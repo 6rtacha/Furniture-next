@@ -20,6 +20,11 @@ interface TrendPropertiesProps {
 }
 
 const TrendProperties = (props: TrendPropertiesProps) => {
+	const trendingProducts = [
+		{ id: 1, name: 'Sunset Adventure Ride', price: '$299', image: '/api/placeholder/300/200' },
+		{ id: 2, name: 'Romantic Couple Flight', price: '$399', image: '/api/placeholder/300/200' },
+		{ id: 3, name: 'Mountain View Special', price: '$349', image: '/api/placeholder/300/200' },
+	];
 	const { initialInput } = props;
 	const device = useDeviceDetect();
 	const [trendProperties, setTrendProperties] = useState<Property[]>([]);

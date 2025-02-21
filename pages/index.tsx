@@ -33,8 +33,8 @@ const Home: NextPage = () => {
 	} else {
 		return (
 			<Stack className={'home-page'}>
-				<TrendProperties />
-				<PopularProperties />
+				{/* <TrendProperties /> */}
+				{/* <PopularProperties /> */}
 				<Advertisement />
 				<TopProperties />
 				<TopAgents />

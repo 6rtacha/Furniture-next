@@ -32,6 +32,7 @@
 @import '/scss/pc/member/memberFollows.scss';
 @import '/scss/pc/member/memberArticles.scss';
 @import '/scss/pc/member/memberProperties.scss';
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
 
 body {
 	-ms-overflow-style: none; /* for Internet Explorer, Edge */
@@ -44,10 +45,14 @@ body::-webkit-scrollbar {
 }
 
 #pc-wrap {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	#top {
 		.navbar {
 			.navbar-main {
-				position: fixed;
+				position: relative;
 				padding: 22px 0px;
 				width: 100%;
 				height: 87px;
@@ -58,16 +63,23 @@ body::-webkit-scrollbar {
 				align-items: center;
 				border-top: 1px solid rgba(255, 255, 255, 0.07);
 				&.transparent {
-					background-color: #181a209e;
+					// background-color: #181a209e;
 				}
 				.container {
 					flex-direction: row;
 					align-items: center;
 					justify-content: space-between;
 					.logo-box {
-						img {
-							width: 150px;
-							cursor: pointer;
+						.logo {
+							font-family: 'DM Serif Display', serif;
+							font-size: 28px;
+							line-height: 33px;
+							letter-spacing: 1%;
+							color: #292f36;
+							img {
+								width: 34px;
+								height: 34px;
+							}
 						}
 					}
 					.router-box {
@@ -78,7 +90,7 @@ body::-webkit-scrollbar {
 						justify-content: space-between;
 						div {
 							position: relative;
-							color: #eeeeeeed;
+							color: #292f36;
 							font-family: $font;
 							font-size: 15px;
 							font-style: normal;
@@ -174,238 +186,91 @@ body::-webkit-scrollbar {
 	.header-main {
 		position: relative;
 		width: 100%;
-		height: 860px;
-		background-image: url('/img/banner/header1.svg');
+		height: 800px;
+		background-image: url('/img/logo/Photo1.jpg');
 		background-size: cover;
+		border-radius: 0px 0px 0px 10px;
 		.container {
 			position: relative;
 			margin-top: 20px;
 			flex-direction: column;
 			align-items: center;
-			.search-box {
+			padding-top: 100px;
+			.motto-box {
 				position: relative;
-				margin-top: 56px;
-				padding: 16px 29px;
-				width: 1094px;
-				height: 96px;
 				display: flex;
+				flex-direction: column;
+				width: 861px;
+				height: auto;
+				.motto {
+					div {
+						font-family: 'DM Serif Display', serif;
+						font-size: 80px;
+						line-height: 104px;
+						letter-spacing: -1%;
+						text-align: center;
+						color: #292f36;
+					}
+				}
+				.moto-desc {
+					position: relative;
+					display: flex;
+					width: 861px;
+					height: 76px;
+					margin-top: 40px;
+					div {
+						font-family: Arial, Helvetica, sans-serif;
+						font-size: 24px;
+						line-height: 38.4px;
+						letter-spacing: 0%;
+						text-align: center;
+						color: #292f36;
+					}
+				}
+			}
+			// .input-box {
+			// 	position: relative;
+			// 	margin-top: 70px;
+			// 	padding: 6px 29px;
+			// 	width: 344px;
+			// 	height: 56px;
+			// 	display: flex;
+			// 	flex-direction: row;
+			// 	justify-content: space-between;
+			// 	background: rgba(255, 255, 255, 0.68);
+			// 	border-radius: 42px;
+			// }
+			.input-box {
+				position: relative;
+				width: 500px;
 				flex-direction: row;
-				justify-content: space-between;
-				background: rgba(255, 255, 255, 0.28);
-				border-radius: 12px;
-				.select-box {
-					width: 712px;
-					display: flex;
-					flex-direction: row;
-					justify-content: space-between;
-					.box {
-						padding: 24px 22px;
-						width: 213px;
-						height: 56px;
-						display: flex;
-						flex-direction: row;
-						align-items: center;
-						justify-content: space-between;
-						border-radius: 12px;
-						background: rgba(255, 255, 255, 0.575);
-						box-sizing: border-box;
-						cursor: pointer;
-						&.on {
-							background: #ffffff;
-							border: 1px solid #000;
-							color: #181a20;
-						}
-						span {
-							color: #181a20;
-							font-family: $font;
-							font-size: 14px;
-							font-style: normal;
-							font-weight: 400;
-							line-height: 26px;
-						}
-						svg {
-						}
-					}
+				align-items: center;
+				margin-top: 50px;
+				svg {
+					cursor: pointer;
 				}
-				.search-box-other {
-					display: flex;
-					flex-direction: row;
-					align-items: center;
-					.advanced-filter {
-						display: flex;
-						flex-direction: row;
-						align-items: center;
-						img {
-							margin-right: 10px;
-							width: 25px;
-							height: 22px;
-							cursor: pointer;
-						}
-						span {
-							color: #fff;
-							font-family: $font;
-							font-size: 20px;
-							font-style: normal;
-							font-weight: 600;
-							line-height: normal;
-							cursor: pointer;
-						}
-					}
-					.search-btn {
-						margin-left: 12px;
-						width: 62px;
-						height: 62px;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						border-radius: 55px;
-						background: #f17742;
-						cursor: pointer;
-						svg {
-							width: 20px;
-							height: 20px;
-							color: #ffffff;
-						}
-					}
+				.search-input {
+					width: 100%;
+					height: 53px;
+					border-radius: 8px;
+					border: 1px solid #f4f0ec;
+					background: rgba(255, 255, 255, 0.68);
+					border-radius: 42px;
+					outline: none;
+					padding-left: 43px;
+					color: #717171;
+					font-family: $font;
+					font-size: 14px;
+					font-style: normal;
+					font-weight: 400;
+					line-height: 26px;
 				}
-				.filter-location {
+				img {
 					position: absolute;
-					padding: 40px 60px;
-					width: 1094px;
-					min-height: 120px;
-					height: auto;
-					top: 96px;
-					right: 0px;
-					display: flex;
-					flex-direction: row;
-					flex-wrap: wrap;
-					gap: 40px;
-					visibility: hidden;
-					border-radius: 12px;
-					background: #ffffff;
-					box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-					box-sizing: border-box;
-					z-index: 2;
-					&.on {
-						visibility: visible;
-						transition: 0.2s ease-out;
-						background: #fffdfd;
-					}
-					div {
-						width: 295px;
-						display: flex;
-						flex-direction: row;
-						align-items: center;
-						img {
-							width: 122px;
-							height: 85px;
-							border-radius: 15px;
-							cursor: pointer;
-						}
-						span {
-							margin-left: 22px;
-							color: #181a20;
-							font-family: $font;
-							font-size: 20px;
-							font-style: normal;
-							font-weight: 400;
-							line-height: 26px;
-							cursor: pointer;
-							text-transform: capitalize;
-						}
-						label {
-							line-height: 13px;
-						}
-					}
-				}
-				.filter-type {
-					position: absolute;
-					padding: 50px;
-					width: 1094px;
-					min-height: 120px;
-					height: auto;
-					top: 96px;
-					right: 0px;
-					display: flex;
-					flex-direction: row;
-					justify-content: space-between;
-					visibility: hidden;
-					border-radius: 12px;
-					background: #fff;
-					box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-					box-sizing: border-box;
-					z-index: 1;
-					&.on {
-						visibility: visible;
-						transition: 0.2s ease-out;
-						background: #fffdfd;
-					}
-					div {
-						position: relative;
-						width: 272px;
-						height: 168px;
-						border-radius: 15px;
-						cursor: pointer;
-						background-size: cover;
-						span {
-							position: absolute;
-							top: 13px;
-							right: 12px;
-							padding: 1px 5px 5px 5px;
-							border-radius: 2px 2px 0px 0px;
-							font-family: $font;
-							font-size: 20px;
-							font-style: normal;
-							font-weight: 700;
-							line-height: 26px;
-							background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 100%);
-							// -webkit-background-clip: text;
-							// -webkit-text-fill-color: transparent;
-							text-transform: capitalize;
-						}
-					}
-				}
-				.filter-rooms {
-					position: absolute;
-					padding: 10px 92px;
-					width: 1094px;
-					min-height: 120px;
-					height: auto;
-					top: 96px;
-					right: 0px;
-					display: flex;
-					flex-direction: row;
-					justify-content: space-between;
-					align-items: center;
-					visibility: hidden;
-					border-radius: 12px;
-					background: #fff;
-					box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-					box-sizing: border-box;
-					z-index: 1;
-					&.on {
-						visibility: visible;
-						transition: 0.2s ease-out;
-						background: #fffdfd;
-					}
-					span {
-						display: flex;
-						align-items: center;
-						padding: 10px 30px;
-						border: 1px solid #fffdfd;
-						color: #181a20;
-						font-family: $font;
-						font-size: 20px;
-						font-style: normal;
-						font-weight: 400;
-						line-height: 26px;
-						cursor: pointer;
-						&:hover {
-							border-radius: 5px;
-							border: 1px solid #b9b9b9;
-							box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-						}
-					}
+					width: 18px;
+					height: 17px;
+					top: 18px;
+					left: 15px;
 				}
 			}
 		}
