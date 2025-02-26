@@ -14,6 +14,7 @@ import { T } from '../../types/common';
 import { LIKE_TARGET_PROPERTY } from '../../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 import { Message } from '../../enums/common.enum';
+import property from '../../../pages/property';
 
 interface TrendPropertiesProps {
 	initialInput: PropertiesInquiry;
@@ -72,12 +73,12 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 			<Stack className={'trend-properties'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<span>Trend Properties</span>
+						<span>Our Projects</span>
 					</Stack>
 					<Stack className={'card-box'}>
 						{trendProperties.length === 0 ? (
 							<Box component={'div'} className={'empty-list'}>
-								Trends Empty
+								Projects Empty
 							</Box>
 						) : (
 							<Swiper
@@ -106,45 +107,15 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span>Trend Properties</span>
-							<p>Trend is based on likes</p>
-						</Box>
-						<Box component={'div'} className={'right'}>
-							<div className={'pagination-box'}>
-								<WestIcon className={'swiper-trend-prev'} />
-								<div className={'swiper-trend-pagination'}></div>
-								<EastIcon className={'swiper-trend-next'} />
-							</div>
+							<span>Checkout Our Popular Projects</span>
+							<p>
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eleifend tellus justo, a maximus elit
+								ornare at. In tempor nisi eget ex bibendum
+							</p>
 						</Box>
 					</Stack>
 					<Stack className={'card-box'}>
-						{trendProperties.length === 0 ? (
-							<Box component={'div'} className={'empty-list'}>
-								Trends Empty
-							</Box>
-						) : (
-							<Swiper
-								className={'trend-property-swiper'}
-								slidesPerView={'auto'}
-								spaceBetween={15}
-								modules={[Autoplay, Navigation, Pagination]}
-								navigation={{
-									nextEl: '.swiper-trend-next',
-									prevEl: '.swiper-trend-prev',
-								}}
-								pagination={{
-									el: '.swiper-trend-pagination',
-								}}
-							>
-								{trendProperties.map((property: Property) => {
-									return (
-										<SwiperSlide key={property._id} className={'trend-property-slide'}>
-											<TrendPropertyCard property={property} likePropertyHandler={likePropertyHandler} />
-										</SwiperSlide>
-									);
-								})}
-							</Swiper>
-						)}
+						<TrendPropertyCard property={property} likePropertyHandler={likePropertyHandler} />
 					</Stack>
 				</Stack>
 			</Stack>
@@ -155,7 +126,7 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 TrendProperties.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 8,
+		limit: 4,
 		sort: 'propertyLikes',
 		direction: 'DESC',
 		search: {},

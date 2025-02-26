@@ -115,162 +115,113 @@
 			}
 		}
 		.trend-properties {
+			position: relative;
 			padding: 108px 0px 76px;
 			width: 100%;
-			height: 697px;
+			height: auto;
 			display: flex;
 			flex-direction: row;
+			margin-top: 50px;
 			.container {
 				flex-direction: column;
+				.left {
+					position: relative;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					width: 737px;
+					height: 137px;
+					gap: 8px;
+					margin-left: 180px;
+					span {
+						font-family: $fontPrimary;
+						font-weight: 400;
+						font-size: 50px;
+						line-height: 62.5px;
+						letter-spacing: 2%;
+						text-align: center;
+					}
+					p {
+						font-family: $font;
+						font-weight: 400;
+						font-size: 22px;
+						line-height: 33px;
+						letter-spacing: 1%;
+						text-align: center;
+					}
+				}
 				.card-box {
 					position: relative;
 					margin-top: 64px;
 					display: flex;
-					flex-direction: row;
-					.empty-list {
-						width: 100%;
-						height: 280px;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-					}
-					.trend-property-swiper {
-						width: 100%;
-						height: 400px;
-						display: flex;
-						flex-direction: row;
-						.trend-property-slide {
-							width: auto;
-							height: auto;
-							display: flex;
-							margin: 10px 0 0 10px;
-						}
-					}
 					.trend-card-box {
-						position: relative;
-						width: 300px;
-						height: 375px;
 						display: flex;
-						flex-direction: column;
-						transition: transform 0.3s;
-						&:hover {
-							opacity: 1;
-							transform: scale(1.05);
-						}
-						.card-img {
+						width: 100%;
+						height: auto;
+						flex-direction: row;
+						justify-content: space-between;
+						flex-wrap: wrap;
+						.trend-card {
 							position: relative;
-							width: 100%;
-							height: 203px;
-							background-size: cover;
-							border-radius: 12px 12px 0px 0px;
-							cursor: pointer;
-							div {
-								position: absolute;
-								padding: 8px 12px;
-								left: 12px;
-								bottom: 12px;
-								border-radius: 6px;
-								background: #fff;
-								color: #181a20;
-								font-family: $font;
-								font-size: 15px;
-								font-style: normal;
-								font-weight: 600;
-								line-height: normal;
-							}
-						}
-						.info {
-							padding: 20px 22px 17px;
 							display: flex;
 							flex-direction: column;
-							box-sizing: border-box;
-							border-radius: 0px 0px 12px 12px;
-							border: 1px solid rgba(196, 196, 196, 0.71);
-							border-top: none;
-							background: #fff;
-							box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
-							.title {
-								overflow: hidden;
-								color: #181a20;
-								text-overflow: ellipsis;
-								white-space: nowrap;
-								font-family: $font;
-								font-size: 15px;
-								font-style: normal;
-								font-weight: 600;
-								line-height: normal;
-								text-transform: capitalize;
-								cursor: pointer;
+							width: 550px;
+							height: auto;
+							gap: 24px;
+							rotate: 90;
+							margin-bottom: 40px;
+							cursor: pointer;
+							transition: opacity 0.4s;
+							&:hover {
+								opacity: 1;
+								scale: 1.05;
+								transition: 0.3s;
+								.more {
+									opacity: 1;
+								}
 							}
-							.desc {
-								margin-top: 5px;
-								overflow: hidden;
-								color: #717171;
-								font-family: $font;
-								font-size: 13px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: normal;
-								text-overflow: ellipsis;
-								white-space: nowrap;
+							img {
+								position: relative;
+								width: 525px;
+								height: 548px;
+								rotate: 90;
+								border-radius: 70px;
 							}
-							.options {
-								margin-top: 15px;
+							.text {
+								position: relative;
 								display: flex;
 								flex-direction: row;
 								justify-content: space-between;
-								div {
-									display: flex;
-									flex-direction: row;
-									img {
-										margin-right: 5px;
-										width: 17px;
-										height: 17px;
-									}
-									span {
-										color: #181a20;
-										font-family: $font;
-										font-size: 13px;
-										font-style: normal;
+								width: 547px;
+								height: 70px;
+								gap: 260px;
+								.text-titles {
+									position: relative;
+									width: 300px;
+									height: auto;
+									.card-name {
+										font-family: $fontPrimary;
 										font-weight: 400;
-										line-height: normal;
+										font-size: 25px;
+										line-height: 31.25px;
+										letter-spacing: 2%;
+										color: #292f36;
 									}
-								}
-							}
-							.bott {
-								display: flex;
-								flex-direction: row;
-								justify-content: space-between;
-								align-items: center;
-								p {
-									color: #181a20;
-									font-family: $font;
-									font-size: 13px;
-									font-style: normal;
-									font-weight: 400;
-									line-height: normal;
-									text-transform: capitalize;
-								}
-								button {
-									margin-left: 7px;
-									width: 16px;
-									height: 16px;
-									box-sizing: border-box;
-								}
-								.view-like-box {
-									display: flex;
-									flex-direction: row;
-									gap: 7px;
-									align-items: center;
-									.view-cnt {
-										color: #717171;
+									.card-type {
 										font-family: $font;
-										font-size: 13px;
-										font-style: normal;
 										font-weight: 400;
-										line-height: normal;
-										text-overflow: ellipsis;
+										font-size: 22px;
+										line-height: 33px;
+										letter-spacing: 1%;
+										color: #4d5053;
 									}
+								}
+								img {
+									position: relative;
+									width: 70px;
+									height: 70px;
+									margin-right: 25px;
 								}
 							}
 						}
@@ -285,6 +236,7 @@
 			display: flex;
 			flex-direction: row;
 			background: #f6f6f6;
+			border-radius: 50px;
 			.container {
 				flex-direction: column;
 				align-items: center;
@@ -487,7 +439,6 @@
 			flex-direction: row;
 			justify-content: space-between;
 			margin-top: 100px;
-
 			.ads-info {
 				position: relative;
 				display: flex;
@@ -699,16 +650,31 @@
 		}
 		.top-agents {
 			position: relative;
-			padding: 153px 0px 135px;
+			// padding: 153px 0px 135px;
 			width: 100%;
-			height: 722px;
+			height: 679px;
 			display: flex;
 			flex-direction: row;
-			background: #f6f6f6;
+			background: #f4f0ec;
+			margin-top: 80px;
+			border-radius: 60px;
 			.container {
 				position: relative;
 				flex-direction: column;
 				align-items: center;
+				.head-box {
+					width: 547px;
+					height: 126px;
+					text-align: center;
+					margin-top: 30px;
+					span {
+						font-family: $fontPrimary;
+						font-weight: 400;
+						font-size: 50px;
+						line-height: 62.5px;
+						letter-spacing: 2%;
+					}
+				}
 				.wrapper {
 					width: 100%;
 					margin-top: 83px;
@@ -736,7 +702,7 @@
 					}
 					.card-wrapper {
 						width: 1174px;
-						height: 280px;
+						height: 339px;
 						display: flex;
 						flex-direction: row;
 						.top-agents-swiper {
@@ -744,44 +710,70 @@
 							height: 280px;
 							display: flex;
 							flex-direction: row;
+							gap: 20px;
 							.top-agents-slide {
 								width: auto;
 								height: auto;
 								display: flex;
 							}
-						}
-						.top-agent-card {
-							width: 205px;
-							height: 280px;
-							display: flex;
-							flex-direction: column;
-							img {
-								width: 209px;
-								height: 209px;
-								border-radius: 50%;
-								cursor: pointer;
-								object-fit: cover;
-							}
-							strong {
-								margin-top: 20px;
-								color: #181a20;
-								text-align: center;
-								font-family: $font;
-								font-size: 15px;
-								font-style: normal;
-								font-weight: 600;
-								line-height: normal;
-								text-transform: capitalize;
-								cursor: pointer;
-							}
-							span {
-								color: #181a20;
-								text-align: center;
-								font-family: $font;
-								font-size: 15px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: 28px;
+							.comment-card {
+								position: relative;
+								display: flex;
+								flex-direction: column;
+								justify-content: center;
+								align-items: center;
+								width: 400px;
+								height: auto;
+								background-color: #ffffff;
+								border-radius: 30px;
+								padding: 10px;
+								.person {
+									position: relative;
+									display: flex;
+									flex-direction: row;
+									justify-content: space-between;
+									width: 250px;
+									cursor: pointer;
+									img {
+										width: 77px;
+										height: 77px;
+										border-radius: 50%;
+										object-fit: cover;
+									}
+									.person-info {
+										position: relative;
+										display: flex;
+										flex-direction: column;
+
+										.person-name {
+											font-family: $fontPrimary;
+											font-weight: 400;
+											font-size: 25px;
+											line-height: 37.5px;
+											letter-spacing: 1%;
+										}
+										.person-address {
+											font-family: $font;
+											font-weight: 400;
+											font-size: 15px;
+											line-height: 27px;
+											letter-spacing: 1%;
+										}
+									}
+								}
+								.text {
+									width: 250px;
+									overflow-y: scroll;
+									margin-top: 20px;
+									margin-left: 3px;
+									span {
+										font-family: $font;
+										font-weight: 400;
+										font-size: 18px;
+										line-height: 33px;
+										letter-spacing: 1%;
+									}
+								}
 							}
 						}
 					}
@@ -790,234 +782,107 @@
 		}
 		.events {
 			position: relative;
-			padding: 100px 0px 92px;
 			width: 100%;
-			height: 810px;
+			height: auto;
 			display: flex;
-			flex-direction: row;
-			background: #181a20;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			margin-top: 70px;
+			span {
+				font-family: $fontPrimary;
+				font-weight: 400;
+				font-size: 50px;
+				line-height: 62.5px;
+				letter-spacing: 2%;
+			}
 			.container {
-				flex-direction: column;
-				align-items: center;
-				.card-wrapper {
-					position: relative;
-					margin-top: 48px;
-					width: 100%;
-					height: auto;
-					display: flex;
-					flex-direction: row;
-					justify-content: space-between;
-					.event-card {
-						position: relative;
-						width: 300px;
-						height: 420px;
-						border-radius: 12px;
-						opacity: 0.9;
-						cursor: pointer;
-						transition: opacity 0.4s;
-						&:hover {
-							opacity: 1;
-							scale: 1.05;
-							transition: 0.3s;
-							.more {
-								opacity: 1;
-							}
-						}
-						.info {
-							position: absolute;
-							display: flex;
-							flex-direction: column;
-							top: 35px;
-							left: 10px;
-							right: 10px;
-							strong {
-								color: #f64747;
-								font-family: $font;
-								font-size: 25px;
-								font-style: normal;
-								font-weight: 600;
-								line-height: normal;
-								text-transform: capitalize;
-							}
-							span {
-								color: #f66767;
-								font-family: $font;
-								font-size: 20px;
-								font-style: normal;
-								font-weight: 500;
-								line-height: 28px;
-								text-transform: capitalize;
-							}
-						}
-						.more {
-							position: absolute;
-							left: 10px;
-							right: 10px;
-							bottom: 41px;
-							display: flex;
-							flex-direction: row;
-							align-items: center;
-							opacity: 0;
-							span {
-								padding: 0px 5px;
-								border-radius: 5px;
-								background: #fffdfdc4;
-								color: #9c67f6;
-								font-family: $font;
-								font-size: 16px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: 26px;
-								text-align: justify;
-								cursor: pointer;
-							}
-						}
-					}
-				}
+				position: relative;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-around;
+				width: 100%;
+				height: 102px;
+				margin-top: 60px;
+				cursor: pointer;
 			}
 		}
 		.community-board {
 			position: relative;
 			padding: 124px 0px 61px;
 			width: 100%;
-			height: 860px;
+			height: 714px;
 			display: flex;
-			flex-direction: row;
-			.container {
-				flex-direction: column;
-				align-items: center;
-				.community-main {
-					width: 100%;
-					margin-top: 60px;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+			margin-top: 80px;
+			.headline {
+				position: relative;
+				width: 811px;
+				height: 141px;
+				span {
+					font-family: $fontPrimary;
+					font-weight: 400;
+					font-size: 50px;
+					line-height: 62.5px;
+					letter-spacing: 2%;
+					text-align: center;
+				}
+			}
+			.card-frame {
+				position: relative;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-evenly;
+				width: 100%;
+				height: auto;
+				.card {
+					position: relative;
 					display: flex;
-					flex-direction: row;
-					justify-content: space-between;
-					.center-line {
-						height: 90%;
-						align-self: end;
-					}
-					.content-top {
-						margin-bottom: 26px;
-						width: 100%;
-						height: 30px;
-						display: flex;
-						flex-direction: row;
-						justify-content: flex-end;
-						align-items: center;
-						span {
-							font-family: $font;
-							font-style: normal;
-							font-weight: 500;
-							font-size: 16px;
-							line-height: 36px;
-							color: #616161;
-							cursor: pointer;
-						}
-						img {
-							margin-left: 10px;
-							width: 12px;
-							height: 12px;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					width: 382px;
+					height: 521px;
+					margin-top: 60px;
+					border: solid 1px none;
+					border-radius: 60px;
+					background-color: #f4f0ec;
+					cursor: pointer;
+					transition: opacity 0.4s;
+					&:hover {
+						opacity: 1;
+						scale: 1.05;
+						transition: 0.3s;
+						.more {
+							opacity: 1;
 						}
 					}
-					.community-left {
-						width: 642px;
-						height: auto;
-						display: flex;
-						flex-direction: column;
-						.card-wrap {
-							display: flex;
-							flex-direction: row;
-							flex-wrap: wrap;
-							.vertical-card {
-								margin-right: 12px;
-								margin-bottom: 18px;
-								width: 202px;
-								display: flex;
-								flex-direction: column;
-								cursor: pointer;
-								.community-img {
-									width: 100%;
-									height: 141px;
-									background-size: cover;
-									background-repeat: round;
-									border-radius: 5px;
-									div {
-										width: 32px;
-										height: 32px;
-										display: flex;
-										justify-content: center;
-										align-items: center;
-										background: #f54d56;
-										border-radius: 5px 0px;
-										font-family: $font;
-										font-style: normal;
-										font-weight: 400;
-										font-size: 19px;
-										line-height: 36px;
-										letter-spacing: -0.015em;
-										color: #bdbdbd;
-									}
-								}
-								strong {
-									margin-top: 10px;
-									font-family: $font;
-									font-style: normal;
-									font-weight: 700;
-									font-size: 18px;
-									line-height: 36px;
-									letter-spacing: 0.105em;
-									color: #000000;
-								}
-								span {
-									font-family: $font;
-									font-style: normal;
-									font-weight: 400;
-									font-size: 16px;
-									line-height: 19px;
-									letter-spacing: -0.015em;
-									color: #d3d3d3;
-								}
+					img {
+						width: 340px;
+						height: 289px;
+						object-fit: cover;
+						object-position: 0 100%;
+						border-radius: 50px 50px 0 0;
+					}
+					.title {
+						width: 340px;
+						height: 152px;
+						margin-top: 30px;
+						.article-title {
+							width: 305px;
+							span {
+								font-family: $fontPrimary;
+								font-weight: 400;
+								font-size: 25px;
+								line-height: 31.25px;
+								letter-spacing: 2%;
 							}
 						}
-					}
-					.community-right {
-						width: 590px;
-						height: auto;
-						display: flex;
-						flex-direction: column;
-						.horizontal-card {
-							display: flex;
-							flex-direction: row;
-							cursor: pointer;
-							margin-bottom: 34px;
-							img {
-								width: 180px;
-								height: 111px;
-								border-radius: 7px;
-							}
-							div {
-								margin-left: 25px;
-								display: flex;
-								flex-direction: column;
-								strong {
-									margin-top: 15px;
-									font-family: $font;
-									font-style: normal;
-									font-weight: 500;
-									font-size: 13px;
-									letter-spacing: 0.105em;
-									color: #212121;
-								}
-								span {
-									font-family: $font;
-									font-style: normal;
-									font-weight: 500;
-									font-size: 13px;
-									line-height: 36px;
-									letter-spacing: 0.105em;
-									color: #bdbdbd;
-								}
-							}
+						.date {
+							margin-top: 20px;
 						}
 					}
 				}

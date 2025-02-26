@@ -73,18 +73,13 @@ const Events = () => {
 	} else {
 		return (
 			<Stack className={'events'}>
+				<span>Partnership Brands</span>
 				<Stack className={'container'}>
-					<Stack className={'info-box'}>
-						<Box component={'div'} className={'left'}>
-							<span className={'white'}>Events</span>
-							<p className={'white'}>Events waiting your attention!</p>
-						</Box>
-					</Stack>
-					<Stack className={'card-wrapper'}>
-						{eventsData.map((event: EventData) => {
-							return <EventCard event={event} key={event?.eventTitle} />;
-						})}
-					</Stack>
+					<img src="/img/events/brandHome.svg" alt="" />
+					<img src="/img/events/brandVs.svg" alt="" />
+					<img src="/img/events/brand.svg" alt="" />
+					<img src="/img/events/brandNature.svg" alt="" />
+					<img src="/img/events/brandClassic.svg" alt="" />
 				</Stack>
 			</Stack>
 		);

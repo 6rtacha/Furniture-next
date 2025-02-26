@@ -55,9 +55,10 @@ const TopAgents = (props: TopAgentsProps) => {
 						>
 							{topAgents.map((agent: Member) => {
 								return (
-									<SwiperSlide className={'top-agents-slide'} key={agent?._id}>
-										<TopAgentCard agent={agent} key={agent?.memberNick} />
-									</SwiperSlide>
+									// <SwiperSlide className={'top-agents-slide'} key={agent?._id}>
+									// 	<TopAgentCard agent={agent} key={agent?.memberNick} />
+									// </SwiperSlide>
+									<></>
 								);
 							})}
 						</Swiper>
@@ -69,16 +70,9 @@ const TopAgents = (props: TopAgentsProps) => {
 		return (
 			<Stack className={'top-agents'}>
 				<Stack className={'container'}>
-					<Stack className={'info-box'}>
+					<Stack className={'head-box'}>
 						<Box component={'div'} className={'left'}>
-							<span>Top Agents</span>
-							<p>Our Top Agents always ready to serve you</p>
-						</Box>
-						<Box component={'div'} className={'right'}>
-							<div className={'more-box'}>
-								<span>See All Agents</span>
-								<img src="/img/icons/rightup.svg" alt="" />
-							</div>
+							<span>What People Think About Us</span>
 						</Box>
 					</Stack>
 					<Stack className={'wrapper'}>
@@ -96,13 +90,14 @@ const TopAgents = (props: TopAgentsProps) => {
 									prevEl: '.swiper-agents-prev',
 								}}
 							>
-								{topAgents.map((agent: Member) => {
+								{/* {topAgents.map((agent: Member) => {
 									return (
 										<SwiperSlide className={'top-agents-slide'} key={agent?._id}>
 											<TopAgentCard agent={agent} key={agent?.memberNick} />
 										</SwiperSlide>
 									);
-								})}
+								})} */}
+								<TopAgentCard />
 							</Swiper>
 						</Box>
 						<Box component={'div'} className={'switch-btn swiper-agents-next'}>

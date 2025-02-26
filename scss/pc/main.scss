@@ -189,7 +189,8 @@ body::-webkit-scrollbar {
 		height: 800px;
 		background-image: url('/img/logo/Photo1.jpg');
 		background-size: cover;
-		border-radius: 0px 0px 0px 10px;
+		border-radius: 0px 0px 0px 170px;
+		object-fit: cover;
 		.container {
 			position: relative;
 			margin-top: 20px;
@@ -526,7 +527,7 @@ body::-webkit-scrollbar {
 		height: auto;
 		display: flex;
 		flex-direction: row;
-		background: #181a20;
+		margin-top: 100px;
 		.footer-container {
 			width: 1300px;
 			height: auto;
@@ -544,12 +545,12 @@ body::-webkit-scrollbar {
 						display: flex;
 						flex-direction: column;
 						.logo {
-							width: 128px;
+							width: 80px;
 							height: 52px;
 							cursor: pointer;
 						}
 						span {
-							color: #bebdbd;
+							color: black;
 							font-family: $font;
 							font-size: 14px;
 							font-style: normal;
@@ -557,7 +558,7 @@ body::-webkit-scrollbar {
 							text-transform: capitalize;
 						}
 						p {
-							color: #fff;
+							color: black;
 							font-family: $font;
 							font-size: 15px;
 							font-style: normal;
@@ -583,7 +584,7 @@ body::-webkit-scrollbar {
 						display: flex;
 						flex-direction: column;
 						strong {
-							color: #fff;
+							color: black;
 							font-family: $font;
 							font-size: 15px;
 							font-style: normal;
@@ -636,7 +637,7 @@ body::-webkit-scrollbar {
 							flex-direction: column;
 							strong {
 								margin-bottom: 3px;
-								color: #fff;
+								color: black;
 								font-family: $font;
 								font-size: 15px;
 								font-style: normal;
@@ -646,14 +647,14 @@ body::-webkit-scrollbar {
 							}
 							span {
 								margin-top: 25px;
-								color: #bebdbd;
+								color: black;
 								font-family: $font;
 								font-size: 14px;
 								font-style: normal;
 								font-weight: 400;
 								cursor: pointer;
 								&:hover {
-									color: #ffffff;
+									color: black;
 									text-decoration-line: underline;
 								}
 							}
@@ -670,7 +671,7 @@ body::-webkit-scrollbar {
 				justify-content: space-between;
 				align-items: flex-end;
 				span {
-					color: #bebdbd;
+					color: black;
 					font-family: $font;
 					font-size: 14px;
 					font-style: normal;
@@ -705,7 +706,7 @@ body::-webkit-scrollbar {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background: #f6f6f6;
+		background: black;
 		cursor: pointer;
 	}
 	.top {
@@ -728,7 +729,7 @@ body::-webkit-scrollbar {
 			flex-direction: row;
 			align-items: center;
 			border-radius: 8px;
-			border: 1px solid #ddd;
+			border: 1px solid black;
 			img {
 				width: 17px;
 				height: 17px;
