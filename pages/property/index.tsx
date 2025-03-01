@@ -16,6 +16,8 @@ import { GET_PROPERTIES } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 import { LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import NewFilter from '../../libs/components/property/NewFilter';
+import ProductCard from '../../libs/components/property/ProductCard';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -170,11 +172,13 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 					<Stack className={'property-page'}>
 						<Stack className={'filter-config'}>
 							{/* @ts-ignore */}
-							<Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
+							<NewFilter />
+
+							{/* <Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} /> */}
 						</Stack>
 						<Stack className="main-config" mb={'76px'}>
 							<Stack className={'list-config'}>
-								{properties?.length === 0 ? (
+								{/* {properties?.length === 0 ? (
 									<div className={'no-data'}>
 										<img src="/img/icons/icoAlert.svg" alt="" />
 										<p>No Properties found!</p>
@@ -185,7 +189,8 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 											<PropertyCard property={property} likePropertyHandler={likePropertyHandler} key={property?._id} />
 										);
 									})
-								)}
+								)} */}
+								<ProductCard />
 							</Stack>
 							<Stack className="pagination-config">
 								{properties.length !== 0 && (

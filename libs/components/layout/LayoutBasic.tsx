@@ -29,9 +29,10 @@ const withLayoutBasic = (Component: any) => {
 
 			switch (router.pathname) {
 				case '/property':
-					title = 'Property Search';
+					title = 'Product Search';
 					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/properties.png';
+					bgImage =
+						'https://s3-alpha-sig.figma.com/img/bf4a/5e25/1e645d3842e11a41778fdbf2ac618eb7?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=J4VaCTuA~3TRbMoNM87Ds9Fi~ahSfsJwdgkz8MOMx4nzQabJ-3uaB9gsZtPe5Jyoicn9NU0I2VtywVyek6I7Rtdwv7fQdeKPRNVx3ww6AKZyDzQy4fF~To9DH328hLkhQNkJg-8hX5cc-jLrvbV7Z1xe5NTG7qLwtBZuBf2o~-bflNGIeN9id19oBL0YlO6dxst-RBYWtXw08SDfxTr1ZxhIT0Ud2JiP1QD3HY-2kRkQgYJEHYwWcraY0H5XondmVlKywxS~442wwfdZBPjCJkL02vspukaUUMQPNQ~LQ5~-wTlGkwO58m2ku13x-Stt0ahM7WML8jN37Jivjclk6g__';
 					break;
 				case '/agent':
 					title = 'Agents';
@@ -93,8 +94,8 @@ const withLayoutBasic = (Component: any) => {
 			return (
 				<>
 					<Head>
-						<title>Nestar</title>
-						<meta name={'title'} content={`Nestar`} />
+						<title>Interno</title>
+						<meta name={'title'} content={`Interno`} />
 					</Head>
 					<Stack id="mobile-wrap">
 						<Stack id={'top'}>
@@ -115,8 +116,8 @@ const withLayoutBasic = (Component: any) => {
 			return (
 				<>
 					<Head>
-						<title>Nestar</title>
-						<meta name={'title'} content={`Nestar`} />
+						<title>Interno</title>
+						<meta name={'title'} content={`Interno`} />
 					</Head>
 					<Stack id="pc-wrap">
 						<Stack id={'top'}>
@@ -128,7 +129,7 @@ const withLayoutBasic = (Component: any) => {
 							style={{
 								backgroundImage: `url(${memoizedValues.bgImage})`,
 								backgroundSize: 'cover',
-								boxShadow: 'inset 10px 40px 150px 40px rgb(24 22 36)',
+								// boxShadow: 'inset 10px 40px 150px 40px rgb(24 22 36)',
 							}}
 						>
 							<Stack className={'container'}>
