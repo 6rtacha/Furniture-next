@@ -16,66 +16,294 @@ interface AgentCardProps {
 }
 
 const AgentCard = (props: AgentCardProps) => {
-	const { agent, likeMemberHandler } = props;
+	// const { agent, likeMemberHandler } = props;
 	const device = useDeviceDetect();
 	const user = useReactiveVar(userVar);
-	const imagePath: string = agent?.memberImage
-		? `${REACT_APP_API_URL}/${agent?.memberImage}`
-		: '/img/profile/defaultUser.svg';
+	// const imagePath: string = agent?.memberImage
+	// ? `${REACT_APP_API_URL}/${agent?.memberImage}`
+	// : '/img/profile/defaultUser.svg';
 
 	if (device === 'mobile') {
 		return <div>AGENT CARD</div>;
 	} else {
 		return (
-			<Stack className="agent-general-card">
-				<Link
-					href={{
-						pathname: '/agent/detail',
-						query: { agentId: agent?._id },
-					}}
-				>
-					<Box
-						component={'div'}
-						className={'agent-img'}
-						style={{
-							backgroundImage: `url(${imagePath})`,
-							backgroundSize: 'cover',
-							backgroundPosition: 'center',
-							backgroundRepeat: 'no-repeat',
+			<>
+				<Stack className="agent-general-card">
+					<Link
+						href={{
+							pathname: '/agent/detail',
+							// query: { agentId: agent?._id },
 						}}
 					>
-						<div>{agent?.memberProperties} properties</div>
-					</Box>
-				</Link>
-
-				<Stack className={'agent-desc'}>
-					<Box component={'div'} className={'agent-info'}>
-						<Link
-							href={{
-								pathname: '/agent/detail',
-								query: { agentId: 'id' },
+						<Box
+							component={'div'}
+							className={'agent-img'}
+							style={{
+								backgroundImage: '/img/profile/defaultUser.svg',
+								backgroundSize: 'cover',
+								backgroundPosition: 'center',
+								backgroundRepeat: 'no-repeat',
+								width: '283px',
+								height: '433px',
 							}}
 						>
-							<strong>{agent?.memberFullName ?? agent?.memberNick}</strong>
-						</Link>
-						<span>Agent</span>
-					</Box>
-					<Box component={'div'} className={'buttons'}>
-						<IconButton color={'default'}>
-							<RemoveRedEyeIcon />
-						</IconButton>
-						<Typography className="view-cnt">{agent?.memberViews}</Typography>
-						<IconButton color={'default'} onClick={() => likeMemberHandler(user, agent?._id)}>
+							<img src="/img/profile/agent1.png" />
+							{/* <div>{agent?.memberProperties} properties</div> */}
+						</Box>
+					</Link>
+
+					<Stack className={'agent-desc'}>
+						<Box component={'div'} className={'agent-info'}>
+							<Link
+								href={{
+									pathname: '/agent/detail',
+									query: { agentId: 'id' },
+								}}
+							>
+								{/* <strong>{agent?.memberFullName ?? agent?.memberNick}</strong> */}
+								<strong>John</strong>
+							</Link>
+							<span>Seoul</span>
+						</Box>
+						<Box component={'div'} className={'buttons'}>
+							<IconButton color={'default'}>
+								<RemoveRedEyeIcon />
+							</IconButton>
+							{/* <Typography className="view-cnt">{agent?.memberViews}</Typography> */}
+							<Typography className="view-cnt">7</Typography>
+							{/* <IconButton color={'default'} onClick={() => likeMemberHandler(user, agent?._id)}>
 							{agent?.meLiked && agent?.meLiked[0]?.myFavorite ? (
 								<FavoriteIcon color={'primary'} />
-							) : (
-								<FavoriteBorderIcon />
-							)}
-						</IconButton>
-						<Typography className="view-cnt">{agent?.memberLikes}</Typography>
-					</Box>
+							) : ( */}
+							<FavoriteBorderIcon />
+							{/* )} */}
+							{/* </IconButton> */}
+							{/* <Typography className="view-cnt">{agent?.memberLikes}</Typography> */}
+							<Typography className="view-cnt">9</Typography>
+						</Box>
+					</Stack>
 				</Stack>
-			</Stack>
+				<Stack className="agent-general-card">
+					<Link
+						href={{
+							pathname: '/agent/detail',
+							// query: { agentId: agent?._id },
+						}}
+					>
+						<Box
+							component={'div'}
+							className={'agent-img'}
+							style={{
+								backgroundImage: '/img/profile/defaultUser.svg',
+								backgroundSize: 'cover',
+								backgroundPosition: 'center',
+								backgroundRepeat: 'no-repeat',
+								width: '283px',
+								height: '433px',
+							}}
+						>
+							<img src="/img/profile/agent1.png" />
+							{/* <div>{agent?.memberProperties} properties</div> */}
+						</Box>
+					</Link>
+
+					<Stack className={'agent-desc'}>
+						<Box component={'div'} className={'agent-info'}>
+							<Link
+								href={{
+									pathname: '/agent/detail',
+									query: { agentId: 'id' },
+								}}
+							>
+								{/* <strong>{agent?.memberFullName ?? agent?.memberNick}</strong> */}
+								<strong>John</strong>
+							</Link>
+							<span>Seoul</span>
+						</Box>
+						<Box component={'div'} className={'buttons'}>
+							<IconButton color={'default'}>
+								<RemoveRedEyeIcon />
+							</IconButton>
+							{/* <Typography className="view-cnt">{agent?.memberViews}</Typography> */}
+							<Typography className="view-cnt">7</Typography>
+							{/* <IconButton color={'default'} onClick={() => likeMemberHandler(user, agent?._id)}>
+							{agent?.meLiked && agent?.meLiked[0]?.myFavorite ? (
+								<FavoriteIcon color={'primary'} />
+							) : ( */}
+							<FavoriteBorderIcon />
+							{/* )} */}
+							{/* </IconButton> */}
+							{/* <Typography className="view-cnt">{agent?.memberLikes}</Typography> */}
+							<Typography className="view-cnt">9</Typography>
+						</Box>
+					</Stack>
+				</Stack>
+				<Stack className="agent-general-card">
+					<Link
+						href={{
+							pathname: '/agent/detail',
+							// query: { agentId: agent?._id },
+						}}
+					>
+						<Box
+							component={'div'}
+							className={'agent-img'}
+							style={{
+								backgroundImage: '/img/profile/defaultUser.svg',
+								backgroundSize: 'cover',
+								backgroundPosition: 'center',
+								backgroundRepeat: 'no-repeat',
+								width: '283px',
+								height: '433px',
+							}}
+						>
+							<img src="/img/profile/agent1.png" />
+							{/* <div>{agent?.memberProperties} properties</div> */}
+						</Box>
+					</Link>
+
+					<Stack className={'agent-desc'}>
+						<Box component={'div'} className={'agent-info'}>
+							<Link
+								href={{
+									pathname: '/agent/detail',
+									query: { agentId: 'id' },
+								}}
+							>
+								{/* <strong>{agent?.memberFullName ?? agent?.memberNick}</strong> */}
+								<strong>John</strong>
+							</Link>
+							<span>Seoul</span>
+						</Box>
+						<Box component={'div'} className={'buttons'}>
+							<IconButton color={'default'}>
+								<RemoveRedEyeIcon />
+							</IconButton>
+							{/* <Typography className="view-cnt">{agent?.memberViews}</Typography> */}
+							<Typography className="view-cnt">7</Typography>
+							{/* <IconButton color={'default'} onClick={() => likeMemberHandler(user, agent?._id)}>
+							{agent?.meLiked && agent?.meLiked[0]?.myFavorite ? (
+								<FavoriteIcon color={'primary'} />
+							) : ( */}
+							<FavoriteBorderIcon />
+							{/* )} */}
+							{/* </IconButton> */}
+							{/* <Typography className="view-cnt">{agent?.memberLikes}</Typography> */}
+							<Typography className="view-cnt">9</Typography>
+						</Box>
+					</Stack>
+				</Stack>
+				<Stack className="agent-general-card">
+					<Link
+						href={{
+							pathname: '/agent/detail',
+							// query: { agentId: agent?._id },
+						}}
+					>
+						<Box
+							component={'div'}
+							className={'agent-img'}
+							style={{
+								backgroundImage: '/img/profile/defaultUser.svg',
+								backgroundSize: 'cover',
+								backgroundPosition: 'center',
+								backgroundRepeat: 'no-repeat',
+								width: '283px',
+								height: '433px',
+							}}
+						>
+							<img src="/img/profile/agent1.png" />
+							{/* <div>{agent?.memberProperties} properties</div> */}
+						</Box>
+					</Link>
+
+					<Stack className={'agent-desc'}>
+						<Box component={'div'} className={'agent-info'}>
+							<Link
+								href={{
+									pathname: '/agent/detail',
+									query: { agentId: 'id' },
+								}}
+							>
+								{/* <strong>{agent?.memberFullName ?? agent?.memberNick}</strong> */}
+								<strong>John</strong>
+							</Link>
+							<span>Seoul</span>
+						</Box>
+						<Box component={'div'} className={'buttons'}>
+							<IconButton color={'default'}>
+								<RemoveRedEyeIcon />
+							</IconButton>
+							{/* <Typography className="view-cnt">{agent?.memberViews}</Typography> */}
+							<Typography className="view-cnt">7</Typography>
+							{/* <IconButton color={'default'} onClick={() => likeMemberHandler(user, agent?._id)}>
+							{agent?.meLiked && agent?.meLiked[0]?.myFavorite ? (
+								<FavoriteIcon color={'primary'} />
+							) : ( */}
+							<FavoriteBorderIcon />
+							{/* )} */}
+							{/* </IconButton> */}
+							{/* <Typography className="view-cnt">{agent?.memberLikes}</Typography> */}
+							<Typography className="view-cnt">9</Typography>
+						</Box>
+					</Stack>
+				</Stack>
+				<Stack className="agent-general-card">
+					<Link
+						href={{
+							pathname: '/agent/detail',
+							// query: { agentId: agent?._id },
+						}}
+					>
+						<Box
+							component={'div'}
+							className={'agent-img'}
+							style={{
+								backgroundImage: '/img/profile/defaultUser.svg',
+								backgroundSize: 'cover',
+								backgroundPosition: 'center',
+								backgroundRepeat: 'no-repeat',
+								width: '283px',
+								height: '433px',
+							}}
+						>
+							<img src="/img/profile/agent1.png" />
+							{/* <div>{agent?.memberProperties} properties</div> */}
+						</Box>
+					</Link>
+
+					<Stack className={'agent-desc'}>
+						<Box component={'div'} className={'agent-info'}>
+							<Link
+								href={{
+									pathname: '/agent/detail',
+									query: { agentId: 'id' },
+								}}
+							>
+								{/* <strong>{agent?.memberFullName ?? agent?.memberNick}</strong> */}
+								<strong>John</strong>
+							</Link>
+							<span>Seoul</span>
+						</Box>
+						<Box component={'div'} className={'buttons'}>
+							<IconButton color={'default'}>
+								<RemoveRedEyeIcon />
+							</IconButton>
+							{/* <Typography className="view-cnt">{agent?.memberViews}</Typography> */}
+							<Typography className="view-cnt">7</Typography>
+							{/* <IconButton color={'default'} onClick={() => likeMemberHandler(user, agent?._id)}>
+							{agent?.meLiked && agent?.meLiked[0]?.myFavorite ? (
+								<FavoriteIcon color={'primary'} />
+							) : ( */}
+							<FavoriteBorderIcon />
+							{/* )} */}
+							{/* </IconButton> */}
+							{/* <Typography className="view-cnt">{agent?.memberLikes}</Typography> */}
+							<Typography className="view-cnt">9</Typography>
+						</Box>
+					</Stack>
+				</Stack>
+			</>
 		);
 	}
 };

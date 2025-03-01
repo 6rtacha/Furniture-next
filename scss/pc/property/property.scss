@@ -1,6 +1,6 @@
 #pc-wrap {
 	#property-list-page {
-		padding-bottom: 40px;
+		// padding-bottom: 40px;
 		.container {
 			.right {
 				position: absolute;
@@ -295,166 +295,102 @@
 						flex-direction: row;
 						flex-wrap: wrap;
 						justify-content: space-between;
-						.card-config {
-							width: 296px;
-							height: 413px;
-							margin-bottom: 7px;
-							border-radius: 12px;
-							background: #f4f0ec;
-							box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
-							margin-bottom: 40px;
-							.top {
+						.card-frame {
+							.card {
 								position: relative;
-								width: 100%;
-								height: 240px;
-								a {
-									height: 100%;
+								display: flex;
+								flex-direction: column;
+								justify-content: center;
+								align-items: center;
+								width: 382px;
+								height: 521px;
+								margin-top: 60px;
+								border: solid 2px #f4f0ec;
+								border-radius: 60px;
+								background-color: #fdfbfa;
+								cursor: pointer;
+								transition: opacity 0.4s;
+								&:hover {
+									opacity: 1;
+									scale: 1.05;
+									transition: 0.3s;
+									.more {
+										opacity: 1;
+									}
 								}
 								img {
-									width: 100%;
-									height: 100%;
+									width: 340px;
+									height: 289px;
 									object-fit: cover;
-									border-radius: 12px 12px 0 0;
+									object-position: 0 100%;
+									border-radius: 50px 50px 0 0;
 								}
-								.top-badge {
-									position: absolute;
-									top: 20px;
-									left: 16px;
-									display: flex;
-									width: 80px;
-									height: 30px;
-									justify-content: center;
-									align-items: center;
-									border-radius: 6px;
-									padding: 6px 20px;
-									background: #eb6753;
-									color: #fff;
-									text-align: center;
-									text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-									font-family: $font;
-									font-size: 12px;
-									font-style: normal;
-									font-weight: 600;
-									line-height: normal;
-									img {
-										height: 16px;
-									}
-								}
-								.price-box {
-									position: absolute;
-									bottom: 20px;
-									left: 20px;
-									padding: 8px 15px;
-									align-items: center;
-									border-radius: 6px;
-									border: 1px solid rgba(255, 255, 255, 0.5);
-									background: #fff;
-									p {
-										color: #181a20;
-										font-family: $font;
-										font-size: 15px;
-										font-style: normal;
-										font-weight: 600;
-										line-height: normal;
-									}
-								}
-							}
-							.bottom {
-								width: 100%;
-								height: 173px;
-								padding: 20px 16px 10px 16px;
-								.name-address {
-									width: 100%;
-									height: 48px;
-									gap: 5px;
-									margin-bottom: 20px;
-									.name {
-										width: 100%;
-										height: 23px;
-										overflow: hidden;
-										p {
-											color: #181a20;
+								.title {
+									width: 340px;
+									height: 152px;
+									margin-top: 20px;
+									.article-title {
+										display: flex;
+										flex-direction: row;
+										width: 305px;
+										span {
 											font-family: $fontPrimary;
-											font-size: 20px;
-											font-style: normal;
 											font-weight: 400;
-											line-height: normal;
-											text-transform: capitalize;
+											font-size: 25px;
+											line-height: 31.25px;
+											letter-spacing: 2%;
 										}
 									}
 									.address {
-										width: 100%;
-										overflow: hidden;
-										p {
-											color: #717171;
-											font-family: $font;
-											font-size: 13px;
-											font-style: normal;
+										margin-top: 10px;
+										color: #717171;
+										font-family: $font;
+										font-size: 13px;
+										font-style: normal;
+										font-weight: 400;
+										line-height: 26px;
+									}
+									.info {
+										position: relative;
+										display: flex;
+										flex-direction: row;
+										justify-content: space-between;
+										margin-top: 10px;
+										div {
+											font-family: $fontPrimary;
 											font-weight: 400;
-											line-height: normal;
+											font-size: 18px;
+											line-height: 31.25px;
+											letter-spacing: 2%;
+											// text-decoration: dashed;
 										}
 									}
-								}
-								.options {
-									flex-direction: row;
-									width: 100%;
-									height: 20px;
-									gap: 20px;
-									margin-bottom: 10px;
-									.option {
+									.view-like {
+										display: flex;
 										flex-direction: row;
-										gap: 5px;
-										align-items: center;
+										justify-content: space-between;
+										margin-top: 10px;
 										p {
-											color: #181a20;
 											font-family: $font;
-											font-size: 13px;
-											font-style: normal;
 											font-weight: 400;
-											line-height: normal;
+											font-size: 20px;
+											line-height: 31.25px;
+											letter-spacing: 2%;
+											margin-top: 4px;
 										}
-									}
-								}
-								.divider {
-									width: 100%;
-									height: 1px;
-									background: #ddd;
-									margin-bottom: 17px;
-								}
-								.type-buttons {
-									flex-direction: row;
-									width: 100%;
-									justify-content: space-between;
-									align-items: center;
-									.type {
-										flex-direction: row;
-										align-items: center;
-										gap: 7px;
-										p {
-											color: #181a20;
-											font-family: $font;
-											font-style: normal;
-											line-height: normal;
-										}
-										.disabled-type {
-											color: rgba(143, 143, 143, 0.54);
-											font-family: $font;
-											font-style: normal;
-											line-height: normal;
-										}
-									}
-									.buttons {
-										flex-direction: row;
-										width: auto;
-										justify-content: center;
-										align-items: center;
-										svg {
-											width: 24px;
-											height: 24px;
-											cursor: pointer;
-										}
-										.view-cnt {
-											font-size: 13px;
+										.buttons {
+											flex-direction: row;
+											width: auto;
+											justify-content: space-between;
+											align-items: center;
+											svg {
+												width: 24px;
+												height: 24px;
+												cursor: pointer;
+											}
+											.view-cnt {
+												font-size: 13px;
+											}
 										}
 									}
 								}

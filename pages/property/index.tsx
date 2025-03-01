@@ -176,7 +176,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 
 							{/* <Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} /> */}
 						</Stack>
-						<Stack className="main-config" mb={'76px'}>
+						<Stack className="main-config">
 							<Stack className={'list-config'}>
 								{/* {properties?.length === 0 ? (
 									<div className={'no-data'}>

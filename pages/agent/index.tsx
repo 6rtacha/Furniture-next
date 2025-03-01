@@ -174,7 +174,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 						</Box>
 					</Stack>
 					<Stack className={'card-wrap'}>
-						{agents?.length === 0 ? (
+						{/* {agents?.length === 0 ? (
 							<div className={'no-data'}>
 								<img src="/img/icons/icoAlert.svg" alt="" />
 								<p>No Agents found!</p>
@@ -183,7 +183,8 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 							agents.map((agent: Member) => {
 								return <AgentCard agent={agent} key={agent._id} likeMemberHandler={likeMemberHandler} />;
 							})
-						)}
+						)} */}
+						<AgentCard agent={undefined} likeMemberHandler={undefined} />
 					</Stack>
 					<Stack className={'pagination'}>
 						<Stack className="pagination-box">

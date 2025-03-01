@@ -7,435 +7,157 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 const ProductCard = () => {
 	return (
 		<>
-			<Stack className="card-config">
-				<Stack className="top">
-					{/* <Link
-                    href={{
-                        pathname: '/property/detail',
-                        query: { id: property?._id },
-                    }}
-                >
-                    
-                </Link> */}
-					{/* {property && property?.propertyRank > topPropertyRank && ( */}
-					<img src="/img/property/imageCard.png" alt="" />
-					{/* <Box component={'div'} className={'top-badge'}>
-						<img src="/img/icons/electricity.svg" alt="" />
-						<Typography>TOP</Typography>
-					</Box> */}
-					{/* )} */}
-					<Box component={'div'} className={'price-box'}>
-						<Typography>$45</Typography>
-					</Box>
-				</Stack>
-				<Stack className="bottom">
-					<Stack className="name-address">
-						<Stack className="name">
-							{/* <Link
-                            href={{
-                                pathname: '/property/detail',
-                                query: { id: property?._id },
-                            }}
-                        >
-                            
-                        </Link> */}
-							<Typography>Sofa</Typography>
+			<Stack className="card-frame">
+				<Box className={'card'}>
+					<div className="image">
+						<img src="https://s3-alpha-sig.figma.com/img/f4b2/a97e/4c4f8f5e4759944aaba98a3c6dd3e663?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=J3lK7R7OBd3vEEGob8cACKMDUCzH4K7fRZFrlYqJCKO~9Z~zNHD4JEq5FQg-XM3mukLZ8MQTaPT-Zz6cmh9XbuVl6k1UfUa1EtSQebhO~N7GFVUfBXNuJISFO6aPQKrPhMbnfhjOD7z3peUbk4hSmNdws44FngRitZ9t~7ADY1yOOfsGHGJw3uHX1Dcczho6LBvXXu5o25kqXTIv~AwJiJjVGiM49SBGSZ9C-8vQoouoavtOpH~46KO4zgFVN36WAzljs3dJ1VMSrFBdbmJjoVQYOY4dYaURp6vT9SvMftxZPbJbTh5eUbNBh9hHtKp5YRX7ZFf-rU~SiYhl2YjDeA__" />
+					</div>
+
+					<div className="title">
+						<div className="article-title">
+							<span>Sofa Berre</span>
+						</div>
+						<div className="address">Seoul, South Korea</div>
+						<Stack className="info">
+							<div className="type">Sofa</div>
+							<div className="material">Leather</div>
+							<div className="price">$57</div>
 						</Stack>
-						<Stack className="address">
-							<Typography>{/* {property.propertyAddress}, {property.propertyLocation} */}Seoul, South Korea</Typography>
+						<Stack className={'view-like'}>
+							<Typography>Available</Typography>
+							<Stack className="buttons">
+								<IconButton color={'default'}>
+									<RemoveRedEyeIcon />
+								</IconButton>
+								<Typography className="view-cnt">7</Typography>
+								<IconButton color={'default'}>
+									{/* {myFavorites ? ( */}
+									<FavoriteIcon color="#cda274" />
+									{/* ) : property?.meLiked && property?.meLiked[0]?.myFavorite ? ( */}
+									<FavoriteIcon color="#cda274" />
+									{/* ) : ( */}
+									<FavoriteBorderIcon />
+									{/* )} */}
+								</IconButton>
+								<Typography className="view-cnt">9</Typography>
+							</Stack>
 						</Stack>
-					</Stack>
-					<Stack className="options">
-						<Stack className="option">
-							{/* <img src="/img/icons/bed.svg" alt="" /> <Typography>{property.propertyBeds} bed</Typography> */}
-						</Stack>
-						<Stack className="option">
-							{/* <img src="/img/icons/room.svg" alt="" /> <Typography>{property.propertyRooms} room</Typography> */}
-						</Stack>
-						<Stack className="option">
-							{/* <img src="/img/icons/expand.svg" alt="" /> <Typography>{property.propertySquare} m2</Typography> */}
-						</Stack>
-					</Stack>
-					<Stack className="divider"></Stack>
-					<Stack className="type-buttons">
-						<Stack className="type">
-							<Typography
-								sx={{ fontWeight: 500, fontSize: '13px' }}
-								// className={property.propertyRent ? '' : 'disabled-type'}
-							>
-								Rent
-							</Typography>
-							<Typography
-								sx={{ fontWeight: 500, fontSize: '13px' }}
-								// className={property.propertyBarter ? '' : 'disabled-type'}
-							>
-								Barter
-							</Typography>
-						</Stack>
-						{/* {!recentlyVisited && ( */}
-						<Stack className="buttons">
-							<IconButton color={'default'}>
-								<RemoveRedEyeIcon />
-							</IconButton>
-							<Typography className="view-cnt">7</Typography>
-							<IconButton color={'default'}>
-								{/* {myFavorites ? ( */}
-								<FavoriteIcon color="primary" />
-								{/* ) : property?.meLiked && property?.meLiked[0]?.myFavorite ? ( */}
-								<FavoriteIcon color="primary" />
-								{/* ) : ( */}
-								<FavoriteBorderIcon />
-								{/* )} */}
-							</IconButton>
-							<Typography className="view-cnt">8</Typography>
-						</Stack>
-						{/* )} */}
-					</Stack>
-				</Stack>
+					</div>
+				</Box>
 			</Stack>
-			<Stack className="card-config">
-				<Stack className="top">
-					{/* <Link
-                    href={{
-                        pathname: '/property/detail',
-                        query: { id: property?._id },
-                    }}
-                >
-                    
-                </Link> */}
-					{/* {property && property?.propertyRank > topPropertyRank && ( */}
-					<img src="/img/property/imageCard.png" alt="" />
-					{/* <Box component={'div'} className={'top-badge'}>
-						<img src="/img/icons/electricity.svg" alt="" />
-						<Typography>TOP</Typography>
-					</Box> */}
-					{/* )} */}
-					<Box component={'div'} className={'price-box'}>
-						<Typography>$45</Typography>
-					</Box>
-				</Stack>
-				<Stack className="bottom">
-					<Stack className="name-address">
-						<Stack className="name">
-							{/* <Link
-                            href={{
-                                pathname: '/property/detail',
-                                query: { id: property?._id },
-                            }}
-                        >
-                            
-                        </Link> */}
-							<Typography>Sofa</Typography>
+			<Stack className="card-frame">
+				<Box className={'card'}>
+					<div className="image">
+						<img src="https://s3-alpha-sig.figma.com/img/f4b2/a97e/4c4f8f5e4759944aaba98a3c6dd3e663?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=J3lK7R7OBd3vEEGob8cACKMDUCzH4K7fRZFrlYqJCKO~9Z~zNHD4JEq5FQg-XM3mukLZ8MQTaPT-Zz6cmh9XbuVl6k1UfUa1EtSQebhO~N7GFVUfBXNuJISFO6aPQKrPhMbnfhjOD7z3peUbk4hSmNdws44FngRitZ9t~7ADY1yOOfsGHGJw3uHX1Dcczho6LBvXXu5o25kqXTIv~AwJiJjVGiM49SBGSZ9C-8vQoouoavtOpH~46KO4zgFVN36WAzljs3dJ1VMSrFBdbmJjoVQYOY4dYaURp6vT9SvMftxZPbJbTh5eUbNBh9hHtKp5YRX7ZFf-rU~SiYhl2YjDeA__" />
+					</div>
+
+					<div className="title">
+						<div className="article-title">
+							<span>Sofa Berre</span>
+						</div>
+						<div className="address">Seoul, South Korea</div>
+						<Stack className="info">
+							<div className="type">Sofa</div>
+							<div className="material">Leather</div>
+							<div className="price">$57</div>
 						</Stack>
-						<Stack className="address">
-							<Typography>{/* {property.propertyAddress}, {property.propertyLocation} */}Seoul, South Korea</Typography>
+						<Stack className={'view-like'}>
+							<Typography>Available</Typography>
+							<Stack className="buttons">
+								<IconButton color={'default'}>
+									<RemoveRedEyeIcon />
+								</IconButton>
+								<Typography className="view-cnt">7</Typography>
+								<IconButton color={'default'}>
+									{/* {myFavorites ? ( */}
+									<FavoriteIcon color="#cda274" />
+									{/* ) : property?.meLiked && property?.meLiked[0]?.myFavorite ? ( */}
+									<FavoriteIcon color="#cda274" />
+									{/* ) : ( */}
+									<FavoriteBorderIcon />
+									{/* )} */}
+								</IconButton>
+								<Typography className="view-cnt">9</Typography>
+							</Stack>
 						</Stack>
-					</Stack>
-					<Stack className="options">
-						<Stack className="option">
-							{/* <img src="/img/icons/bed.svg" alt="" /> <Typography>{property.propertyBeds} bed</Typography> */}
-						</Stack>
-						<Stack className="option">
-							{/* <img src="/img/icons/room.svg" alt="" /> <Typography>{property.propertyRooms} room</Typography> */}
-						</Stack>
-						<Stack className="option">
-							{/* <img src="/img/icons/expand.svg" alt="" /> <Typography>{property.propertySquare} m2</Typography> */}
-						</Stack>
-					</Stack>
-					<Stack className="divider"></Stack>
-					<Stack className="type-buttons">
-						<Stack className="type">
-							<Typography
-								sx={{ fontWeight: 500, fontSize: '13px' }}
-								// className={property.propertyRent ? '' : 'disabled-type'}
-							>
-								Rent
-							</Typography>
-							<Typography
-								sx={{ fontWeight: 500, fontSize: '13px' }}
-								// className={property.propertyBarter ? '' : 'disabled-type'}
-							>
-								Barter
-							</Typography>
-						</Stack>
-						{/* {!recentlyVisited && ( */}
-						<Stack className="buttons">
-							<IconButton color={'default'}>
-								<RemoveRedEyeIcon />
-							</IconButton>
-							<Typography className="view-cnt">7</Typography>
-							<IconButton color={'default'}>
-								{/* {myFavorites ? ( */}
-								<FavoriteIcon color="primary" />
-								{/* ) : property?.meLiked && property?.meLiked[0]?.myFavorite ? ( */}
-								<FavoriteIcon color="primary" />
-								{/* ) : ( */}
-								<FavoriteBorderIcon />
-								{/* )} */}
-							</IconButton>
-							<Typography className="view-cnt">8</Typography>
-						</Stack>
-						{/* )} */}
-					</Stack>
-				</Stack>
+					</div>
+				</Box>
 			</Stack>
-			<Stack className="card-config">
-				<Stack className="top">
-					{/* <Link
-                    href={{
-                        pathname: '/property/detail',
-                        query: { id: property?._id },
-                    }}
-                >
-                    
-                </Link> */}
-					{/* {property && property?.propertyRank > topPropertyRank && ( */}
-					<img src="/img/property/imageCard.png" alt="" />
-					{/* <Box component={'div'} className={'top-badge'}>
-						<img src="/img/icons/electricity.svg" alt="" />
-						<Typography>TOP</Typography>
-					</Box> */}
-					{/* )} */}
-					<Box component={'div'} className={'price-box'}>
-						<Typography>$45</Typography>
-					</Box>
-				</Stack>
-				<Stack className="bottom">
-					<Stack className="name-address">
-						<Stack className="name">
-							{/* <Link
-                            href={{
-                                pathname: '/property/detail',
-                                query: { id: property?._id },
-                            }}
-                        >
-                            
-                        </Link> */}
-							<Typography>Sofa</Typography>
+			<Stack className="card-frame">
+				<Box className={'card'}>
+					<div className="image">
+						<img src="https://s3-alpha-sig.figma.com/img/f4b2/a97e/4c4f8f5e4759944aaba98a3c6dd3e663?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=J3lK7R7OBd3vEEGob8cACKMDUCzH4K7fRZFrlYqJCKO~9Z~zNHD4JEq5FQg-XM3mukLZ8MQTaPT-Zz6cmh9XbuVl6k1UfUa1EtSQebhO~N7GFVUfBXNuJISFO6aPQKrPhMbnfhjOD7z3peUbk4hSmNdws44FngRitZ9t~7ADY1yOOfsGHGJw3uHX1Dcczho6LBvXXu5o25kqXTIv~AwJiJjVGiM49SBGSZ9C-8vQoouoavtOpH~46KO4zgFVN36WAzljs3dJ1VMSrFBdbmJjoVQYOY4dYaURp6vT9SvMftxZPbJbTh5eUbNBh9hHtKp5YRX7ZFf-rU~SiYhl2YjDeA__" />
+					</div>
+
+					<div className="title">
+						<div className="article-title">
+							<span>Sofa Berre</span>
+						</div>
+						<div className="address">Seoul, South Korea</div>
+						<Stack className="info">
+							<div className="type">Sofa</div>
+							<div className="material">Leather</div>
+							<div className="price">$57</div>
 						</Stack>
-						<Stack className="address">
-							<Typography>{/* {property.propertyAddress}, {property.propertyLocation} */}Seoul, South Korea</Typography>
+						<Stack className={'view-like'}>
+							<Typography>Available</Typography>
+							<Stack className="buttons">
+								<IconButton color={'default'}>
+									<RemoveRedEyeIcon />
+								</IconButton>
+								<Typography className="view-cnt">7</Typography>
+								<IconButton color={'default'}>
+									{/* {myFavorites ? ( */}
+									<FavoriteIcon color="#cda274" />
+									{/* ) : property?.meLiked && property?.meLiked[0]?.myFavorite ? ( */}
+									<FavoriteIcon color="#cda274" />
+									{/* ) : ( */}
+									<FavoriteBorderIcon />
+									{/* )} */}
+								</IconButton>
+								<Typography className="view-cnt">9</Typography>
+							</Stack>
 						</Stack>
-					</Stack>
-					<Stack className="options">
-						<Stack className="option">
-							{/* <img src="/img/icons/bed.svg" alt="" /> <Typography>{property.propertyBeds} bed</Typography> */}
-						</Stack>
-						<Stack className="option">
-							{/* <img src="/img/icons/room.svg" alt="" /> <Typography>{property.propertyRooms} room</Typography> */}
-						</Stack>
-						<Stack className="option">
-							{/* <img src="/img/icons/expand.svg" alt="" /> <Typography>{property.propertySquare} m2</Typography> */}
-						</Stack>
-					</Stack>
-					<Stack className="divider"></Stack>
-					<Stack className="type-buttons">
-						<Stack className="type">
-							<Typography
-								sx={{ fontWeight: 500, fontSize: '13px' }}
-								// className={property.propertyRent ? '' : 'disabled-type'}
-							>
-								Rent
-							</Typography>
-							<Typography
-								sx={{ fontWeight: 500, fontSize: '13px' }}
-								// className={property.propertyBarter ? '' : 'disabled-type'}
-							>
-								Barter
-							</Typography>
-						</Stack>
-						{/* {!recentlyVisited && ( */}
-						<Stack className="buttons">
-							<IconButton color={'default'}>
-								<RemoveRedEyeIcon />
-							</IconButton>
-							<Typography className="view-cnt">7</Typography>
-							<IconButton color={'default'}>
-								{/* {myFavorites ? ( */}
-								<FavoriteIcon color="primary" />
-								{/* ) : property?.meLiked && property?.meLiked[0]?.myFavorite ? ( */}
-								<FavoriteIcon color="primary" />
-								{/* ) : ( */}
-								<FavoriteBorderIcon />
-								{/* )} */}
-							</IconButton>
-							<Typography className="view-cnt">8</Typography>
-						</Stack>
-						{/* )} */}
-					</Stack>
-				</Stack>
+					</div>
+				</Box>
 			</Stack>
-			<Stack className="card-config">
-				<Stack className="top">
-					{/* <Link
-                    href={{
-                        pathname: '/property/detail',
-                        query: { id: property?._id },
-                    }}
-                >
-                    
-                </Link> */}
-					{/* {property && property?.propertyRank > topPropertyRank && ( */}
-					<img src="/img/property/imageCard.png" alt="" />
-					{/* <Box component={'div'} className={'top-badge'}>
-						<img src="/img/icons/electricity.svg" alt="" />
-						<Typography>TOP</Typography>
-					</Box> */}
-					{/* )} */}
-					<Box component={'div'} className={'price-box'}>
-						<Typography>$45</Typography>
-					</Box>
-				</Stack>
-				<Stack className="bottom">
-					<Stack className="name-address">
-						<Stack className="name">
-							{/* <Link
-                            href={{
-                                pathname: '/property/detail',
-                                query: { id: property?._id },
-                            }}
-                        >
-                            
-                        </Link> */}
-							<Typography>Sofa</Typography>
+			<Stack className="card-frame">
+				<Box className={'card'}>
+					<div className="image">
+						<img src="https://s3-alpha-sig.figma.com/img/f4b2/a97e/4c4f8f5e4759944aaba98a3c6dd3e663?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=J3lK7R7OBd3vEEGob8cACKMDUCzH4K7fRZFrlYqJCKO~9Z~zNHD4JEq5FQg-XM3mukLZ8MQTaPT-Zz6cmh9XbuVl6k1UfUa1EtSQebhO~N7GFVUfBXNuJISFO6aPQKrPhMbnfhjOD7z3peUbk4hSmNdws44FngRitZ9t~7ADY1yOOfsGHGJw3uHX1Dcczho6LBvXXu5o25kqXTIv~AwJiJjVGiM49SBGSZ9C-8vQoouoavtOpH~46KO4zgFVN36WAzljs3dJ1VMSrFBdbmJjoVQYOY4dYaURp6vT9SvMftxZPbJbTh5eUbNBh9hHtKp5YRX7ZFf-rU~SiYhl2YjDeA__" />
+					</div>
+
+					<div className="title">
+						<div className="article-title">
+							<span>Sofa Berre</span>
+						</div>
+						<div className="address">Seoul, South Korea</div>
+						<Stack className="info">
+							<div className="type">Sofa</div>
+							<div className="material">Leather</div>
+							<div className="price">$57</div>
 						</Stack>
-						<Stack className="address">
-							<Typography>{/* {property.propertyAddress}, {property.propertyLocation} */}Seoul, South Korea</Typography>
+						<Stack className={'view-like'}>
+							<Typography>Available</Typography>
+							<Stack className="buttons">
+								<IconButton color={'default'}>
+									<RemoveRedEyeIcon />
+								</IconButton>
+								<Typography className="view-cnt">7</Typography>
+								<IconButton color={'default'}>
+									{/* {myFavorites ? ( */}
+									<FavoriteIcon color="#cda274" />
+									{/* ) : property?.meLiked && property?.meLiked[0]?.myFavorite ? ( */}
+									<FavoriteIcon color="#cda274" />
+									{/* ) : ( */}
+									<FavoriteBorderIcon />
+									{/* )} */}
+								</IconButton>
+								<Typography className="view-cnt">9</Typography>
+							</Stack>
 						</Stack>
-					</Stack>
-					<Stack className="options">
-						<Stack className="option">
-							{/* <img src="/img/icons/bed.svg" alt="" /> <Typography>{property.propertyBeds} bed</Typography> */}
-						</Stack>
-						<Stack className="option">
-							{/* <img src="/img/icons/room.svg" alt="" /> <Typography>{property.propertyRooms} room</Typography> */}
-						</Stack>
-						<Stack className="option">
-							{/* <img src="/img/icons/expand.svg" alt="" /> <Typography>{property.propertySquare} m2</Typography> */}
-						</Stack>
-					</Stack>
-					<Stack className="divider"></Stack>
-					<Stack className="type-buttons">
-						<Stack className="type">
-							<Typography
-								sx={{ fontWeight: 500, fontSize: '13px' }}
-								// className={property.propertyRent ? '' : 'disabled-type'}
-							>
-								Rent
-							</Typography>
-							<Typography
-								sx={{ fontWeight: 500, fontSize: '13px' }}
-								// className={property.propertyBarter ? '' : 'disabled-type'}
-							>
-								Barter
-							</Typography>
-						</Stack>
-						{/* {!recentlyVisited && ( */}
-						<Stack className="buttons">
-							<IconButton color={'default'}>
-								<RemoveRedEyeIcon />
-							</IconButton>
-							<Typography className="view-cnt">7</Typography>
-							<IconButton color={'default'}>
-								{/* {myFavorites ? ( */}
-								<FavoriteIcon color="primary" />
-								{/* ) : property?.meLiked && property?.meLiked[0]?.myFavorite ? ( */}
-								<FavoriteIcon color="primary" />
-								{/* ) : ( */}
-								<FavoriteBorderIcon />
-								{/* )} */}
-							</IconButton>
-							<Typography className="view-cnt">8</Typography>
-						</Stack>
-						{/* )} */}
-					</Stack>
-				</Stack>
-			</Stack>
-			<Stack className="card-config">
-				<Stack className="top">
-					{/* <Link
-                    href={{
-                        pathname: '/property/detail',
-                        query: { id: property?._id },
-                    }}
-                >
-                    
-                </Link> */}
-					{/* {property && property?.propertyRank > topPropertyRank && ( */}
-					<img src="/img/property/imageCard.png" alt="" />
-					{/* <Box component={'div'} className={'top-badge'}>
-						<img src="/img/icons/electricity.svg" alt="" />
-						<Typography>TOP</Typography>
-					</Box> */}
-					{/* )} */}
-					<Box component={'div'} className={'price-box'}>
-						<Typography>$45</Typography>
-					</Box>
-				</Stack>
-				<Stack className="bottom">
-					<Stack className="name-address">
-						<Stack className="name">
-							{/* <Link
-                            href={{
-                                pathname: '/property/detail',
-                                query: { id: property?._id },
-                            }}
-                        >
-                            
-                        </Link> */}
-							<Typography>Sofa</Typography>
-						</Stack>
-						<Stack className="address">
-							<Typography>{/* {property.propertyAddress}, {property.propertyLocation} */}Seoul, South Korea</Typography>
-						</Stack>
-					</Stack>
-					<Stack className="options">
-						<Stack className="option">
-							{/* <img src="/img/icons/bed.svg" alt="" /> <Typography>{property.propertyBeds} bed</Typography> */}
-						</Stack>
-						<Stack className="option">
-							{/* <img src="/img/icons/room.svg" alt="" /> <Typography>{property.propertyRooms} room</Typography> */}
-						</Stack>
-						<Stack className="option">
-							{/* <img src="/img/icons/expand.svg" alt="" /> <Typography>{property.propertySquare} m2</Typography> */}
-						</Stack>
-					</Stack>
-					<Stack className="divider"></Stack>
-					<Stack className="type-buttons">
-						<Stack className="type">
-							<Typography
-								sx={{ fontWeight: 500, fontSize: '13px' }}
-								// className={property.propertyRent ? '' : 'disabled-type'}
-							>
-								Rent
-							</Typography>
-							<Typography
-								sx={{ fontWeight: 500, fontSize: '13px' }}
-								// className={property.propertyBarter ? '' : 'disabled-type'}
-							>
-								Barter
-							</Typography>
-						</Stack>
-						{/* {!recentlyVisited && ( */}
-						<Stack className="buttons">
-							<IconButton color={'default'}>
-								<RemoveRedEyeIcon />
-							</IconButton>
-							<Typography className="view-cnt">7</Typography>
-							<IconButton color={'default'}>
-								{/* {myFavorites ? ( */}
-								<FavoriteIcon color="primary" />
-								{/* ) : property?.meLiked && property?.meLiked[0]?.myFavorite ? ( */}
-								<FavoriteIcon color="primary" />
-								{/* ) : ( */}
-								<FavoriteBorderIcon />
-								{/* )} */}
-							</IconButton>
-							<Typography className="view-cnt">8</Typography>
-						</Stack>
-						{/* )} */}
-					</Stack>
-				</Stack>
+					</div>
+				</Box>
 			</Stack>
 		</>
 	);
