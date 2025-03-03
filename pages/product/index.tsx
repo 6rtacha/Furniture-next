@@ -1,23 +1,23 @@
 import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import { Box, Button, Menu, MenuItem, Pagination, Stack, Typography } from '@mui/material';
-import PropertyCard from '../../libs/components/property/PropertyCard';
+// import PropertyCard from '../../libs/components/product/PropertyCard';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-import Filter from '../../libs/components/property/Filter';
+import Filter from '../../libs/components/product/Filter';
 import { useRouter } from 'next/router';
-import { PropertiesInquiry } from '../../libs/types/property/property.input';
-import { Property } from '../../libs/types/property/property';
+import { ProductsInquiry } from '../../libs/types/product/product.input';
+import { Product } from '../../libs/types/product/product';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import { Direction, Message } from '../../libs/enums/common.enum';
 import { useMutation, useQuery } from '@apollo/client';
-import { GET_PROPERTIES } from '../../apollo/user/query';
+import { GET_PRODUCTS } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 import { LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
-import NewFilter from '../../libs/components/property/NewFilter';
-import ProductCard from '../../libs/components/property/ProductCard';
+import NewFilter from '../../libs/components/product/NewFilter';
+import ProductCard from '../../libs/components/product/ProductCard';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -25,13 +25,13 @@ export const getStaticProps = async ({ locale }: any) => ({
 	},
 });
 
-const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
+const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
-	const [searchFilter, setSearchFilter] = useState<PropertiesInquiry>(
+	const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(
 		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
 	);
-	const [properties, setProperties] = useState<Property[]>([]);
+	const [products, setProducts] = useState<Product[]>([]);
 	const [total, setTotal] = useState<number>(0);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -42,17 +42,17 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
 
 	const {
-		loading: getPropertiesLoading,
-		data: getPropertiesData,
-		error: getPropertiesError,
-		refetch: getPropertiesRefetch,
-	} = useQuery(GET_PROPERTIES, {
+		loading: getProductsLoading,
+		data: getProductsData,
+		error: getProductsError,
+		refetch: getProductsRefetch,
+	} = useQuery(GET_PRODUCTS, {
 		fetchPolicy: 'cache-and-network',
 		variables: { input: searchFilter },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			setProperties(data?.getProperties?.list);
-			setTotal(data?.getProperties?.metaCounter[0]?.total);
+			setProducts(data?.getProducts?.list);
+			setTotal(data?.getProducts?.metaCounter[0]?.total);
 		},
 	});
 
@@ -74,8 +74,8 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	const handlePaginationChange = async (event: ChangeEvent<unknown>, value: number) => {
 		searchFilter.page = value;
 		await router.push(
-			`/property?input=${JSON.stringify(searchFilter)}`,
-			`/property?input=${JSON.stringify(searchFilter)}`,
+			`/product?input=${JSON.stringify(searchFilter)}`,
+			`/product?input=${JSON.stringify(searchFilter)}`,
 			{
 				scroll: false,
 			},
@@ -92,7 +92,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 			await likeTargetProperty({ variables: { input: id } });
 
 			// execute getPropertiesRefetch
-			await getPropertiesRefetch({ input: initialInput });
+			await getProductsRefetch({ input: initialInput });
 
 			await sweetTopSmallSuccessAlert('success', 800);
 		} catch (err: any) {
@@ -118,11 +118,11 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 				setFilterSortName('New');
 				break;
 			case 'lowest':
-				setSearchFilter({ ...searchFilter, sort: 'propertyPrice', direction: Direction.ASC });
+				setSearchFilter({ ...searchFilter, sort: 'productPrice', direction: Direction.ASC });
 				setFilterSortName('Lowest Price');
 				break;
 			case 'highest':
-				setSearchFilter({ ...searchFilter, sort: 'propertyPrice', direction: Direction.DESC });
+				setSearchFilter({ ...searchFilter, sort: 'productPrice', direction: Direction.DESC });
 				setFilterSortName('Highest Price');
 		}
 		setSortingOpen(false);
@@ -178,22 +178,21 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 						</Stack>
 						<Stack className="main-config">
 							<Stack className={'list-config'}>
-								{/* {properties?.length === 0 ? (
+								{products?.length === 0 ? (
 									<div className={'no-data'}>
 										<img src="/img/icons/icoAlert.svg" alt="" />
-										<p>No Properties found!</p>
+										<p>No Products found!</p>
 									</div>
 								) : (
-									properties.map((property: Property) => {
+									products.map((product: Product) => {
 										return (
-											<PropertyCard property={property} likePropertyHandler={likePropertyHandler} key={property?._id} />
+											<ProductCard product={product} likePropertyHandler={likePropertyHandler} key={product?._id} />
 										);
 									})
-								)} */}
-								<ProductCard />
+								)}
 							</Stack>
 							<Stack className="pagination-config">
-								{properties.length !== 0 && (
+								{products.length !== 0 && (
 									<Stack className="pagination-box">
 										<Pagination
 											page={currentPage}
@@ -205,7 +204,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 									</Stack>
 								)}
 
-								{properties.length !== 0 && (
+								{products.length !== 0 && (
 									<Stack className="total-result">
 										<Typography>
 											Total {total} propert{total > 1 ? 'ies' : 'y'} available
@@ -221,23 +220,14 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	}
 };
 
-PropertyList.defaultProps = {
+ProductList.defaultProps = {
 	initialInput: {
 		page: 1,
 		limit: 9,
 		sort: 'createdAt',
 		direction: 'DESC',
-		search: {
-			squaresRange: {
-				start: 0,
-				end: 500,
-			},
-			pricesRange: {
-				start: 0,
-				end: 2000000,
-			},
-		},
+		search: {},
 	},
 };
 
-export default withLayoutBasic(PropertyList);
+export default withLayoutBasic(ProductList);

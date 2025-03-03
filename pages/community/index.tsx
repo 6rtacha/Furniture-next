@@ -16,6 +16,7 @@ import { LIKE_TARGET_BOARD_ARTICLE } from '../../apollo/user/mutation';
 import { GET_BOARD_ARTICLES } from '../../apollo/user/query';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import { Messages } from '../../libs/config';
+import BlogCard from '../../libs/components/common/BlogCard';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -112,44 +113,6 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 				<div className="container">
 					<TabContext value={searchCommunity.search.articleCategory}>
 						<Stack className="main-box">
-							<Stack className="left-config">
-								<Stack className={'image-info'}>
-									<img src={'/img/logo/logoText.svg'} />
-									<Stack className={'community-name'}>
-										<Typography className={'name'}>Nestar Community</Typography>
-									</Stack>
-								</Stack>
-
-								<TabList
-									orientation="vertical"
-									aria-label="lab API tabs example"
-									TabIndicatorProps={{
-										style: { display: 'none' },
-									}}
-									onChange={tabChangeHandler}
-								>
-									<Tab
-										value={'FREE'}
-										label={'Free Board'}
-										className={`tab-button ${searchCommunity.search.articleCategory == 'FREE' ? 'active' : ''}`}
-									/>
-									<Tab
-										value={'RECOMMEND'}
-										label={'Recommendation'}
-										className={`tab-button ${searchCommunity.search.articleCategory == 'RECOMMEND' ? 'active' : ''}`}
-									/>
-									<Tab
-										value={'NEWS'}
-										label={'News'}
-										className={`tab-button ${searchCommunity.search.articleCategory == 'NEWS' ? 'active' : ''}`}
-									/>
-									<Tab
-										value={'HUMOR'}
-										label={'Humor'}
-										className={`tab-button ${searchCommunity.search.articleCategory == 'HUMOR' ? 'active' : ''}`}
-									/>
-								</TabList>
-							</Stack>
 							<Stack className="right-config">
 								<Stack className="panel-config">
 									<Stack className="title-box">
@@ -173,10 +136,25 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 											Write
 										</Button>
 									</Stack>
+									<Stack className={'latest-post'}>
+										<Stack className={'title'}>
+											<span>Latest Post</span>
+										</Stack>
+										<Stack className={'post-card'}>
+											<img src="https://s3-alpha-sig.figma.com/img/af52/437c/53959c93c2008f27c1e1049e0731c002?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=WU6Fxsel7sU85cplB~YkU3Qxme6SCCrJdmG7NTiEQfTBPCNvgMupjV0PeKFPisY5AF00AGqWbtYyr5RDRFYHuxYxRDuDrPOuGKj7RXxul8su2vWTwlFnqY-HEWK45dgU1XvKbFjsX3HY549fHBxQJ9Ewh~0CflgsyF1NzxNAdzMHt-M~ltoTVFwOLTryPSFMFBEvwf8xJusL1K7mRstF04j20D8ubiaSDthibDS1nuLfy1QyXnyXcZUCIhpvkOvE0T11vkjuC5gtMKAhDiWV7prlEBonllUvE9c0hl3FGYuYLUVx34TxB1EzJ2GJUF9Rt3IET0ppUCc-Klay-21hlA__" />
+											<Stack className={'post-info'}>
+												<Stack className={'post-title'}>Low Cost Latest </Stack>
+												<span>
+													aefjoijai ijfaioja ijafiojao fjaioj aoij fifj afio jaoeij ijafio ajjm ijaf jaiojfaioj aiojaoi
+												</span>
+												<div className="date">26 December, 2022</div>
+											</Stack>
+										</Stack>
+									</Stack>
 
 									<TabPanel value="FREE">
 										<Stack className="list-box">
-											{totalCount ? (
+											{/* {totalCount ? (
 												boardArticles?.map((boardArticle: BoardArticle) => {
 													return (
 														<CommunityCard
@@ -191,7 +169,8 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 													<img src="/img/icons/icoAlert.svg" alt="" />
 													<p>No Article found!</p>
 												</Stack>
-											)}
+											)} */}
+											<BlogCard />
 										</Stack>
 									</TabPanel>
 									<TabPanel value="RECOMMEND">
@@ -255,6 +234,44 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 										</Stack>
 									</TabPanel>
 								</Stack>
+							</Stack>
+							<Stack className="left-config">
+								<Stack className={'image-info'}>
+									<img src={'/img/logo/Logo.png'} />
+									<Stack className={'community-name'}>
+										<Typography className={'name'}>Interno Posts</Typography>
+									</Stack>
+								</Stack>
+
+								<TabList
+									orientation="vertical"
+									aria-label="lab API tabs example"
+									TabIndicatorProps={{
+										style: { display: 'none' },
+									}}
+									onChange={tabChangeHandler}
+								>
+									<Tab
+										value={'FREE'}
+										label={'Free Board'}
+										className={`tab-button ${searchCommunity.search.articleCategory == 'FREE' ? 'active' : ''}`}
+									/>
+									<Tab
+										value={'RECOMMEND'}
+										label={'Recommendation'}
+										className={`tab-button ${searchCommunity.search.articleCategory == 'RECOMMEND' ? 'active' : ''}`}
+									/>
+									<Tab
+										value={'NEWS'}
+										label={'News'}
+										className={`tab-button ${searchCommunity.search.articleCategory == 'NEWS' ? 'active' : ''}`}
+									/>
+									<Tab
+										value={'HUMOR'}
+										label={'Humor'}
+										className={`tab-button ${searchCommunity.search.articleCategory == 'HUMOR' ? 'active' : ''}`}
+									/>
+								</TabList>
 							</Stack>
 						</Stack>
 					</TabContext>

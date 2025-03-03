@@ -7,11 +7,11 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { propertySquare, propertyYears } from '../../config';
-import { PropertyLocation, PropertyType } from '../../enums/property.enum';
-import { PropertiesInquiry } from '../../types/property/property.input';
+import { ProductLocation, ProductType } from '../../enums/product.enum';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import { ProductsInquiry } from '../../types/product/product.input';
 
 const style = {
 	position: 'absolute' as 'absolute',
@@ -36,14 +36,14 @@ const MenuProps = {
 const thisYear = new Date().getFullYear();
 
 interface HeaderFilterProps {
-	initialInput: PropertiesInquiry;
+	initialInput: ProductsInquiry;
 }
 
 const HeaderFilter = (props: HeaderFilterProps) => {
 	const { initialInput } = props;
 	const device = useDeviceDetect();
 	const { t, i18n } = useTranslation('common');
-	const [searchFilter, setSearchFilter] = useState<PropertiesInquiry>(initialInput);
+	const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(initialInput);
 	const locationRef: any = useRef();
 	const typeRef: any = useRef();
 	const roomsRef: any = useRef();
@@ -52,8 +52,8 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 	const [openLocation, setOpenLocation] = useState(false);
 	const [openType, setOpenType] = useState(false);
 	const [openRooms, setOpenRooms] = useState(false);
-	const [propertyLocation, setPropertyLocation] = useState<PropertyLocation[]>(Object.values(PropertyLocation));
-	const [propertyType, setPropertyType] = useState<PropertyType[]>(Object.values(PropertyType));
+	const [productLocation, setProductLocation] = useState<ProductLocation[]>(Object.values(ProductLocation));
+	const [productType, setProductType] = useState<ProductType[]>(Object.values(ProductType));
 	const [yearCheck, setYearCheck] = useState({ start: 1970, end: thisYear });
 	const [optionCheck, setOptionCheck] = useState('all');
 	const [searchText, setSearchText] = useState<string>('');
@@ -113,7 +113,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 		setOpenLocation(false);
 	};
 
-	const propertyLocationSelectHandler = useCallback(
+	const productLocationSelectHandler = useCallback(
 		async (value: any) => {
 			try {
 				setSearchFilter({
@@ -125,7 +125,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 				});
 				typeStateChangeHandler();
 			} catch (err: any) {
-				console.log('ERROR, propertyLocationSelectHandler:', err);
+				console.log('ERROR, productLocationSelectHandler:', err);
 			}
 		},
 		[searchFilter],
@@ -149,7 +149,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 		[searchFilter],
 	);
 
-	const propertyRoomSelectHandler = useCallback(
+	const productRoomSelectHandler = useCallback(
 		async (value: any) => {
 			try {
 				setSearchFilter({
@@ -161,7 +161,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 				});
 				disableAllStateHandler();
 			} catch (err: any) {
-				console.log('ERROR, propertyRoomSelectHandler:', err);
+				console.log('ERROR, productRoomSelectHandler:', err);
 			}
 		},
 		[searchFilter],

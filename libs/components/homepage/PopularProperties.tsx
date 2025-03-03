@@ -6,41 +6,41 @@ import { Autoplay, Navigation, Pagination } from 'swiper';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
 import PopularPropertyCard from './PopularPropertyCard';
-import { Property } from '../../types/property/property';
+import { Product } from '../../types/product/product';
 import Link from 'next/link';
-import { PropertiesInquiry } from '../../types/property/property.input';
+import { ProductsInquiry } from '../../types/product/product.input';
 import { useQuery } from '@apollo/client';
-import { GET_PROPERTIES } from '../../../apollo/user/query';
+import { GET_PRODUCTS } from '../../../apollo/user/query';
 import { T } from '../../types/common';
 
 interface PopularPropertiesProps {
-	initialInput: PropertiesInquiry;
+	initialInput: ProductsInquiry;
 }
 
 const PopularProperties = (props: PopularPropertiesProps) => {
 	const { initialInput } = props;
 	const device = useDeviceDetect();
-	const [popularProperties, setPopularProperties] = useState<Property[]>([]);
+	const [popularProducts, setPopularProducts] = useState<Product[]>([]);
 
 	/** APOLLO REQUESTS **/
 	/** APOLLO REQUESTS **/
 
 	const {
-		loading: getPropertiesLoading,
-		data: getPropertiesData,
-		error: getPropertiesError,
-		refetch: getPropertiesRefetch,
-	} = useQuery(GET_PROPERTIES, {
+		loading: getProductsLoading,
+		data: getProductsData,
+		error: getProductsError,
+		refetch: getProductsRefetch,
+	} = useQuery(GET_PRODUCTS, {
 		fetchPolicy: 'cache-and-network', // cache + => network -
 		variables: { input: initialInput },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			setPopularProperties(data?.getProperties?.list);
+			setPopularProducts(data?.getProducts?.list);
 		},
 	});
 	/** HANDLERS **/
 
-	if (!popularProperties) return null;
+	if (!popularProducts) return null;
 
 	if (device === 'mobile') {
 		return (
@@ -57,10 +57,10 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 							spaceBetween={25}
 							modules={[Autoplay]}
 						>
-							{popularProperties.map((property: Property) => {
+							{popularProducts.map((product: Product) => {
 								return (
-									<SwiperSlide key={property._id} className={'popular-property-slide'}>
-										<PopularPropertyCard property={property} />
+									<SwiperSlide key={product._id} className={'popular-property-slide'}>
+										<PopularPropertyCard product={product} />
 									</SwiperSlide>
 								);
 							})}
@@ -101,10 +101,10 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 								el: '.swiper-popular-pagination',
 							}}
 						>
-							{popularProperties.map((property: Property) => {
+							{popularProducts.map((product: Product) => {
 								return (
-									<SwiperSlide key={property._id} className={'popular-property-slide'}>
-										<PopularPropertyCard property={property} />
+									<SwiperSlide key={product._id} className={'popular-property-slide'}>
+										<PopularPropertyCard product={product} />
 									</SwiperSlide>
 								);
 							})}
@@ -125,7 +125,7 @@ PopularProperties.defaultProps = {
 	initialInput: {
 		page: 1,
 		limit: 7,
-		sort: 'propertyViews',
+		sort: 'productViews',
 		direction: 'DESC',
 		search: {},
 	},

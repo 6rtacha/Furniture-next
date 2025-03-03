@@ -8,19 +8,21 @@ import { Box, Button, Pagination, Stack, Typography } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { useRouter } from 'next/router';
-import { Property } from '../../libs/types/property/property';
+import { Product } from '../../libs/types/product/product';
 import { Member } from '../../libs/types/member/member';
 import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import { userVar } from '../../apollo/store';
-import { PropertiesInquiry } from '../../libs/types/property/property.input';
+import { ProductsInquiry } from '../../libs/types/product/product.input';
 import { CommentInput, CommentsInquiry } from '../../libs/types/comment/comment.input';
 import { Comment } from '../../libs/types/comment/comment';
 import { CommentGroup } from '../../libs/enums/comment.enum';
 import { Messages, REACT_APP_API_URL } from '../../libs/config';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { CREATE_COMMENT, LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
-import { GET_COMMENTS, GET_MEMBER, GET_PROPERTIES } from '../../apollo/user/query';
+import { GET_COMMENTS, GET_MEMBER, GET_PRODUCTS } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -34,9 +36,9 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	const user = useReactiveVar(userVar);
 	const [agentId, setAgentId] = useState<string | null>(null);
 	const [agent, setAgent] = useState<Member | null>(null);
-	const [searchFilter, setSearchFilter] = useState<PropertiesInquiry>(initialInput);
-	const [agentProperties, setAgentProperties] = useState<Property[]>([]);
-	const [propertyTotal, setPropertyTotal] = useState<number>(0);
+	const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(initialInput);
+	const [agentProducts, setAgentProducts] = useState<Product[]>([]);
+	const [productTotal, setProductTotal] = useState<number>(0);
 	const [commentInquiry, setCommentInquiry] = useState<CommentsInquiry>(initialComment);
 	const [agentComments, setAgentComments] = useState<Comment[]>([]);
 	const [commentTotal, setCommentTotal] = useState<number>(0);
@@ -72,14 +74,14 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 		data: getPropertiesData,
 		error: getPropertiesError,
 		refetch: getPropertiesRefetch,
-	} = useQuery(GET_PROPERTIES, {
+	} = useQuery(GET_PRODUCTS, {
 		fetchPolicy: 'network-only',
 		variables: { input: searchFilter },
 		skip: !searchFilter.search.memberId,
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			setAgentProperties(data?.getProperties?.list);
-			setPropertyTotal(data?.getProperties?.metaCounter[0].total ?? 0);
+			setAgentProducts(data?.getProperties?.list);
+			setProductTotal(data?.getProperties?.metaCounter[0].total ?? 0);
 		},
 	});
 
@@ -170,55 +172,155 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 		return (
 			<Stack className={'agent-detail-page'}>
 				<Stack className={'container'}>
-					<Stack className={'agent-info'}>
-						<img
-							src={agent?.memberImage ? `${REACT_APP_API_URL}/${agent?.memberImage}` : '/img/profile/defaultUser.svg'}
-							alt=""
-						/>
-						<Box component={'div'} className={'info'} onClick={() => redirectToMemberPageHandler(agent?._id as string)}>
-							<strong>{agent?.memberFullName ?? agent?.memberNick}</strong>
-							<div>
-								<img src="/img/icons/call.svg" alt="" />
-								<span>{agent?.memberPhone}</span>
-							</div>
-						</Box>
+					<Stack className={'info-card'}>
+						<Stack className={'agent-image'}>
+							<img src="https://s3-alpha-sig.figma.com/img/ef08/0257/2c6e28c6aa31cb138d47922a76a4bf10?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=pbQj8T20uv6M96bjpR15Pbotqnyps1AUdp8rlAL1JgQ23Z8Ddil0gGcNW5HlvLrMckXnr1be5FrGJ~-KxBncwJAJHM62wvMPOkF8nqWkEdhfNiB686vj71hK5DX8DkiTZu2A8IhxBaENJLO0OFmaQnNhqwK4y-QLehtLMfTynqy36n1jtYcCc258bfOvza5Z8f7-G~a9meIVFEo9g3JKYohA978WLMS9nhh2aV357VnbtoKvoCqkwxC2EQeYIBlHKBPk1WDNsqLEQ6z9eur1Nnr9C5h7Xw-7VQL~blWeSUqzIKBJUES9WYc7tIPOkDG7Nd0zOhnlw30a85f0C3b-1w__" />
+						</Stack>
+						<Stack className={'agent-info'}>
+							<Stack className={'agent-name'}>
+								<span>John Smith</span>
+								<Button className={'follow-btn'}>
+									<span>Follow</span>
+								</Button>
+							</Stack>
+							<Stack className={'agent-desc'}>
+								<Stack className={'designer'}>
+									<span>Designer</span>
+								</Stack>
+								<Stack className={'description'}>
+									<span>
+										Lorem ipsum dolor sit amet, adipiscing Aliquam eu sem vitae turpmaximus.posuere in.Contrpobelie
+										frandomised words which don't look even slightly believable.
+									</span>
+								</Stack>
+								<Stack className={'mail-info'}>
+									<img src="/img/icons/mail.png" />
+									<span>info@youremail.com</span>
+								</Stack>
+								<Stack className={'mail-info'}>
+									<img src="/img/icons/phone.png" />
+									<span>+821034401234</span>
+								</Stack>
+								<Stack className={'mail-info'}>
+									<img src="/img/icons/domain.png" />
+									<span>yourdomain.com</span>
+								</Stack>
+								<Stack className={'social-media'}>
+									<img src="/img/icons/facebook.png" alt="" />
+									<img src="/img/icons/twitter.png" alt="" />
+									<img src="/img/icons/linkedin.png" alt="" />
+									<img src="/img/icons/instagram.png" alt="" />
+								</Stack>
+							</Stack>
+						</Stack>
 					</Stack>
 					<Stack className={'agent-home-list'}>
-						<Stack className={'card-wrap'}>
-							{agentProperties.map((property: Property) => {
-								return (
-									<div className={'wrap-main'} key={property?._id}>
-										<PropertyBigCard
-											property={property}
-											likePropertyHandler={likePropertyHandler}
-											key={property?._id}
-										/>
-									</div>
-								);
-							})}
-						</Stack>
-						<Stack className={'pagination'}>
-							{propertyTotal ? (
-								<>
-									<Stack className="pagination-box">
-										<Pagination
-											page={searchFilter.page}
-											count={Math.ceil(propertyTotal / searchFilter.limit) || 1}
-											onChange={propertyPaginationChangeHandler}
-											shape="circular"
-											color="primary"
-										/>
+						<Stack className={'project-blog'}>
+							<Stack className={'button'}>
+								<Button className={'btn'}>
+									<span>Projects</span>
+								</Button>
+								<Button className={'btn'}>
+									<span>Blog</span>
+								</Button>
+							</Stack>
+							<div className="divider"></div>
+							<Stack className={'cards'}>
+								<Stack className={'pb-card'}>
+									<img src="https://s3-alpha-sig.figma.com/img/8b53/a5f9/212f31f550844ba39262a277c128ad8a?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Z0SkGTLc8Y-mZ9BYgZgA8mmwAARNfpWV4Scas3rj8wFLYxTb3PHAFrpIhXhK0yabi8TPA5Aas182D2HhXNqdZqfuV18i-5iXllV2gSEe-r5DWsll-vXjslec5naP7lZ6e-tIlFyd4Eun5kEAzgCIQP9nYCbaAmaq7lErp8Mysia5kxYgEwdl0IYKd4NQnH4YBw3S765Ipju-Zz2hkZDR3Vdel-LJl8JxmGK30AgfY7At6HPnb2E4gjSW~zQHnjNix61mw7-Ls7RxS0QwDM5W1HPX53oMZM9ETCY78utv~J~T6ynFAHL1T~UKkAJ2DNNnqWXlyPbCp8ivtJwsFx9Gsw__" />
+									<Stack className={'card-info'}>
+										<Stack className={'pb-name'}>
+											<div className="name">Kitchen Project</div>
+											<div className="name">$123</div>
+										</Stack>
+										<Stack className={'status'}>
+											<span>ACTIVE</span>
+											<span>22 December, 2024</span>
+										</Stack>
 									</Stack>
-									<span>
-										Total {propertyTotal} propert{propertyTotal > 1 ? 'ies' : 'y'} available
-									</span>
-								</>
-							) : (
-								<div className={'no-data'}>
-									<img src="/img/icons/icoAlert.svg" alt="" />
-									<p>No properties found!</p>
-								</div>
-							)}
+								</Stack>
+								<Stack className={'pb-card'}>
+									<img src="https://s3-alpha-sig.figma.com/img/8b53/a5f9/212f31f550844ba39262a277c128ad8a?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Z0SkGTLc8Y-mZ9BYgZgA8mmwAARNfpWV4Scas3rj8wFLYxTb3PHAFrpIhXhK0yabi8TPA5Aas182D2HhXNqdZqfuV18i-5iXllV2gSEe-r5DWsll-vXjslec5naP7lZ6e-tIlFyd4Eun5kEAzgCIQP9nYCbaAmaq7lErp8Mysia5kxYgEwdl0IYKd4NQnH4YBw3S765Ipju-Zz2hkZDR3Vdel-LJl8JxmGK30AgfY7At6HPnb2E4gjSW~zQHnjNix61mw7-Ls7RxS0QwDM5W1HPX53oMZM9ETCY78utv~J~T6ynFAHL1T~UKkAJ2DNNnqWXlyPbCp8ivtJwsFx9Gsw__" />
+									<Stack className={'card-info'}>
+										<Stack className={'pb-name'}>
+											<div className="name">Kitchen Project</div>
+											<div className="name">$123</div>
+										</Stack>
+										<Stack className={'status'}>
+											<span>ACTIVE</span>
+											<span>22 December, 2024</span>
+										</Stack>
+									</Stack>
+								</Stack>
+								<Stack className={'pb-card'}>
+									<img src="https://s3-alpha-sig.figma.com/img/8b53/a5f9/212f31f550844ba39262a277c128ad8a?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Z0SkGTLc8Y-mZ9BYgZgA8mmwAARNfpWV4Scas3rj8wFLYxTb3PHAFrpIhXhK0yabi8TPA5Aas182D2HhXNqdZqfuV18i-5iXllV2gSEe-r5DWsll-vXjslec5naP7lZ6e-tIlFyd4Eun5kEAzgCIQP9nYCbaAmaq7lErp8Mysia5kxYgEwdl0IYKd4NQnH4YBw3S765Ipju-Zz2hkZDR3Vdel-LJl8JxmGK30AgfY7At6HPnb2E4gjSW~zQHnjNix61mw7-Ls7RxS0QwDM5W1HPX53oMZM9ETCY78utv~J~T6ynFAHL1T~UKkAJ2DNNnqWXlyPbCp8ivtJwsFx9Gsw__" />
+									<Stack className={'card-info'}>
+										<Stack className={'pb-name'}>
+											<div className="name">Kitchen Project</div>
+											<div className="name">$123</div>
+										</Stack>
+										<Stack className={'status'}>
+											<span>ACTIVE</span>
+											<span>22 December, 2024</span>
+										</Stack>
+									</Stack>
+								</Stack>
+							</Stack>
+						</Stack>
+						<Stack className={'follower-following'}>
+							<Stack className={'button'}>
+								<Button className={'btn'}>
+									<span>Followers</span>
+								</Button>
+								<Button className={'btn'}>
+									<span>Followings</span>
+								</Button>
+							</Stack>
+							<div className="divider"></div>
+							<Stack className={'cards'}>
+								<Stack className={'pb-card'}>
+									<img src="https://s3-alpha-sig.figma.com/img/8b53/a5f9/212f31f550844ba39262a277c128ad8a?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Z0SkGTLc8Y-mZ9BYgZgA8mmwAARNfpWV4Scas3rj8wFLYxTb3PHAFrpIhXhK0yabi8TPA5Aas182D2HhXNqdZqfuV18i-5iXllV2gSEe-r5DWsll-vXjslec5naP7lZ6e-tIlFyd4Eun5kEAzgCIQP9nYCbaAmaq7lErp8Mysia5kxYgEwdl0IYKd4NQnH4YBw3S765Ipju-Zz2hkZDR3Vdel-LJl8JxmGK30AgfY7At6HPnb2E4gjSW~zQHnjNix61mw7-Ls7RxS0QwDM5W1HPX53oMZM9ETCY78utv~J~T6ynFAHL1T~UKkAJ2DNNnqWXlyPbCp8ivtJwsFx9Gsw__" />
+									<Stack className={'card-info'}>
+										<Stack className={'pb-name'}>
+											<div className="name">John</div>
+											<FavoriteIcon color="#cda274" />
+											<FavoriteBorderIcon />
+										</Stack>
+										<Stack className={'status'}>
+											<span>Follower (56)</span>
+											<span>Following (56)</span>
+										</Stack>
+									</Stack>
+								</Stack>
+								<Stack className={'pb-card'}>
+									<img src="https://s3-alpha-sig.figma.com/img/8b53/a5f9/212f31f550844ba39262a277c128ad8a?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Z0SkGTLc8Y-mZ9BYgZgA8mmwAARNfpWV4Scas3rj8wFLYxTb3PHAFrpIhXhK0yabi8TPA5Aas182D2HhXNqdZqfuV18i-5iXllV2gSEe-r5DWsll-vXjslec5naP7lZ6e-tIlFyd4Eun5kEAzgCIQP9nYCbaAmaq7lErp8Mysia5kxYgEwdl0IYKd4NQnH4YBw3S765Ipju-Zz2hkZDR3Vdel-LJl8JxmGK30AgfY7At6HPnb2E4gjSW~zQHnjNix61mw7-Ls7RxS0QwDM5W1HPX53oMZM9ETCY78utv~J~T6ynFAHL1T~UKkAJ2DNNnqWXlyPbCp8ivtJwsFx9Gsw__" />
+									<Stack className={'card-info'}>
+										<Stack className={'pb-name'}>
+											<div className="name">John</div>
+											<FavoriteIcon color="#cda274" />
+											<FavoriteBorderIcon />
+										</Stack>
+										<Stack className={'status'}>
+											<span>Follower (56)</span>
+											<span>Following (56)</span>
+										</Stack>
+									</Stack>
+								</Stack>
+								<Stack className={'pb-card'}>
+									<img src="https://s3-alpha-sig.figma.com/img/8b53/a5f9/212f31f550844ba39262a277c128ad8a?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Z0SkGTLc8Y-mZ9BYgZgA8mmwAARNfpWV4Scas3rj8wFLYxTb3PHAFrpIhXhK0yabi8TPA5Aas182D2HhXNqdZqfuV18i-5iXllV2gSEe-r5DWsll-vXjslec5naP7lZ6e-tIlFyd4Eun5kEAzgCIQP9nYCbaAmaq7lErp8Mysia5kxYgEwdl0IYKd4NQnH4YBw3S765Ipju-Zz2hkZDR3Vdel-LJl8JxmGK30AgfY7At6HPnb2E4gjSW~zQHnjNix61mw7-Ls7RxS0QwDM5W1HPX53oMZM9ETCY78utv~J~T6ynFAHL1T~UKkAJ2DNNnqWXlyPbCp8ivtJwsFx9Gsw__" />
+									<Stack className={'card-info'}>
+										<Stack className={'pb-name'}>
+											<div className="name">John</div>
+											<FavoriteIcon color="#cda274" />
+											<FavoriteBorderIcon />
+										</Stack>
+										<Stack className={'status'}>
+											<span>Follower (56)</span>
+											<span>Following (56)</span>
+										</Stack>
+									</Stack>
+								</Stack>
+							</Stack>
 						</Stack>
 					</Stack>
 					<Stack className={'review-box'}>
