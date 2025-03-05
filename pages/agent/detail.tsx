@@ -21,8 +21,13 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { CREATE_COMMENT, LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
 import { GET_COMMENTS, GET_MEMBER, GET_PRODUCTS } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
+import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import AgentBlogCard from '../../libs/components/agent/AgentBlogCard';
+import AgentFloowerCard from '../../libs/components/agent/AgentFollowerCard';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -206,10 +211,10 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 									<span>yourdomain.com</span>
 								</Stack>
 								<Stack className={'social-media'}>
-									<img src="/img/icons/facebook.png" alt="" />
-									<img src="/img/icons/twitter.png" alt="" />
-									<img src="/img/icons/linkedin.png" alt="" />
-									<img src="/img/icons/instagram.png" alt="" />
+									<FacebookOutlinedIcon />
+									<TelegramIcon />
+									<InstagramIcon />
+									<TwitterIcon />
 								</Stack>
 							</Stack>
 						</Stack>
@@ -226,45 +231,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 							</Stack>
 							<div className="divider"></div>
 							<Stack className={'cards'}>
-								<Stack className={'pb-card'}>
-									<img src="https://s3-alpha-sig.figma.com/img/8b53/a5f9/212f31f550844ba39262a277c128ad8a?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Z0SkGTLc8Y-mZ9BYgZgA8mmwAARNfpWV4Scas3rj8wFLYxTb3PHAFrpIhXhK0yabi8TPA5Aas182D2HhXNqdZqfuV18i-5iXllV2gSEe-r5DWsll-vXjslec5naP7lZ6e-tIlFyd4Eun5kEAzgCIQP9nYCbaAmaq7lErp8Mysia5kxYgEwdl0IYKd4NQnH4YBw3S765Ipju-Zz2hkZDR3Vdel-LJl8JxmGK30AgfY7At6HPnb2E4gjSW~zQHnjNix61mw7-Ls7RxS0QwDM5W1HPX53oMZM9ETCY78utv~J~T6ynFAHL1T~UKkAJ2DNNnqWXlyPbCp8ivtJwsFx9Gsw__" />
-									<Stack className={'card-info'}>
-										<Stack className={'pb-name'}>
-											<div className="name">Kitchen Project</div>
-											<div className="name">$123</div>
-										</Stack>
-										<Stack className={'status'}>
-											<span>ACTIVE</span>
-											<span>22 December, 2024</span>
-										</Stack>
-									</Stack>
-								</Stack>
-								<Stack className={'pb-card'}>
-									<img src="https://s3-alpha-sig.figma.com/img/8b53/a5f9/212f31f550844ba39262a277c128ad8a?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Z0SkGTLc8Y-mZ9BYgZgA8mmwAARNfpWV4Scas3rj8wFLYxTb3PHAFrpIhXhK0yabi8TPA5Aas182D2HhXNqdZqfuV18i-5iXllV2gSEe-r5DWsll-vXjslec5naP7lZ6e-tIlFyd4Eun5kEAzgCIQP9nYCbaAmaq7lErp8Mysia5kxYgEwdl0IYKd4NQnH4YBw3S765Ipju-Zz2hkZDR3Vdel-LJl8JxmGK30AgfY7At6HPnb2E4gjSW~zQHnjNix61mw7-Ls7RxS0QwDM5W1HPX53oMZM9ETCY78utv~J~T6ynFAHL1T~UKkAJ2DNNnqWXlyPbCp8ivtJwsFx9Gsw__" />
-									<Stack className={'card-info'}>
-										<Stack className={'pb-name'}>
-											<div className="name">Kitchen Project</div>
-											<div className="name">$123</div>
-										</Stack>
-										<Stack className={'status'}>
-											<span>ACTIVE</span>
-											<span>22 December, 2024</span>
-										</Stack>
-									</Stack>
-								</Stack>
-								<Stack className={'pb-card'}>
-									<img src="https://s3-alpha-sig.figma.com/img/8b53/a5f9/212f31f550844ba39262a277c128ad8a?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Z0SkGTLc8Y-mZ9BYgZgA8mmwAARNfpWV4Scas3rj8wFLYxTb3PHAFrpIhXhK0yabi8TPA5Aas182D2HhXNqdZqfuV18i-5iXllV2gSEe-r5DWsll-vXjslec5naP7lZ6e-tIlFyd4Eun5kEAzgCIQP9nYCbaAmaq7lErp8Mysia5kxYgEwdl0IYKd4NQnH4YBw3S765Ipju-Zz2hkZDR3Vdel-LJl8JxmGK30AgfY7At6HPnb2E4gjSW~zQHnjNix61mw7-Ls7RxS0QwDM5W1HPX53oMZM9ETCY78utv~J~T6ynFAHL1T~UKkAJ2DNNnqWXlyPbCp8ivtJwsFx9Gsw__" />
-									<Stack className={'card-info'}>
-										<Stack className={'pb-name'}>
-											<div className="name">Kitchen Project</div>
-											<div className="name">$123</div>
-										</Stack>
-										<Stack className={'status'}>
-											<span>ACTIVE</span>
-											<span>22 December, 2024</span>
-										</Stack>
-									</Stack>
-								</Stack>
+								<AgentBlogCard />
 							</Stack>
 						</Stack>
 						<Stack className={'follower-following'}>
@@ -278,48 +245,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 							</Stack>
 							<div className="divider"></div>
 							<Stack className={'cards'}>
-								<Stack className={'pb-card'}>
-									<img src="https://s3-alpha-sig.figma.com/img/8b53/a5f9/212f31f550844ba39262a277c128ad8a?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Z0SkGTLc8Y-mZ9BYgZgA8mmwAARNfpWV4Scas3rj8wFLYxTb3PHAFrpIhXhK0yabi8TPA5Aas182D2HhXNqdZqfuV18i-5iXllV2gSEe-r5DWsll-vXjslec5naP7lZ6e-tIlFyd4Eun5kEAzgCIQP9nYCbaAmaq7lErp8Mysia5kxYgEwdl0IYKd4NQnH4YBw3S765Ipju-Zz2hkZDR3Vdel-LJl8JxmGK30AgfY7At6HPnb2E4gjSW~zQHnjNix61mw7-Ls7RxS0QwDM5W1HPX53oMZM9ETCY78utv~J~T6ynFAHL1T~UKkAJ2DNNnqWXlyPbCp8ivtJwsFx9Gsw__" />
-									<Stack className={'card-info'}>
-										<Stack className={'pb-name'}>
-											<div className="name">John</div>
-											<FavoriteIcon color="#cda274" />
-											<FavoriteBorderIcon />
-										</Stack>
-										<Stack className={'status'}>
-											<span>Follower (56)</span>
-											<span>Following (56)</span>
-										</Stack>
-									</Stack>
-								</Stack>
-								<Stack className={'pb-card'}>
-									<img src="https://s3-alpha-sig.figma.com/img/8b53/a5f9/212f31f550844ba39262a277c128ad8a?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Z0SkGTLc8Y-mZ9BYgZgA8mmwAARNfpWV4Scas3rj8wFLYxTb3PHAFrpIhXhK0yabi8TPA5Aas182D2HhXNqdZqfuV18i-5iXllV2gSEe-r5DWsll-vXjslec5naP7lZ6e-tIlFyd4Eun5kEAzgCIQP9nYCbaAmaq7lErp8Mysia5kxYgEwdl0IYKd4NQnH4YBw3S765Ipju-Zz2hkZDR3Vdel-LJl8JxmGK30AgfY7At6HPnb2E4gjSW~zQHnjNix61mw7-Ls7RxS0QwDM5W1HPX53oMZM9ETCY78utv~J~T6ynFAHL1T~UKkAJ2DNNnqWXlyPbCp8ivtJwsFx9Gsw__" />
-									<Stack className={'card-info'}>
-										<Stack className={'pb-name'}>
-											<div className="name">John</div>
-											<FavoriteIcon color="#cda274" />
-											<FavoriteBorderIcon />
-										</Stack>
-										<Stack className={'status'}>
-											<span>Follower (56)</span>
-											<span>Following (56)</span>
-										</Stack>
-									</Stack>
-								</Stack>
-								<Stack className={'pb-card'}>
-									<img src="https://s3-alpha-sig.figma.com/img/8b53/a5f9/212f31f550844ba39262a277c128ad8a?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Z0SkGTLc8Y-mZ9BYgZgA8mmwAARNfpWV4Scas3rj8wFLYxTb3PHAFrpIhXhK0yabi8TPA5Aas182D2HhXNqdZqfuV18i-5iXllV2gSEe-r5DWsll-vXjslec5naP7lZ6e-tIlFyd4Eun5kEAzgCIQP9nYCbaAmaq7lErp8Mysia5kxYgEwdl0IYKd4NQnH4YBw3S765Ipju-Zz2hkZDR3Vdel-LJl8JxmGK30AgfY7At6HPnb2E4gjSW~zQHnjNix61mw7-Ls7RxS0QwDM5W1HPX53oMZM9ETCY78utv~J~T6ynFAHL1T~UKkAJ2DNNnqWXlyPbCp8ivtJwsFx9Gsw__" />
-									<Stack className={'card-info'}>
-										<Stack className={'pb-name'}>
-											<div className="name">John</div>
-											<FavoriteIcon color="#cda274" />
-											<FavoriteBorderIcon />
-										</Stack>
-										<Stack className={'status'}>
-											<span>Follower (56)</span>
-											<span>Following (56)</span>
-										</Stack>
-									</Stack>
-								</Stack>
+								<AgentFloowerCard />
 							</Stack>
 						</Stack>
 					</Stack>

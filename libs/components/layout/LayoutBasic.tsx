@@ -42,14 +42,15 @@ const withLayoutBasic = (Component: any) => {
 					break;
 				case '/agent/detail':
 					title = 'Agent Page';
-					desc = 'Home / For Blog';
+					desc = 'Home / ';
 					bgImage =
 						'https://s3-alpha-sig.figma.com/img/8d84/c0a6/90afce983e419dc7455c9a0c9aba64f4?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=BQUsjOJr6GhY-XqseIW9PS8UKfL9GKwNwoMBhCzar4nwNJrNRdfL60UFxlsCVbBrh0IwKtZ0iKqRe6BMXXTRwYxsx5B9j2dC8AafUDNH0tshhWxaP3lxHj8Ob~YU5UgG5Gfa7ehUV5wymvbY~McPup-ml-X5fBCNlQDF3HxUEDHPUBkpUraBTCyvqV5rMI4p8iIWnX3DtlOJukRuiyyj5MdTQ3922Y-tiXUh~lHqs38toeEWLs9hr32ycyyhCgg6tzcG8X98aV18-faYwl0pj~HBQDn-ltwdDehqGovss7u2K3uk9ubjwU75kASfUdjTe3EuvsYRR2TlA3AQbSfMag__';
 					break;
 				case '/mypage':
 					title = 'my page';
-					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header1.svg';
+					desc = 'Home / Member';
+					bgImage =
+						'https://s3-alpha-sig.figma.com/img/708c/b91d/9373acafe0e5f7db95f7559d0fa1a37b?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=cZUpVRN-PZkTo-GS8MP-XUosZ8jxc8Q01pN0Sy8SLVu8K5J4BQ~ibSJlGvXQmoUxnat~ltvrblowm7GmA5XLfqYyZwnDSkQuM6ZuNnn-G2VfQKCDTKkWvOm~LexKH8FNVIMHCfd7~zXPdGZOjHQMSnF79vUdubAFJHo601MNLrqfEx5gjhvz0K51feGoJ-KGTB0x0xdXNYGWe~xvoy6le6nnW5PZN3yhVVzeCJrZK4rH8qf6IOdfl7yi1rzy0h1J655r5TQxqMBhJEryVzBbBkOQehGvm6sThTRbPabvw063R361mXEQ4vI-uAjpv2O2klAjtDYMCHT3l3LsK46YgQ__';
 					break;
 				case '/community':
 					title = 'Community';
