@@ -154,7 +154,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 
 									<TabPanel value="FREE">
 										<Stack className="list-box">
-											{/* {totalCount ? (
+											{totalCount ? (
 												boardArticles?.map((boardArticle: BoardArticle) => {
 													return (
 														<CommunityCard
@@ -169,8 +169,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 													<img src="/img/icons/icoAlert.svg" alt="" />
 													<p>No Article found!</p>
 												</Stack>
-											)} */}
-											<BlogCard />
+											)}
 										</Stack>
 									</TabPanel>
 									<TabPanel value="RECOMMEND">

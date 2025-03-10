@@ -8,7 +8,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { TabContext } from '@mui/lab';
 import TablePagination from '@mui/material/TablePagination';
-import { PropertyPanelList } from '../../../libs/components/admin/properties/PropertyList';
+import { PropertyPanelList } from '../../../libs/components/admin/properties/ProductList';
 import { AllProductsInquiry } from '../../../libs/types/product/product.input';
 import { Product } from '../../../libs/types/product/product';
 import { ProductLocation, ProductStatus } from '../../../libs/enums/product.enum';
@@ -210,12 +210,12 @@ const AdminProperties: NextPage = ({ initialInquiry, ...props }: any) => {
 							<Divider />
 						</Box>
 						<PropertyPanelList
-							properties={products}
+							products={products}
 							anchorEl={anchorEl}
 							menuIconClickHandler={menuIconClickHandler}
 							menuIconCloseHandler={menuIconCloseHandler}
-							updatePropertyHandler={updatePropertyHandler}
-							removePropertyHandler={removePropertyHandler}
+							updateProductHandler={updatePropertyHandler}
+							removeProductHandler={removePropertyHandler}
 						/>
 
 						<TablePagination

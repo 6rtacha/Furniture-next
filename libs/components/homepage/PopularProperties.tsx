@@ -5,19 +5,19 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
-import PopularPropertyCard from './PopularPropertyCard';
 import { Product } from '../../types/product/product';
 import Link from 'next/link';
 import { ProductsInquiry } from '../../types/product/product.input';
 import { useQuery } from '@apollo/client';
 import { GET_PRODUCTS } from '../../../apollo/user/query';
 import { T } from '../../types/common';
+import PopularProductCard from './PopularProductCard';
 
-interface PopularPropertiesProps {
+interface PopularProductsProps {
 	initialInput: ProductsInquiry;
 }
 
-const PopularProperties = (props: PopularPropertiesProps) => {
+const PopularProducts = (props: PopularProductsProps) => {
 	const { initialInput } = props;
 	const device = useDeviceDetect();
 	const [popularProducts, setPopularProducts] = useState<Product[]>([]);
@@ -47,7 +47,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 			<Stack className={'popular-properties'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<span>Popular properties</span>
+						<span>Popular products</span>
 					</Stack>
 					<Stack className={'card-box'}>
 						<Swiper
@@ -60,7 +60,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 							{popularProducts.map((product: Product) => {
 								return (
 									<SwiperSlide key={product._id} className={'popular-property-slide'}>
-										<PopularPropertyCard product={product} />
+										<PopularProductCard product={product} />
 									</SwiperSlide>
 								);
 							})}
@@ -75,12 +75,11 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span>Popular properties</span>
-							<p>Popularity is based on views</p>
+							<span>Popular Products</span>
 						</Box>
 						<Box component={'div'} className={'right'}>
 							<div className={'more-box'}>
-								<Link href={'/property'}>
+								<Link href={'/product'}>
 									<span>See All Categories</span>
 								</Link>
 								<img src="/img/icons/rightup.svg" alt="" />
@@ -104,7 +103,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 							{popularProducts.map((product: Product) => {
 								return (
 									<SwiperSlide key={product._id} className={'popular-property-slide'}>
-										<PopularPropertyCard product={product} />
+										<PopularProductCard product={product} />
 									</SwiperSlide>
 								);
 							})}
@@ -121,7 +120,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 	}
 };
 
-PopularProperties.defaultProps = {
+PopularProducts.defaultProps = {
 	initialInput: {
 		page: 1,
 		limit: 7,
@@ -131,4 +130,4 @@ PopularProperties.defaultProps = {
 	},
 };
 
-export default PopularProperties;
+export default PopularProducts;

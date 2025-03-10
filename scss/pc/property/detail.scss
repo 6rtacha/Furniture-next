@@ -4,5 +4,540 @@
 		background: #fff;
 		padding-top: 87px;
 		padding-bottom: 200px;
+		.property-detail-config {
+			width: 100%;
+			height: auto;
+			padding-top: 56px;
+			gap: 30px;
+			.property-info-config {
+				width: 100%;
+				height: auto;
+				gap: 30px;
+
+				.images {
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					width: 100%;
+					height: auto;
+					.left {
+						width: 48%;
+						.main-image {
+							width: 100%;
+							height: 600px;
+							img {
+								width: 100%;
+								height: 100%;
+								object-fit: cover;
+								border-radius: 30px;
+							}
+						}
+						.sub-images {
+							width: 50%;
+							height: auto;
+							flex-direction: row;
+							gap: 10px;
+							.sub-img-box {
+								width: 80px;
+								height: 80px;
+								cursor: pointer;
+								img {
+									width: 100%;
+									height: 100%;
+									object-fit: cover;
+									border-radius: 30px;
+								}
+							}
+						}
+					}
+					.right {
+						width: 48%;
+						// background-color: aqua;
+						.prop-desc-config {
+							width: 100%;
+							height: 600px;
+							// gap: 50px;
+							padding: 29px 38px 50px 38px;
+							border-radius: 30px;
+							// border: px solid #c4c4c4;
+							background-color: #f4f0ec;
+							.info {
+								width: 100%;
+								height: auto;
+								flex-direction: row;
+								justify-content: space-between;
+								.left-box {
+									width: 50%;
+									height: auto;
+									.title-main {
+										color: #181a20;
+										font-family: $fontPrimary;
+										font-size: 50px;
+										font-style: normal;
+										font-weight: 400;
+										line-height: normal;
+										letter-spacing: 0.6px;
+										text-transform: capitalize;
+									}
+									.top-box {
+										width: auto;
+										height: auto;
+										flex-direction: row;
+										align-items: center;
+										gap: 10px;
+										margin-bottom: 17px;
+										.city {
+											color: #717171;
+											font-family: $font;
+											font-size: 13px;
+											font-style: normal;
+											font-weight: 400;
+											line-height: normal;
+										}
+										.divider {
+											width: 1px;
+											height: 20px;
+											background: #ddd;
+										}
+										.buy-rent-box {
+											flex-direction: row;
+											align-items: center;
+											gap: 7px;
+											.buy-rent {
+												color: #eb6753;
+												font-family: $font;
+												font-size: 15px;
+												font-style: normal;
+												font-weight: 600;
+												line-height: normal;
+											}
+										}
+										.date {
+											color: #181a20;
+											font-family: $font;
+											font-size: 15px;
+											font-style: normal;
+											font-weight: 400;
+											line-height: 28px;
+										}
+									}
+								}
+								.right-box {
+									width: auto;
+									height: auto;
+									align-items: flex-end;
+									.buttons {
+										width: auto;
+										height: auto;
+										flex-direction: row;
+										align-items: center;
+										gap: 11px;
+										margin: 0 10px 27px 0;
+										p {
+											color: #181a20;
+											text-align: right;
+											font-family: $font;
+											font-size: 18px;
+											font-style: normal;
+											font-weight: 400;
+											line-height: normal;
+											letter-spacing: 0.52px;
+											text-transform: capitalize;
+										}
+										.button-box {
+											flex-direction: row;
+											gap: 5px;
+											align-items: center;
+										}
+									}
+									img {
+										width: 28px;
+										height: 27px;
+									}
+									svg {
+										width: 28px;
+										height: 27px;
+										cursor: pointer;
+									}
+									p {
+										color: #181a20;
+										text-align: right;
+										font-family: $fontPrimary;
+										font-size: 46px;
+										font-style: normal;
+										font-weight: 400;
+										line-height: normal;
+										letter-spacing: 0.52px;
+										text-transform: capitalize;
+									}
+									span {
+										color: #181a20;
+										text-align: right;
+										font-family: $font;
+										font-size: 15px;
+										font-style: normal;
+										font-weight: 400;
+										line-height: normal;
+										letter-spacing: 0.3px;
+										text-transform: capitalize;
+									}
+								}
+							}
+							.top {
+								width: 100%;
+								height: auto;
+								gap: 30px;
+								margin-top: 30px;
+								.title {
+									color: #181a20;
+									font-family: $font;
+									font-size: 17px;
+									font-style: normal;
+									font-weight: 600;
+									line-height: normal;
+								}
+								.desc {
+									color: #181a20;
+									font-family: $font;
+									font-size: 14px;
+									font-style: normal;
+									font-weight: 400;
+									line-height: 26px;
+									max-height: 104px;
+								}
+							}
+							.bottom {
+								width: 100%;
+								height: auto;
+								gap: 30px;
+								margin-top: 50px;
+								.title {
+									color: #181a20;
+									font-family: $font;
+									font-size: 17px;
+									font-style: normal;
+									font-weight: 600;
+									line-height: normal;
+								}
+								.info-box {
+									width: 100%;
+									height: auto;
+									flex-direction: row;
+									gap: 180px;
+									.left,
+									.right {
+										.info {
+											width: auto;
+											height: auto;
+											display: flex;
+											flex-direction: row;
+											.title {
+												width: 121px;
+												color: #181a20;
+												font-family: $font;
+												font-size: 14px;
+												font-style: normal;
+												font-weight: 600;
+												line-height: 35px;
+											}
+											.data {
+												width: 88px;
+												color: #181a20;
+												font-family: $font;
+												font-size: 14px;
+												font-style: normal;
+												font-weight: 400;
+												line-height: 35px;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			.property-desc-config {
+				width: 100%;
+				height: auto;
+				flex-direction: row;
+				gap: 22px;
+				margin-top: 60px;
+				.left-config {
+					width: 100%;
+					height: auto;
+					gap: 80px;
+					.address-config {
+						width: 100%;
+						height: auto;
+						gap: 30px;
+						padding: 30px 38px;
+						border-radius: 30px;
+						border: 1px solid #f4f0ec;
+						background-color: #f4f0ec;
+						.title {
+							color: #181a20;
+							font-family: $fontPrimary;
+							font-size: 34px;
+							font-style: normal;
+							font-weight: 400;
+							line-height: normal;
+						}
+						.map-box {
+							width: 100%;
+							height: 400px;
+							iframe {
+								border-radius: 30px;
+							}
+						}
+					}
+					.reviews-config {
+						width: 100%;
+						height: auto;
+						padding: 30px 38px 45px 38px;
+						border-radius: 30px;
+						border: 1px solid #f4f0ec;
+						.filter-box {
+							width: 100%;
+							height: auto;
+							flex-direction: row;
+							justify-content: space-between;
+							margin-bottom: 30px;
+							.review-cnt {
+								width: auto;
+								height: auto;
+								flex-direction: row;
+								align-items: center;
+								gap: 12px;
+								.reviews {
+									width: 153.6px;
+									color: #181a20;
+									font-family: $font;
+									font-size: 17px;
+									font-style: normal;
+									font-weight: 600;
+									line-height: normal;
+								}
+							}
+							.select-box {
+								width: auto;
+								height: auto;
+								flex-direction: row;
+								gap: 10px;
+								.sort-title {
+									color: #717171;
+									font-family: $font;
+									font-size: 14px;
+									font-style: normal;
+									font-weight: 400;
+									line-height: 26px;
+								}
+								.select-main {
+									width: 140px;
+									border: none;
+									outline: none;
+									color: #181a20;
+									font-family: $font;
+									font-size: 14px;
+									font-style: normal;
+									font-weight: 400;
+									line-height: 26px;
+								}
+							}
+						}
+						.review-list {
+							width: 100%;
+							height: auto;
+							gap: 20px;
+							.review-config {
+								width: 100%;
+								height: auto;
+								padding-bottom: 10px;
+								border-bottom: 1px solid #c4c4c4;
+								.review-mb-info {
+									width: 100%;
+									height: auto;
+									flex-direction: row;
+									justify-content: space-between;
+									.img-name-box {
+										width: 30%;
+										flex-direction: row;
+										align-items: center;
+										gap: 20px;
+										.img-box {
+											width: 65px;
+											height: 65px;
+											align-items: center;
+											justify-content: center;
+											border-radius: 50%;
+											background: #f6f6f6;
+											border: 1px solid #b9b9b9;
+											object-fit: cover;
+										}
+										.name {
+											width: 100%;
+											color: #181a20;
+											font-family: $font;
+											font-size: 15px;
+											font-style: normal;
+											font-weight: 600;
+											line-height: normal;
+											cursor: pointer;
+										}
+										.date {
+											width: 100%;
+											color: #181a20;
+											font-family: $font;
+											font-size: 13px;
+											font-style: normal;
+											font-weight: 400;
+											line-height: normal;
+										}
+									}
+									.review-stars {
+										padding-top: 10px;
+									}
+								}
+								.desc-box {
+									width: 100%;
+									height: auto;
+									margin-top: 15px;
+									.description {
+										color: #181a20;
+										font-family: $font;
+										font-size: 14px;
+										font-style: normal;
+										font-weight: 400;
+										line-height: 26px;
+									}
+								}
+							}
+							.pagination-box {
+								margin-top: 15px;
+								width: 100%;
+								height: auto;
+								display: flex;
+								justify-content: center;
+							}
+						}
+					}
+					.leave-review-config {
+						border-radius: 30px;
+						border: 1px solid #f4f0ec;
+						background: #f4f0ec;
+						box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+						padding: 30px 38px;
+						.main-title {
+							color: #181a20;
+							font-family: $fontPrimary;
+							font-size: 30px;
+							font-style: normal;
+							font-weight: 400;
+							line-height: normal;
+						}
+						.review-title {
+							margin-top: 20px;
+							color: #181a20;
+							font-family: $font;
+							font-size: 14px;
+							font-style: normal;
+							font-weight: 600;
+							line-height: normal;
+						}
+						textarea {
+							width: 100%;
+							height: 120px;
+							margin-top: 8px;
+							padding: 20px;
+							border-radius: 25px;
+							border: 1px solid #ddd;
+							color: #717171;
+							font-family: $font;
+							font-size: 14px;
+							font-style: normal;
+							font-weight: 400;
+							line-height: 26px;
+						}
+						.submit-btn {
+							width: 100%;
+							display: flex;
+							justify-content: flex-end;
+							button:disabled {
+								background: #dfdfdf;
+							}
+							.submit-review {
+								display: flex;
+								width: 256px;
+								margin-top: 30px;
+								padding: 16px 30px;
+								justify-content: center;
+								align-items: center;
+								gap: 10px;
+								border-radius: 12px;
+								border: 1px solid #c4c4c4;
+								cursor: pointer;
+								.title {
+									color: #181a20;
+									font-family: $font;
+									font-size: 15px;
+									font-style: normal;
+									font-weight: 600;
+									line-height: normal;
+								}
+							}
+						}
+					}
+				}
+			}
+			.similar-properties-config {
+				width: 100%;
+				margin-top: 45px;
+				gap: 66px;
+				.title-pagination-box {
+					width: 100%;
+					height: auto;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: flex-end;
+					.title-box {
+						width: 30%;
+						.main-title {
+							color: #181a20;
+							font-family: $fontPrimary;
+							font-size: 30px;
+							font-style: normal;
+							font-weight: 400;
+							line-height: normal;
+							letter-spacing: 0.6px;
+							text-transform: capitalize;
+						}
+						.sub-title {
+							color: #181a20;
+							font-family: $font;
+							font-size: 14px;
+							font-style: normal;
+							font-weight: 400;
+							line-height: 26px;
+						}
+					}
+					.pagination-box {
+						flex-direction: row;
+						align-items: center;
+						gap: 22px;
+					}
+				}
+				.cards-box {
+					width: 100%;
+					padding-bottom: 10px;
+
+					.similar-homes-swiper {
+						width: 100%;
+						.similar-homes-slide {
+							// width: auto;
+						}
+					}
+				}
+			}
+		}
 	}
 }

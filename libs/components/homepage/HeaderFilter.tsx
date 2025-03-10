@@ -336,6 +336,14 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 						className={'search-input'}
 						placeholder={'What are you looking for?'}
 						onChange={(e: any) => setSearchText(e.target.value)}
+						sx={{
+							'& .MuiOutlinedInput-notchedOutline': {
+								borderColor: 'none',
+							},
+							'&:hover > .MuiOutlinedInput-notchedOutline': {
+								borderColor: 'none',
+							},
+						}}
 						onKeyDown={(event: any) => {
 							if (event.key == 'Enter') {
 								setSearchFilter({

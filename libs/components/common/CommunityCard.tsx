@@ -49,7 +49,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 	} else {
 		return (
 			<Stack
-				sx={{ width: size === 'small' ? '285px' : '317px' }}
+				sx={{ width: size === 'small' ? '285px' : '302px' }}
 				className="community-general-card-config"
 				onClick={(e: any) => chooseArticleHandler(e, boardArticle)}
 			>
@@ -65,9 +65,9 @@ const CommunityCard = (props: CommunityCardProps) => {
 								goMemberPage(boardArticle?.memberData?._id as string);
 							}}
 						>
-							{boardArticle?.memberData?.memberNick}
+							{boardArticle?.articleTitle}
 						</Typography>
-						<Typography className="title">{boardArticle?.articleTitle}</Typography>
+						<Typography className="title">{boardArticle?.memberData?.memberNick}</Typography>
 					</Stack>
 					<Stack className={'buttons'}>
 						<IconButton color={'default'}>
@@ -76,7 +76,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 						<Typography className="view-cnt">{boardArticle?.articleViews}</Typography>
 						<IconButton color={'default'} onClick={(e: any) => likeArticleHandler(e, user, boardArticle?._id)}>
 							{boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite ? (
-								<FavoriteIcon color={'primary'} />
+								<FavoriteIcon sx={{ color: '#cda274' }} />
 							) : (
 								<FavoriteBorderIcon />
 							)}

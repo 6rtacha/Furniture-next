@@ -8,12 +8,15 @@ import { REACT_APP_API_URL, topPropertyRank } from '../../config';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
+import StraightenOutlinedIcon from '@mui/icons-material/StraightenOutlined';
+import WidthNormalOutlinedIcon from '@mui/icons-material/WidthNormalOutlined';
+import HeightOutlinedIcon from '@mui/icons-material/HeightOutlined';
 
 interface PopularProductCardProps {
 	product: Product;
 }
 
-const PopularPropertyCard = (props: PopularProductCardProps) => {
+const PopularProductCard = (props: PopularProductCardProps) => {
 	const { product } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
@@ -102,8 +105,23 @@ const PopularPropertyCard = (props: PopularProductCardProps) => {
 					>
 						{product.productTitle}
 					</strong>
-					<p className={'desc'}>{product.productAddress}</p>
-					<div className={'options'}></div>
+					<p className={'desc'}>
+						{product.productAddress}, {product.productLocation}
+					</p>
+					<div className={'options'}>
+						<div>
+							<StraightenOutlinedIcon />
+							<span>{product?.productWidth} Width</span>
+						</div>
+						<div>
+							<WidthNormalOutlinedIcon />
+							<span>{product?.productLength} Length</span>
+						</div>
+						<div>
+							<HeightOutlinedIcon />
+							<span>{product?.productHeight} Height</span>
+						</div>
+					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
 					<div className={'bott'}>
 						<p>{product?.productRent ? 'rent' : 'sale'}</p>
@@ -120,4 +138,4 @@ const PopularPropertyCard = (props: PopularProductCardProps) => {
 	}
 };
 
-export default PopularPropertyCard;
+export default PopularProductCard;

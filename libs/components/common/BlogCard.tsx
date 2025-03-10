@@ -1,45 +1,56 @@
 import { Box, Stack } from '@mui/material';
+import useDeviceDetect from '../../hooks/useDeviceDetect';
+import { useRouter } from 'next/router';
+import { useReactiveVar } from '@apollo/client';
+import { userVar } from '../../../apollo/store';
+import { REACT_APP_API_URL } from '../../config';
+import { BoardArticle } from '../../types/board-article/board-article';
+import Moment from 'react-moment';
 
-const BlogCard = () => {
+interface BlogCardProps {
+	boardArticle: BoardArticle;
+	size?: string;
+	likeArticleHandler: any;
+}
+
+const BlogCard = (props: BlogCardProps) => {
+	const { boardArticle, size = 'normal', likeArticleHandler } = props;
+	const device = useDeviceDetect();
+	const router = useRouter();
+	const user = useReactiveVar(userVar);
+	const imagePath: string = boardArticle?.articleImage
+		? `${REACT_APP_API_URL}/${boardArticle?.articleImage}`
+		: '/img/community/communityImg.png';
+
+	/** HANDLERS **/
+	const chooseArticleHandler = (e: React.SyntheticEvent, boardArticle: BoardArticle) => {
+		router.push(
+			{
+				pathname: '/community/detail',
+				query: { articleCategory: boardArticle?.articleCategory, id: boardArticle?._id },
+			},
+			undefined,
+			{ shallow: true },
+		);
+	};
+
+	const goMemberPage = (id: string) => {
+		if (id === user?._id) router.push('/mypage');
+		else router.push(`/member?memberId=${id}`);
+	};
+
 	return (
-		<>
-			<Box className={'card'}>
-				<img src="https://s3-alpha-sig.figma.com/img/f4b2/a97e/4c4f8f5e4759944aaba98a3c6dd3e663?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=J3lK7R7OBd3vEEGob8cACKMDUCzH4K7fRZFrlYqJCKO~9Z~zNHD4JEq5FQg-XM3mukLZ8MQTaPT-Zz6cmh9XbuVl6k1UfUa1EtSQebhO~N7GFVUfBXNuJISFO6aPQKrPhMbnfhjOD7z3peUbk4hSmNdws44FngRitZ9t~7ADY1yOOfsGHGJw3uHX1Dcczho6LBvXXu5o25kqXTIv~AwJiJjVGiM49SBGSZ9C-8vQoouoavtOpH~46KO4zgFVN36WAzljs3dJ1VMSrFBdbmJjoVQYOY4dYaURp6vT9SvMftxZPbJbTh5eUbNBh9hHtKp5YRX7ZFf-rU~SiYhl2YjDeA__" />
-				<div className="title">
-					<div className="article-title">
-						<span>Let's Get Solution For Building Construction Work</span>
-					</div>
-					<div className="date">16 December, 2022</div>
+		<Box className={'card'} onClick={(e: any) => chooseArticleHandler(e, boardArticle)}>
+			<img src={imagePath} alt="" className="card-img" />
+			<div className="title">
+				<div className="article-title">
+					<span>{boardArticle?.articleTitle}</span>
 				</div>
-			</Box>
-			<Box className={'card'}>
-				<img src="https://s3-alpha-sig.figma.com/img/f4b2/a97e/4c4f8f5e4759944aaba98a3c6dd3e663?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=J3lK7R7OBd3vEEGob8cACKMDUCzH4K7fRZFrlYqJCKO~9Z~zNHD4JEq5FQg-XM3mukLZ8MQTaPT-Zz6cmh9XbuVl6k1UfUa1EtSQebhO~N7GFVUfBXNuJISFO6aPQKrPhMbnfhjOD7z3peUbk4hSmNdws44FngRitZ9t~7ADY1yOOfsGHGJw3uHX1Dcczho6LBvXXu5o25kqXTIv~AwJiJjVGiM49SBGSZ9C-8vQoouoavtOpH~46KO4zgFVN36WAzljs3dJ1VMSrFBdbmJjoVQYOY4dYaURp6vT9SvMftxZPbJbTh5eUbNBh9hHtKp5YRX7ZFf-rU~SiYhl2YjDeA__" />
-				<div className="title">
-					<div className="article-title">
-						<span>Let's Get Solution For Building Construction Work</span>
-					</div>
-					<div className="date">16 December, 2022</div>
-				</div>
-			</Box>
-			<Box className={'card'}>
-				<img src="https://s3-alpha-sig.figma.com/img/f4b2/a97e/4c4f8f5e4759944aaba98a3c6dd3e663?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=J3lK7R7OBd3vEEGob8cACKMDUCzH4K7fRZFrlYqJCKO~9Z~zNHD4JEq5FQg-XM3mukLZ8MQTaPT-Zz6cmh9XbuVl6k1UfUa1EtSQebhO~N7GFVUfBXNuJISFO6aPQKrPhMbnfhjOD7z3peUbk4hSmNdws44FngRitZ9t~7ADY1yOOfsGHGJw3uHX1Dcczho6LBvXXu5o25kqXTIv~AwJiJjVGiM49SBGSZ9C-8vQoouoavtOpH~46KO4zgFVN36WAzljs3dJ1VMSrFBdbmJjoVQYOY4dYaURp6vT9SvMftxZPbJbTh5eUbNBh9hHtKp5YRX7ZFf-rU~SiYhl2YjDeA__" />
-				<div className="title">
-					<div className="article-title">
-						<span>Let's Get Solution For Building Construction Work</span>
-					</div>
-					<div className="date">16 December, 2022</div>
-				</div>
-			</Box>
-			<Box className={'card'}>
-				<img src="https://s3-alpha-sig.figma.com/img/f4b2/a97e/4c4f8f5e4759944aaba98a3c6dd3e663?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=J3lK7R7OBd3vEEGob8cACKMDUCzH4K7fRZFrlYqJCKO~9Z~zNHD4JEq5FQg-XM3mukLZ8MQTaPT-Zz6cmh9XbuVl6k1UfUa1EtSQebhO~N7GFVUfBXNuJISFO6aPQKrPhMbnfhjOD7z3peUbk4hSmNdws44FngRitZ9t~7ADY1yOOfsGHGJw3uHX1Dcczho6LBvXXu5o25kqXTIv~AwJiJjVGiM49SBGSZ9C-8vQoouoavtOpH~46KO4zgFVN36WAzljs3dJ1VMSrFBdbmJjoVQYOY4dYaURp6vT9SvMftxZPbJbTh5eUbNBh9hHtKp5YRX7ZFf-rU~SiYhl2YjDeA__" />
-				<div className="title">
-					<div className="article-title">
-						<span>Let's Get Solution For Building Construction Work</span>
-					</div>
-					<div className="date">16 December, 2022</div>
-				</div>
-			</Box>
-		</>
+				<Moment className="date" format={'MMMM'}>
+					{boardArticle?.createdAt}
+				</Moment>
+			</div>
+		</Box>
 	);
 };
 

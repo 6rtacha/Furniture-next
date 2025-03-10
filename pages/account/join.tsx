@@ -72,17 +72,14 @@ const Join: NextPage = () => {
 					<Stack className={'main'}>
 						<Stack className={'left'}>
 							{/* @ts-ignore */}
-							<Box className={'logo'}>
-								<img src="/img/logo/logoText.svg" alt="" />
-								<span>Nestar</span>
-							</Box>
+
 							<Box className={'info'}>
 								<span>{loginView ? 'login' : 'signup'}</span>
 								<p>{loginView ? 'Login' : 'Sign'} in with this account across the following sites.</p>
 							</Box>
 							<Box className={'input-wrap'}>
 								<div className={'input-box'}>
-									<span>Nickname</span>
+									{/* <span>Nickname</span> */}
 									<input
 										type="text"
 										placeholder={'Enter Nickname'}
@@ -94,10 +91,11 @@ const Join: NextPage = () => {
 										}}
 									/>
 								</div>
+
 								<div className={'input-box'}>
-									<span>Password</span>
+									{/* <span>Password</span> */}
 									<input
-										type="text"
+										type="password"
 										placeholder={'Enter Password'}
 										onChange={(e) => handleInput('password', e.target.value)}
 										required={true}
@@ -109,7 +107,6 @@ const Join: NextPage = () => {
 								</div>
 								{!loginView && (
 									<div className={'input-box'}>
-										<span>Phone</span>
 										<input
 											type="text"
 											placeholder={'Enter Phone'}

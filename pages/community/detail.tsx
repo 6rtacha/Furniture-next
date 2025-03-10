@@ -23,7 +23,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { BoardArticle } from '../../libs/types/board-article/board-article';
 import { CREATE_COMMENT, LIKE_TARGET_BOARD_ARTICLE, UPDATE_COMMENT } from '../../apollo/user/mutation';
 import { GET_BOARD_ARTICLE, GET_COMMENTS } from '../../apollo/user/query';
-import { Messages } from '../../libs/config';
+import { Messages, REACT_APP_API_URL } from '../../libs/config';
 import {
 	sweetConfirmAlert,
 	sweetMixinErrorAlert,
@@ -66,6 +66,9 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 	const [updatedCommentId, setUpdatedCommentId] = useState<string>('');
 	const [likeLoading, setLikeLoading] = useState<boolean>(false);
 	const [boardArticle, setBoardArticle] = useState<BoardArticle>();
+	const imagePath: string = boardArticle?.articleImage
+		? `${REACT_APP_API_URL}/${boardArticle?.articleImage}`
+		: '/img/community/communityImg.png';
 
 	/** APOLLO REQUESTS **/
 	const [likeTargetBoardArticle] = useMutation(LIKE_TARGET_BOARD_ARTICLE);
@@ -248,66 +251,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 			<div id="community-detail-page">
 				<div className="container">
 					<Stack className="main-box">
-						<Stack className="left-config">
-							<Stack className={'image-info'}>
-								<img src={'/img/logo/logoText.svg'} />
-								<Stack className={'community-name'}>
-									<Typography className={'name'}>Community Board Article</Typography>
-								</Stack>
-							</Stack>
-							<Tabs
-								orientation="vertical"
-								aria-label="lab API tabs example"
-								TabIndicatorProps={{
-									style: { display: 'none' },
-								}}
-								onChange={tabChangeHandler}
-								value={articleCategory}
-							>
-								<Tab
-									value={'FREE'}
-									label={'Free Board'}
-									className={`tab-button ${articleCategory === 'FREE' ? 'active' : ''}`}
-								/>
-								<Tab
-									value={'RECOMMEND'}
-									label={'Recommendation'}
-									className={`tab-button ${articleCategory === 'RECOMMEND' ? 'active' : ''}`}
-								/>
-								<Tab
-									value={'NEWS'}
-									label={'News'}
-									className={`tab-button ${articleCategory === 'NEWS' ? 'active' : ''}`}
-								/>
-								<Tab
-									value={'HUMOR'}
-									label={'Humor'}
-									className={`tab-button ${articleCategory === 'HUMOR' ? 'active' : ''}`}
-								/>
-							</Tabs>
-						</Stack>
 						<div className="community-detail-config">
-							<Stack className="title-box">
-								<Stack className="left">
-									<Typography className="title">{articleCategory} BOARD</Typography>
-									<Typography className="sub-title">
-										Express your opinions freely here without content restrictions
-									</Typography>
-								</Stack>
-								<Button
-									onClick={() =>
-										router.push({
-											pathname: '/mypage',
-											query: {
-												category: 'writeArticle',
-											},
-										})
-									}
-									className="right"
-								>
-									Write
-								</Button>
-							</Stack>
 							<div className="config">
 								<Stack className="first-box-config">
 									<Stack className="content-and-info">
@@ -351,21 +295,66 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 												<Typography className="text">{total}</Typography>
 											</Stack>
 										</Stack>
+										<Button
+											onClick={() =>
+												router.push({
+													pathname: '/mypage',
+													query: {
+														category: 'writeArticle',
+													},
+												})
+											}
+											className="right"
+										>
+											Write
+										</Button>
+									</Stack>
+									<Stack className={'blog-image'}>
+										<img
+											className={'image'}
+											src="https://s3-alpha-sig.figma.com/img/af52/437c/53959c93c2008f27c1e1049e0731c002?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=WU6Fxsel7sU85cplB~YkU3Qxme6SCCrJdmG7NTiEQfTBPCNvgMupjV0PeKFPisY5AF00AGqWbtYyr5RDRFYHuxYxRDuDrPOuGKj7RXxul8su2vWTwlFnqY-HEWK45dgU1XvKbFjsX3HY549fHBxQJ9Ewh~0CflgsyF1NzxNAdzMHt-M~ltoTVFwOLTryPSFMFBEvwf8xJusL1K7mRstF04j20D8ubiaSDthibDS1nuLfy1QyXnyXcZUCIhpvkOvE0T11vkjuC5gtMKAhDiWV7prlEBonllUvE9c0hl3FGYuYLUVx34TxB1EzJ2GJUF9Rt3IET0ppUCc-Klay-21hlA__"
+										/>
+										<Stack className="left-config">
+											<Stack className={'image-info'}>
+												<img src={'/img/logo/Logo.png'} />
+												<Stack className={'community-name'}>
+													<Typography className={'name'}>Community Board Article</Typography>
+												</Stack>
+											</Stack>
+											<Tabs
+												orientation="vertical"
+												aria-label="lab API tabs example"
+												TabIndicatorProps={{
+													style: { display: 'none' },
+												}}
+												onChange={tabChangeHandler}
+												value={articleCategory}
+											>
+												<Tab
+													value={'FREE'}
+													label={'Free Board'}
+													className={`tab-button ${articleCategory === 'FREE' ? 'active' : ''}`}
+												/>
+												<Tab
+													value={'RECOMMEND'}
+													label={'Recommendation'}
+													className={`tab-button ${articleCategory === 'RECOMMEND' ? 'active' : ''}`}
+												/>
+												<Tab
+													value={'NEWS'}
+													label={'News'}
+													className={`tab-button ${articleCategory === 'NEWS' ? 'active' : ''}`}
+												/>
+												<Tab
+													value={'HUMOR'}
+													label={'Humor'}
+													className={`tab-button ${articleCategory === 'HUMOR' ? 'active' : ''}`}
+												/>
+											</Tabs>
+										</Stack>
 									</Stack>
 									<Stack>
 										<ToastViewerComponent markdown={boardArticle?.articleContent} className={'ytb_play'} />
-									</Stack>
-									<Stack className="like-and-dislike">
-										<Stack className="top">
-											<Button>
-												{boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite ? (
-													<ThumbUpAltIcon onClick={() => likeBoardArticleHandler(user, boardArticle?._id)} />
-												) : (
-													<ThumbUpOffAltIcon onClick={() => likeBoardArticleHandler(user, boardArticle?._id)} />
-												)}
-												<Typography className="text">{boardArticle?.articleLikes}</Typography>
-											</Button>
-										</Stack>
 									</Stack>
 								</Stack>
 								<Stack
