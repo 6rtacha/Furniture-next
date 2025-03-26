@@ -8,7 +8,7 @@ export interface ProductInput {
 	productTitle: string;
 	productPrice: number;
 	productMaterial: string;
-	productColors: string;
+	productColors?: string;
 	productWidth: number;
 	productLength: number;
 	productHeight: number;
@@ -24,12 +24,12 @@ interface PISearch {
 	memberId?: string;
 	locationList?: ProductLocation[];
 	typeList?: ProductType[];
-	roomsList?: Number[];
+	widthList?: Number[];
+	heightList?: Number[];
+	lengthList?: Number[];
 	options?: string[];
-	bedsList?: Number[];
 	pricesRange?: Range;
 	periodsRange?: PeriodsRange;
-	squaresRange?: Range;
 	text?: string;
 }
 

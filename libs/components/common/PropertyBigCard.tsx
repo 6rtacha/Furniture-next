@@ -16,11 +16,11 @@ import HeightOutlinedIcon from '@mui/icons-material/HeightOutlined';
 
 interface PropertyBigCardProps {
 	product: Product;
-	likePropertyHandler: any;
+	likeProductHandler: any;
 }
 
 const PropertyBigCard = (props: PropertyBigCardProps) => {
-	const { product, likePropertyHandler } = props;
+	const { product, likeProductHandler } = props;
 	const device = useDeviceDetect();
 	const user = useReactiveVar(userVar);
 	const router = useRouter();
@@ -74,7 +74,7 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 								color={'default'}
 								onClick={(e: any) => {
 									e.stopPropagation();
-									likePropertyHandler(user, product?._id);
+									likeProductHandler(user, product?._id);
 								}}
 							>
 								{product?.meLiked && product?.meLiked[0]?.myFavorite ? (

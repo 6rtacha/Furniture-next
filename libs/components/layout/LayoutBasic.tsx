@@ -31,14 +31,12 @@ const withLayoutBasic = (Component: any) => {
 				case '/product':
 					title = 'Product Search';
 					desc = 'We are glad to see you again!';
-					bgImage =
-						'https://s3-alpha-sig.figma.com/img/bf4a/5e25/1e645d3842e11a41778fdbf2ac618eb7?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=J4VaCTuA~3TRbMoNM87Ds9Fi~ahSfsJwdgkz8MOMx4nzQabJ-3uaB9gsZtPe5Jyoicn9NU0I2VtywVyek6I7Rtdwv7fQdeKPRNVx3ww6AKZyDzQy4fF~To9DH328hLkhQNkJg-8hX5cc-jLrvbV7Z1xe5NTG7qLwtBZuBf2o~-bflNGIeN9id19oBL0YlO6dxst-RBYWtXw08SDfxTr1ZxhIT0Ud2JiP1QD3HY-2kRkQgYJEHYwWcraY0H5XondmVlKywxS~442wwfdZBPjCJkL02vspukaUUMQPNQ~LQ5~-wTlGkwO58m2ku13x-Stt0ahM7WML8jN37Jivjclk6g__';
+					bgImage = '/img/page_product.png';
 					break;
 				case '/agent':
 					title = 'Designers';
 					desc = 'Home / Agents';
-					bgImage =
-						'https://s3-alpha-sig.figma.com/img/9133/29df/166bccba71d1efe08b16c0bd47f9a98f?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=qRdKGq~UrEIk6xbiGDXH8CwytI5Y6P1Z2q8F~fu7R7~4BVFQi1QT1x-jAUkFDuW9H10CJkAikO~jgEyoZXjXvHl~jzS9SKuaJwB0YxBGK0dGdmRASk6nbj1UeI~X58Q-rrQBTM2-9S1c~DTcUVQr5-NNPS9sLDxltfLYnCLTH0Tzcv8BdizZfxaSaZSHhmRSrLSv1xc1ESX~iEkAf9ordxyr0EGBN37A4MjteYBXEwhJWYn-MIgbraEbE7v0SaM6o2kazIVBgi6pMcmWkWvv1Gbfld-l6vTkDOxmAiHIQyIOtHO9wZHSssMKEax85iSgUsgbBsGcvj5ZPYeDbVwFHw__';
+					bgImage = '/img/page_my.png';
 					break;
 				case '/agent/detail':
 					title = 'Agent Page';
@@ -49,14 +47,12 @@ const withLayoutBasic = (Component: any) => {
 				case '/mypage':
 					title = 'my page';
 					desc = 'Home / Member';
-					bgImage =
-						'https://s3-alpha-sig.figma.com/img/708c/b91d/9373acafe0e5f7db95f7559d0fa1a37b?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=cZUpVRN-PZkTo-GS8MP-XUosZ8jxc8Q01pN0Sy8SLVu8K5J4BQ~ibSJlGvXQmoUxnat~ltvrblowm7GmA5XLfqYyZwnDSkQuM6ZuNnn-G2VfQKCDTKkWvOm~LexKH8FNVIMHCfd7~zXPdGZOjHQMSnF79vUdubAFJHo601MNLrqfEx5gjhvz0K51feGoJ-KGTB0x0xdXNYGWe~xvoy6le6nnW5PZN3yhVVzeCJrZK4rH8qf6IOdfl7yi1rzy0h1J655r5TQxqMBhJEryVzBbBkOQehGvm6sThTRbPabvw063R361mXEQ4vI-uAjpv2O2klAjtDYMCHT3l3LsK46YgQ__';
+					bgImage = '/img/page_agent.png';
 					break;
 				case '/community':
 					title = 'Community';
 					desc = 'Home / Blog';
-					bgImage =
-						'https://s3-alpha-sig.figma.com/img/8d84/c0a6/90afce983e419dc7455c9a0c9aba64f4?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=BQUsjOJr6GhY-XqseIW9PS8UKfL9GKwNwoMBhCzar4nwNJrNRdfL60UFxlsCVbBrh0IwKtZ0iKqRe6BMXXTRwYxsx5B9j2dC8AafUDNH0tshhWxaP3lxHj8Ob~YU5UgG5Gfa7ehUV5wymvbY~McPup-ml-X5fBCNlQDF3HxUEDHPUBkpUraBTCyvqV5rMI4p8iIWnX3DtlOJukRuiyyj5MdTQ3922Y-tiXUh~lHqs38toeEWLs9hr32ycyyhCgg6tzcG8X98aV18-faYwl0pj~HBQDn-ltwdDehqGovss7u2K3uk9ubjwU75kASfUdjTe3EuvsYRR2TlA3AQbSfMag__';
+					bgImage = '/img/page_community.png';
 					break;
 				case '/community/detail':
 					title = 'Community Detail';

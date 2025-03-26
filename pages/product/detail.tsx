@@ -30,7 +30,7 @@ import 'swiper/css/pagination';
 import { GET_COMMENTS, GET_PRODUCT, GET_PRODUCTS } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 import { Direction, Message } from '../../libs/enums/common.enum';
-import { CREATE_COMMENT, LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
+import { CREATE_COMMENT, LIKE_TARGET_PRODUCT } from '../../apollo/user/mutation';
 import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import ProductCard from '../../libs/components/product/ProductCard';
 
@@ -54,13 +54,13 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 	const [productComments, setProductComments] = useState<Comment[]>([]);
 	const [commentTotal, setCommentTotal] = useState<number>(0);
 	const [insertCommentData, setInsertCommentData] = useState<CommentInput>({
-		commentGroup: CommentGroup.PROPERTY,
+		commentGroup: CommentGroup.PRODUCT,
 		commentContent: '',
 		commentRefId: '',
 	});
 
 	/** APOLLO REQUESTS **/
-	const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
+	const [likeTargetProduct] = useMutation(LIKE_TARGET_PRODUCT);
 	const [createComment] = useMutation(CREATE_COMMENT);
 
 	const {
@@ -145,13 +145,13 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 	const changeImageHandler = (image: string) => {
 		setSlideImage(image);
 	};
-	const likePropertyHandler = async (user: T, id: string) => {
+	const likeProductHandler = async (user: T, id: string) => {
 		try {
 			if (!id) return;
 			if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
 
 			// execute likeTargetProperty Mutation
-			await likeTargetProperty({ variables: { input: id } });
+			await likeTargetProduct({ variables: { input: id } });
 
 			await getProductRefetch({ input: id });
 			// execute getPropertiesRefetch
@@ -167,7 +167,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 
 			await sweetTopSmallSuccessAlert('success', 800);
 		} catch (err: any) {
-			console.log('ERROR, likePropertyHandler:', err.message);
+			console.log('ERROR, likeProductHandler:', err.message);
 			sweetMixinErrorAlert(err.message).then();
 		}
 	};
@@ -304,15 +304,15 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 														<RemoveRedEyeIcon fontSize="medium" />
 														<Typography>{product?.productViews}</Typography>
 													</Stack>
-													<Stack className="button-box">
+													<Stack
+														className="button-box"
+														// @ts-ignore
+														onClick={() => likeProductHandler(user, product?._id)}
+													>
 														{product?.meLiked && product?.meLiked[0]?.myFavorite ? (
 															<FavoriteIcon color="primary" fontSize={'medium'} />
 														) : (
-															<FavoriteBorderIcon
-																fontSize={'medium'}
-																// @ts-ignore
-																onClick={() => likePropertyHandler(user, property?._id)}
-															/>
+															<FavoriteBorderIcon fontSize={'medium'} />
 														)}
 														<Typography>{product?.productLikes}</Typography>
 													</Stack>
@@ -333,7 +333,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 														<Typography className={'data'}>${formatterStr(product?.productPrice)}</Typography>
 													</Box>
 													<Box component={'div'} className={'info'}>
-														<Typography className={'title'}>Property Size</Typography>
+														<Typography className={'title'}>Product Size</Typography>
 														<Typography className={'data'}>{product?.productLength} m2</Typography>
 													</Box>
 													<Box component={'div'} className={'info'}>
@@ -485,7 +485,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 												<SwiperSlide className={'similar-homes-slide'} key={product.productTitle}>
 													<PropertyBigCard
 														product={product}
-														likePropertyHandler={likePropertyHandler}
+														likeProductHandler={likeProductHandler}
 														key={product?._id}
 													/>
 												</SwiperSlide>

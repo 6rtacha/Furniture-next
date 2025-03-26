@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
 import { Button, Stack } from '@mui/material';
@@ -10,7 +10,7 @@ import RecentlyVisited from '../../libs/components/mypage/RecentlyVisited';
 import AddProperty from '../../libs/components/mypage/AddNewProperty';
 import MyProfile from '../../libs/components/mypage/MyProfile';
 import MyArticles from '../../libs/components/mypage/MyArticles';
-import { useMutation, useReactiveVar } from '@apollo/client';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { userVar } from '../../apollo/store';
 import MyMenu from '../../libs/components/mypage/MyMenu';
 import WriteArticle from '../../libs/components/mypage/WriteArticle';
@@ -22,6 +22,10 @@ import { LIKE_TARGET_MEMBER, SUBSCRIBE, UNSUBSCRIBE } from '../../apollo/user/mu
 import { Messages } from '../../libs/config';
 import AgentBlogCard from '../../libs/components/agent/AgentBlogCard';
 import AgentFloowerCard from '../../libs/components/agent/AgentFollowerCard';
+import MyProducts from '../../libs/components/mypage/MyProducts';
+import { GET_MEMBER } from '../../apollo/user/query';
+import { Member } from '../../libs/types/member/member';
+import { T } from '../../libs/types/common';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -34,11 +38,27 @@ const MyPage: NextPage = () => {
 	const user = useReactiveVar(userVar);
 	const router = useRouter();
 	const category: any = router.query?.category ?? 'myProfile';
+	const [member, setMember] = useState<Member | null>(null);
+	const { memberId } = router.query;
 
 	/** APOLLO REQUESTS **/
 	const [subscribe] = useMutation(SUBSCRIBE);
 	const [unsubscribe] = useMutation(UNSUBSCRIBE);
 	const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
+
+	const {
+		loading: getMemberLoading,
+		data: getMemberData,
+		error: getMemberError,
+		refetch: getMemberRefetch,
+	} = useQuery(GET_MEMBER, {
+		fetchPolicy: 'network-only',
+		variables: { input: memberId },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setMember(data?.getMember);
+		},
+	});
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -119,7 +139,7 @@ const MyPage: NextPage = () => {
 						</Stack>
 						<Stack className={'agent-info'}>
 							<Stack className={'agent-name'}>
-								<span>John Smith</span>
+								<span>{member?.memberNick}</span>
 								<Button className={'logout-btn'}>
 									<span>Logout</span>
 								</Button>
@@ -127,7 +147,7 @@ const MyPage: NextPage = () => {
 							<Stack className={'agent-desc'}>
 								<Stack className={'designer'}>
 									<span>Designer</span>
-									<span>01034401234</span>
+									<span>{member?.memberPhone}</span>
 								</Stack>
 							</Stack>
 							<MyProfile />
@@ -145,7 +165,7 @@ const MyPage: NextPage = () => {
 							</Stack>
 							<div className="divider"></div>
 							<Stack className={'cards'}>
-								<AgentBlogCard />
+								<MyProducts />
 							</Stack>
 						</Stack>
 						<Stack className={'follower-following'}>
@@ -168,6 +188,16 @@ const MyPage: NextPage = () => {
 			</div>
 		);
 	}
+};
+
+MyPage.defaultProps = {
+	initialInput: {
+		page: 1,
+		limit: 9,
+		search: {
+			memberId: '',
+		},
+	},
 };
 
 export default withLayoutBasic(MyPage);

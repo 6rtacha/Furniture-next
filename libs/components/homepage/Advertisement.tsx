@@ -29,9 +29,8 @@ const Advertisement = () => {
 					</div>
 					<div className="desc">
 						<span>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eleifend tellus justo, a maximus elit
-							ornare at. In tempor nisi eget ex bibendum, vel tincidunt neque volutpat.Nulla condimentum condimentum
-							nulla, eget aliquet odio vulputate eleifend
+							We paint with elegance, design with grace, A stylish haven, a timeless space. Where art and life in
+							harmony blend, A touch of beauty, a trend that won’t end.
 						</span>
 					</div>
 					<Button className={'btn'}>

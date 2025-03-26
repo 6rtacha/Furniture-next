@@ -306,7 +306,7 @@ Community.defaultProps = {
 		sort: 'createdAt',
 		direction: 'ASC',
 		search: {
-			articleCategory: 'FREE',
+			articleCategory: 'NEWS',
 		},
 	},
 };
