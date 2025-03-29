@@ -14,8 +14,6 @@ import { T } from '../../types/common';
 import { LIKE_TARGET_PRODUCT } from '../../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 import { Message } from '../../enums/common.enum';
-import property from '../../../pages/product';
-import product from '../../../pages/product';
 
 interface TrendProductsProps {
 	initialInput: ProductsInquiry;

@@ -33,3 +33,13 @@ export enum OrderStatus {
 	FINISH = 'FINISH',
 	DELETE = 'DELETE',
 }
+
+export enum ProductMaterial {
+	WOOD = 'WOOD',
+	METAL = 'METAL',
+	FABRICS = 'FABRICS',
+	LEATHER = 'LEATHER',
+	VELVET = 'VELVET',
+	PLYWOOD = 'PLYWOOD',
+	GLASS = 'GLASS',
+}

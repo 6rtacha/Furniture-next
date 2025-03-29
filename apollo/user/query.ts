@@ -126,11 +126,6 @@ export const GET_PRODUCT = gql`
 			deletedAt
 			createdAt
 			updatedAt
-			meLiked {
-				memberId
-				likeRefId
-				myFavorite
-			}
 			memberData {
 				_id
 				memberType
@@ -157,11 +152,11 @@ export const GET_PRODUCT = gql`
 				createdAt
 				updatedAt
 				accessToken
-				meLiked {
-					memberId
-					likeRefId
-					myFavorite
-				}
+			}
+			meLiked {
+				memberId
+				likeRefId
+				myFavorite
 			}
 		}
 	}
@@ -207,26 +202,21 @@ export const GET_PRODUCTS = gql`
 					memberImage
 					memberAddress
 					memberDesc
+					memberWarnings
+					memberBlocks
 					memberProducts
-					memberArticles
-					memberFollowers
-					memberFollowings
+					memberRank
 					memberPoints
 					memberLikes
 					memberViews
-					memberComments
-					memberRank
-					memberWarnings
-					memberBlocks
 					deletedAt
 					createdAt
 					updatedAt
-					accessToken
-					meLiked {
-						memberId
-						likeRefId
-						myFavorite
-					}
+				}
+				meLiked {
+					memberId
+					likeRefId
+					myFavorite
 				}
 			}
 			metaCounter {

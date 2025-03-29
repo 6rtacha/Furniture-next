@@ -120,6 +120,8 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 			});
 
 			await getAgentsRefetch({ input: searchFilter });
+			console.log('agents:', agents);
+
 			await sweetTopSmallSuccessAlert('succes', 800);
 		} catch (err: any) {
 			console.log('Error, likeMemberHandler:', err.message);

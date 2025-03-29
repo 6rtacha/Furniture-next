@@ -1,7 +1,6 @@
 import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import { Box, Button, Menu, MenuItem, Pagination, Stack, Typography } from '@mui/material';
-// import PropertyCard from '../../libs/components/product/PropertyCard';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import Filter from '../../libs/components/product/Filter';
@@ -39,7 +38,7 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 	const [filterSortName, setFilterSortName] = useState('New');
 
 	/** APOLLO REQUESTS **/
-	const [likeTargetProperty] = useMutation(LIKE_TARGET_PRODUCT);
+	const [likeTargetProduct] = useMutation(LIKE_TARGET_PRODUCT);
 
 	const {
 		loading: getProductsLoading,
@@ -47,7 +46,7 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 		error: getProductsError,
 		refetch: getProductsRefetch,
 	} = useQuery(GET_PRODUCTS, {
-		fetchPolicy: 'cache-and-network',
+		fetchPolicy: 'network-only',
 		variables: { input: searchFilter },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
@@ -83,20 +82,20 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 		setCurrentPage(value);
 	};
 
-	const likePropertyHandler = async (user: T, id: string) => {
+	const likeProductHandler = async (user: T, id: string) => {
 		try {
 			if (!id) return;
 			if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
 
-			// execute likeTargetProperty Mutation
-			await likeTargetProperty({ variables: { input: id } });
+			// execute likeTargetProduct Mutation
+			await likeTargetProduct({ variables: { input: id } });
 
-			// execute getPropertiesRefetch
-			await getProductsRefetch({ input: initialInput });
-
+			// execute getProductsRefetch
+			await getProductsRefetch({ input: searchFilter });
+			console.log('products:', products);
 			await sweetTopSmallSuccessAlert('success', 800);
 		} catch (err: any) {
-			console.log('ERROR, likePropertyHandler:', err.message);
+			console.log('ERROR, likeProductHandler:', err.message);
 			sweetMixinErrorAlert(err.message).then();
 		}
 	};
@@ -172,7 +171,7 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 					<Stack className={'property-page'}>
 						<Stack className={'filter-config'}>
 							{/* @ts-ignore */}
-							<NewFilter />
+							<NewFilter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
 
 							{/* <Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} /> */}
 						</Stack>
@@ -185,9 +184,7 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 									</div>
 								) : (
 									products.map((product: Product) => {
-										return (
-											<ProductCard product={product} likePropertyHandler={likePropertyHandler} key={product?._id} />
-										);
+										return <ProductCard product={product} likeProductHandler={likeProductHandler} key={product?._id} />;
 									})
 								)}
 							</Stack>
@@ -207,7 +204,7 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 								{products.length !== 0 && (
 									<Stack className="total-result">
 										<Typography>
-											Total {total} propert{total > 1 ? 'ies' : 'y'} available
+											Total {total} product{total > 1 ? 's' : ''} available
 										</Typography>
 									</Stack>
 								)}
@@ -226,7 +223,12 @@ ProductList.defaultProps = {
 		limit: 9,
 		sort: 'createdAt',
 		direction: 'DESC',
-		search: {},
+		search: {
+			pricesRange: {
+				start: 0,
+				end: 10000,
+			},
+		},
 	},
 };
 

@@ -13,8 +13,8 @@ import {
 	IconButton,
 } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import { PropertyLocation, PropertyType } from '../../enums/product.enum';
-import { PropertiesInquiry } from '../../types/product/product.input';
+import {} from '../../enums/product.enum';
+import {} from '../../types/product/product.input';
 import { useRouter } from 'next/router';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { propertySquare } from '../../config';
@@ -45,12 +45,12 @@ const Filter = (props: FilterType) => {
 
 	/** LIFECYCLES **/
 	useEffect(() => {
-		// const queryParams = JSON.stringify({
-		// 	...searchFilter,
-		// 	search: {
-		// 		...searchFilter.search,
-		// 	},
-		// });
+		const queryParams = JSON.stringify({
+			...searchFilter,
+			search: {
+				...searchFilter.search,
+			},
+		});
 
 		if (searchFilter?.search?.locationList?.length == 0) {
 			delete searchFilter.search.locationList;
@@ -543,7 +543,7 @@ const Filter = (props: FilterType) => {
 						<OutlinedInput
 							value={searchText}
 							type={'text'}
-							className={'search-input'}
+							className={'input-search'}
 							placeholder={'What are you looking for?'}
 							onChange={(e: any) => setSearchText(e.target.value)}
 							onKeyDown={(event: any) => {

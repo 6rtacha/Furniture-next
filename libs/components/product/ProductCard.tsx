@@ -2,6 +2,7 @@ import { Box, IconButton, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteSharpIcon from '@mui/icons-material/FavoriteSharp';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Product } from '../../types/product/product';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
@@ -11,13 +12,13 @@ import { REACT_APP_API_URL } from '../../config';
 
 interface ProductCardType {
 	product: Product;
-	likePropertyHandler?: any;
+	likeProductHandler?: any;
 	myFavorites?: boolean;
 	recentlyVisited?: boolean;
 }
 
 const ProductCard = (props: ProductCardType) => {
-	const { product, likePropertyHandler, myFavorites, recentlyVisited } = props;
+	const { product, likeProductHandler, myFavorites, recentlyVisited } = props;
 	const device = useDeviceDetect();
 	const user = useReactiveVar(userVar);
 	const imagePath: string = product?.productImages[0]
@@ -44,17 +45,10 @@ const ProductCard = (props: ProductCardType) => {
 
 						<div className="title">
 							<div className="article-title">
-								<Link
-									href={{
-										pathname: '/product/detail',
-										query: { id: product?._id },
-									}}
-								>
-									<span>{product.productTitle}</span>
-								</Link>
+								<span>{product.productTitle}</span>
 							</div>
 							<div className="address">
-								{product.productLocation}, {product.productAddress}
+								{product.productAddress}, {product.productLocation}
 							</div>
 							<Stack className="info">
 								<div className="type">{product.productType}</div>
@@ -67,17 +61,17 @@ const ProductCard = (props: ProductCardType) => {
 									<IconButton color={'default'}>
 										<RemoveRedEyeIcon />
 									</IconButton>
-									<Typography className="view-cnt">7</Typography>
-									<IconButton color={'default'}>
-										{/* {myFavorites ? ( */}
-										<FavoriteIcon color="#cda274" />
-										{/* ) : property?.meLiked && property?.meLiked[0]?.myFavorite ? ( */}
-										<FavoriteIcon color="#cda274" />
-										{/* ) : ( */}
-										<FavoriteBorderIcon />
-										{/* )} */}
+									<Typography className="view-cnt">{product?.productViews}</Typography>
+									<IconButton color={'default'} onClick={() => likeProductHandler(user, product?._id)}>
+										{myFavorites ? (
+											<FavoriteSharpIcon />
+										) : product?.meLiked && product?.meLiked[0]?.myFavorite ? (
+											<FavoriteSharpIcon />
+										) : (
+											<FavoriteBorderIcon />
+										)}
 									</IconButton>
-									<Typography className="view-cnt">9</Typography>
+									<Typography className="view-cnt">{product?.productLikes}</Typography>
 								</Stack>
 							</Stack>
 						</div>

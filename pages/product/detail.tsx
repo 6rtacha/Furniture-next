@@ -70,8 +70,8 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 		refetch: getProductRefetch,
 	} = useQuery(GET_PRODUCT, {
 		fetchPolicy: 'network-only',
-		skip: !productId,
 		variables: { input: productId },
+		skip: !productId,
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
 			if (data?.getProduct) setProduct(data?.getProduct);
@@ -95,7 +95,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 				search: { locationList: product?.productLocation ? [product?.productLocation] : [] },
 			},
 		},
-		skip: !productId && !product,
+		// skip: !productId && !product,
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
 			if (data?.getProducts?.list) setDestinationProducts(data?.getProducts?.list);
@@ -122,6 +122,8 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 	useEffect(() => {
 		if (router.query.id) {
 			setProductId(router.query.id as string);
+			console.log('productId', productId);
+
 			setCommentInquiry({
 				...commentInquiry,
 				search: {
@@ -230,9 +232,9 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 									<Stack className={'prop-desc-config'}>
 										<Stack className={'info'}>
 											<Stack className={'left-box'}>
-												<Typography className={'title-main'}>{product?.productTitle}Sofa</Typography>
+												<Typography className={'title-main'}>{product?.productTitle}</Typography>
 												<Stack className={'top-box'}>
-													<Typography className={'city'}>{product?.productLocation}Seoul</Typography>
+													<Typography className={'city'}>{product?.productLocation}</Typography>
 													<Stack className={'divider'}></Stack>
 													<Stack className={'buy-rent-box'}>
 														{product?.productPurchase && (
@@ -337,21 +339,21 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 														<Typography className={'data'}>{product?.productLength} m2</Typography>
 													</Box>
 													<Box component={'div'} className={'info'}>
-														<Typography className={'title'}>Rooms</Typography>
+														<Typography className={'title'}>Product Width</Typography>
 														<Typography className={'data'}>{product?.productWidth}</Typography>
 													</Box>
 													<Box component={'div'} className={'info'}>
-														<Typography className={'title'}>Bedrooms</Typography>
+														<Typography className={'title'}>Product Height</Typography>
 														<Typography className={'data'}>{product?.productHeight}</Typography>
 													</Box>
 												</Stack>
 												<Stack className={'right'}>
 													<Box component={'div'} className={'info'}>
-														<Typography className={'title'}>Year Built</Typography>
+														<Typography className={'title'}>Year made</Typography>
 														<Typography className={'data'}>{moment(product?.createdAt).format('YYYY')}</Typography>
 													</Box>
 													<Box component={'div'} className={'info'}>
-														<Typography className={'title'}>Property Type</Typography>
+														<Typography className={'title'}>Product Type</Typography>
 														<Typography className={'data'}>{product?.productType}</Typography>
 													</Box>
 													<Box component={'div'} className={'info'}>
@@ -462,7 +464,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 									</Stack>
 									<Stack className={'pagination-box'}>
 										<WestIcon className={'swiper-similar-prev'} />
-										<div className={'swiper-similar-pagination'}></div>
+										<div className={'swiper-similar-pagination'} style={{ color: '#cda274' }}></div>
 										<EastIcon className={'swiper-similar-next'} />
 									</Stack>
 								</Stack>
@@ -470,7 +472,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 									<Swiper
 										className={'similar-homes-swiper'}
 										slidesPerView={'auto'}
-										spaceBetween={35}
+										spaceBetween={30}
 										modules={[Autoplay, Navigation, Pagination]}
 										navigation={{
 											nextEl: '.swiper-similar-next',
@@ -515,37 +517,3 @@ PropertyDetail.defaultProps = {
 };
 
 export default withLayoutFull(PropertyDetail);
-{
-	/* <Stack className={'leave-review-config'}>
-									<Typography className={'main-title'}>Leave A Review</Typography>
-									<Typography className={'review-title'}>Review</Typography>
-									<textarea
-										onChange={({ target: { value } }: any) => {
-											setInsertCommentData({ ...insertCommentData, commentContent: value });
-										}}
-										value={insertCommentData.commentContent}
-									></textarea>
-									<Box className={'submit-btn'} component={'div'}>
-										<Button
-											className={'submit-review'}
-											disabled={insertCommentData.commentContent === '' || user?._id === ''}
-											onClick={createCommentHandler}
-										>
-											<Typography className={'title'}>Submit Review</Typography>
-											<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
-												<g clipPath="url(#clip0_6975_3642)">
-													<path
-														d="M16.1571 0.5H6.37936C6.1337 0.5 5.93491 0.698792 5.93491 0.944458C5.93491 1.19012 6.1337 1.38892 6.37936 1.38892H15.0842L0.731781 15.7413C0.558156 15.915 0.558156 16.1962 0.731781 16.3698C0.818573 16.4566 0.932323 16.5 1.04603 16.5C1.15974 16.5 1.27345 16.4566 1.36028 16.3698L15.7127 2.01737V10.7222C15.7127 10.9679 15.9115 11.1667 16.1572 11.1667C16.4028 11.1667 16.6016 10.9679 16.6016 10.7222V0.944458C16.6016 0.698792 16.4028 0.5 16.1571 0.5Z"
-														fill="#181A20"
-													/>
-												</g>
-												<defs>
-													<clipPath id="clip0_6975_3642">
-														<rect width="16" height="16" fill="white" transform="translate(0.601562 0.5)" />
-													</clipPath>
-												</defs>
-											</svg>
-										</Button>
-									</Box>
-								</Stack> */
-}
