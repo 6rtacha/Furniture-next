@@ -25,8 +25,10 @@ const ProductCard = (props: ProductCardType) => {
 		? `${REACT_APP_API_URL}/${product?.productImages[0]}`
 		: '/img/banner/header1.svg';
 
+	console.log('product:', product);
+
 	if (device === 'mobile') {
-		return <div>PROPERTY CARD</div>;
+		return <div>PRODUCT CARD</div>;
 	} else {
 		return (
 			<>

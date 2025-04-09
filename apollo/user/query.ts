@@ -100,7 +100,7 @@ query GetMember($input: String!) {
 
 export const GET_PRODUCT = gql`
 	query Getproduct($input: String!) {
-		getproduct(productId: $input) {
+		getProduct(productId: $input) {
 			_id
 			productType
 			productStatus
@@ -126,6 +126,11 @@ export const GET_PRODUCT = gql`
 			deletedAt
 			createdAt
 			updatedAt
+			meLiked {
+				memberId
+				likeRefId
+				myFavorite
+			}
 			memberData {
 				_id
 				memberType
@@ -152,11 +157,11 @@ export const GET_PRODUCT = gql`
 				createdAt
 				updatedAt
 				accessToken
-			}
-			meLiked {
-				memberId
-				likeRefId
-				myFavorite
+				meLiked {
+					memberId
+					likeRefId
+					myFavorite
+				}
 			}
 		}
 	}

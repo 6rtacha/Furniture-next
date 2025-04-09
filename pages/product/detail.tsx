@@ -46,6 +46,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
+
 	const [productId, setProductId] = useState<string | null>(null);
 	const [product, setProduct] = useState<Product | null>(null);
 	const [slideImage, setSlideImage] = useState<string>('');
@@ -69,16 +70,22 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 		error: getProductError,
 		refetch: getProductRefetch,
 	} = useQuery(GET_PRODUCT, {
-		fetchPolicy: 'network-only',
+		fetchPolicy: 'cache-and-network',
 		variables: { input: productId },
 		skip: !productId,
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			if (data?.getProduct) setProduct(data?.getProduct);
-			if (data?.getProduct) setSlideImage(data?.getProduct?.productImages[0]);
+			if (data?.getProduct) {
+				setProduct(data.getProduct);
+				console.log('product from query:', data.getProduct);
+
+				if (data.getProduct?.productImages?.length > 0) {
+					setSlideImage(data.getProduct.productImages[0]);
+				}
+			}
 		},
 	});
-
+	console.log('product', getProductData);
 	const {
 		loading: getProductsLoading,
 		data: getProductsData,
@@ -118,11 +125,13 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 		},
 	});
 
+	console.log('productId:', productId);
 	/** LIFECYCLES **/
 	useEffect(() => {
 		if (router.query.id) {
+			console.log('router.query.id', router.query.id);
+
 			setProductId(router.query.id as string);
-			console.log('productId', productId);
 
 			setCommentInquiry({
 				...commentInquiry,
@@ -312,14 +321,14 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 														onClick={() => likeProductHandler(user, product?._id)}
 													>
 														{product?.meLiked && product?.meLiked[0]?.myFavorite ? (
-															<FavoriteIcon color="primary" fontSize={'medium'} />
+															<FavoriteIcon color="none" fontSize={'medium'} />
 														) : (
 															<FavoriteBorderIcon fontSize={'medium'} />
 														)}
 														<Typography>{product?.productLikes}</Typography>
 													</Stack>
 												</Stack>
-												<Typography>${formatterStr(product?.productPrice)}47</Typography>
+												<Typography>${formatterStr(product?.productPrice)}</Typography>
 											</Stack>
 										</Stack>
 										<Stack className={'top'}>
@@ -357,7 +366,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 														<Typography className={'data'}>{product?.productType}</Typography>
 													</Box>
 													<Box component={'div'} className={'info'}>
-														<Typography className={'title'}>Property Options</Typography>
+														<Typography className={'title'}>Product Options</Typography>
 														<Typography className={'data'}>
 															For {product?.productPurchase && 'Barter'} {product?.productRent && 'Rent'}
 														</Typography>

@@ -3,7 +3,7 @@ export enum ProductType {
 	BED = 'BED',
 	TABLE = 'TABLE',
 	CHAIR = 'CHAIR',
-	CABINET = 'CABIENT',
+	CABINET = 'CABINET',
 	OUTDOOR = 'OUTDOOR',
 	LAMP = 'LAMP',
 }

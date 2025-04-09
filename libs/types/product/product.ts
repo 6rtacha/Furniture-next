@@ -45,6 +45,7 @@ export interface Product {
 	productRank: number;
 
 	productImages: string[];
+
 	productDesc?: string;
 
 	productPurchase: boolean;
@@ -68,7 +69,7 @@ export interface Product {
 	memberData?: Member;
 }
 
-export interface Properties {
+export interface Products {
 	list: Product[];
 	metaCounter: TotalCounter[];
 }

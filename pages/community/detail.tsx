@@ -100,7 +100,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 		error: getCommentsError,
 		refetch: getCommentsRefetch,
 	} = useQuery(GET_COMMENTS, {
-		fetchPolicy: 'cache-and-network',
+		fetchPolicy: 'network-only',
 		variables: {
 			input: articleId,
 		},
@@ -114,6 +114,8 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 	/** LIFECYCLES **/
 	useEffect(() => {
 		if (articleId) setSearchFilter({ ...searchFilter, search: { commentRefId: articleId } });
+		getCommentsRefetch({ input: searchFilter });
+		console.log('articleId:', articleId);
 	}, [articleId]);
 
 	/** HANDLERS **/
@@ -353,9 +355,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 											</Tabs>
 										</Stack>
 									</Stack>
-									<Stack>
-										<ToastViewerComponent markdown={boardArticle?.articleContent} className={'ytb_play'} />
-									</Stack>
+									<Stack className={'ytb_play'}>{boardArticle?.articleContent}</Stack>
 								</Stack>
 								<Stack
 									className="second-box-config"
@@ -375,7 +375,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 										/>
 										<Stack className="button-box">
 											<Typography>{wordsCnt}/100</Typography>
-											<Button onClick={creteCommentHandler}>comment</Button>
+											<Button onClick={creteCommentHandler}>Comment</Button>
 										</Stack>
 									</Stack>
 								</Stack>

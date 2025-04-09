@@ -18,7 +18,7 @@ import { Comment } from '../../libs/types/comment/comment';
 import { CommentGroup } from '../../libs/enums/comment.enum';
 import { Messages, REACT_APP_API_URL } from '../../libs/config';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { CREATE_COMMENT, LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
+import { CREATE_COMMENT, LIKE_TARGET_PRODUCT } from '../../apollo/user/mutation';
 import { GET_COMMENTS, GET_MEMBER, GET_PRODUCTS } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 
@@ -55,7 +55,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 
 	/** APOLLO REQUESTS **/
 	const [createComment] = useMutation(CREATE_COMMENT);
-	const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
+	const [likeTargetProperty] = useMutation(LIKE_TARGET_PRODUCT);
 
 	const {
 		loading: getMemberLoading,
@@ -109,6 +109,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	/** LIFECYCLES **/
 	useEffect(() => {
 		if (router.query.agentId) setAgentId(router.query.agentId as string);
+		console.log('agentId:', agentId);
 	}, [router]);
 
 	useEffect(() => {}, [searchFilter]);
@@ -179,11 +180,11 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 				<Stack className={'container'}>
 					<Stack className={'info-card'}>
 						<Stack className={'agent-image'}>
-							<img src="https://s3-alpha-sig.figma.com/img/ef08/0257/2c6e28c6aa31cb138d47922a76a4bf10?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=pbQj8T20uv6M96bjpR15Pbotqnyps1AUdp8rlAL1JgQ23Z8Ddil0gGcNW5HlvLrMckXnr1be5FrGJ~-KxBncwJAJHM62wvMPOkF8nqWkEdhfNiB686vj71hK5DX8DkiTZu2A8IhxBaENJLO0OFmaQnNhqwK4y-QLehtLMfTynqy36n1jtYcCc258bfOvza5Z8f7-G~a9meIVFEo9g3JKYohA978WLMS9nhh2aV357VnbtoKvoCqkwxC2EQeYIBlHKBPk1WDNsqLEQ6z9eur1Nnr9C5h7Xw-7VQL~blWeSUqzIKBJUES9WYc7tIPOkDG7Nd0zOhnlw30a85f0C3b-1w__" />
+							<img src={`${REACT_APP_API_URL}/${agent?.memberImage}`} alt="" />
 						</Stack>
 						<Stack className={'agent-info'}>
 							<Stack className={'agent-name'}>
-								<span>John Smith</span>
+								<span>{agent?.memberNick}</span>
 								<Button className={'follow-btn'}>
 									<span>Follow</span>
 								</Button>
@@ -193,10 +194,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 									<span>Designer</span>
 								</Stack>
 								<Stack className={'description'}>
-									<span>
-										Lorem ipsum dolor sit amet, adipiscing Aliquam eu sem vitae turpmaximus.posuere in.Contrpobelie
-										frandomised words which don't look even slightly believable.
-									</span>
+									<span>{agent?.memberDesc}</span>
 								</Stack>
 								<Stack className={'mail-info'}>
 									<img src="/img/icons/mail.png" />

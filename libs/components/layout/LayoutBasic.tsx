@@ -35,14 +35,13 @@ const withLayoutBasic = (Component: any) => {
 					break;
 				case '/agent':
 					title = 'Designers';
-					desc = 'Home / Agents';
+					desc = 'Home / Designers';
 					bgImage = '/img/page_my.png';
 					break;
 				case '/agent/detail':
 					title = 'Agent Page';
 					desc = 'Home / ';
-					bgImage =
-						'https://s3-alpha-sig.figma.com/img/8d84/c0a6/90afce983e419dc7455c9a0c9aba64f4?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=BQUsjOJr6GhY-XqseIW9PS8UKfL9GKwNwoMBhCzar4nwNJrNRdfL60UFxlsCVbBrh0IwKtZ0iKqRe6BMXXTRwYxsx5B9j2dC8AafUDNH0tshhWxaP3lxHj8Ob~YU5UgG5Gfa7ehUV5wymvbY~McPup-ml-X5fBCNlQDF3HxUEDHPUBkpUraBTCyvqV5rMI4p8iIWnX3DtlOJukRuiyyj5MdTQ3922Y-tiXUh~lHqs38toeEWLs9hr32ycyyhCgg6tzcG8X98aV18-faYwl0pj~HBQDn-ltwdDehqGovss7u2K3uk9ubjwU75kASfUdjTe3EuvsYRR2TlA3AQbSfMag__';
+					bgImage = '/img/page_agentDetail.png';
 					break;
 				case '/mypage':
 					title = 'my page';

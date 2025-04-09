@@ -50,6 +50,8 @@ const NewFilter = (props: FilterType) => {
 	const [productMaterial, setProductMaterial] = useState<ProductMaterial[]>(Object.values(ProductMaterial));
 	const [btnColor, setBtnColor] = useState('#fff');
 
+	console.log('searchFilter', searchFilter);
+
 	/** HANDLERS **/
 	const handleLocationChange = useCallback(
 		async (event: any) => {

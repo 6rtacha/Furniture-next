@@ -64,14 +64,14 @@ const CommunityBoards = () => {
 					<Swiper
 						className={'article-swiper'}
 						slidesPerView={'auto'}
-						spaceBetween={29}
+						spaceBetween={30}
 						modules={[Autoplay, Navigation, Pagination]}
 						navigation={{
-							nextEl: '.swiper-agents-next',
-							prevEl: '.swiper-agents-prev',
+							nextEl: '.swiper-community-next',
+							prevEl: '.swiper-community-prev',
 						}}
 						pagination={{
-							el: '.swiper-popular-pagination',
+							el: '.swiper-community-pagination',
 						}}
 					>
 						{newsArticles.map((article, index) => {
@@ -84,9 +84,9 @@ const CommunityBoards = () => {
 					</Swiper>
 				</Stack>
 				<Stack className={'pagination-box'}>
-					<WestIcon className={'swiper-popular-prev'} />
-					<div className={'swiper-popular-pagination'}></div>
-					<EastIcon className={'swiper-popular-next'} />
+					<WestIcon className={'swiper-community-prev'} />
+					<div className={'swiper-community-pagination'}></div>
+					<EastIcon className={'swiper-community-next'} />
 				</Stack>
 			</Stack>
 		);

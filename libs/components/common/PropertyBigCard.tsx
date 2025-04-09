@@ -3,6 +3,7 @@ import { Stack, Box, Divider, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Product } from '../../types/product/product';
 import { REACT_APP_API_URL, topPropertyRank } from '../../config';
 import { formatterStr } from '../../utils';
@@ -78,9 +79,9 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 								}}
 							>
 								{product?.meLiked && product?.meLiked[0]?.myFavorite ? (
-									<FavoriteIcon color="primary" />
+									<FavoriteIcon color="none" />
 								) : (
-									<FavoriteIcon />
+									<FavoriteBorderIcon fontSize={'medium'} />
 								)}
 							</IconButton>
 							<Typography className="view-cnt">{product?.productLikes}</Typography>

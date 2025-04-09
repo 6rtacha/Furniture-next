@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Stack, Box } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import WestIcon from '@mui/icons-material/West';
@@ -14,6 +14,8 @@ import { T } from '../../types/common';
 import { LIKE_TARGET_PRODUCT } from '../../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 import { Message } from '../../enums/common.enum';
+import router, { useRouter } from 'next/router';
+import { ProductType } from '../../enums/product.enum';
 
 interface TrendProductsProps {
 	initialInput: ProductsInquiry;
@@ -23,6 +25,10 @@ const TrendProducts = (props: TrendProductsProps) => {
 	const { initialInput } = props;
 	const device = useDeviceDetect();
 	const [trendProducts, setTrendProducts] = useState<Product[]>([]);
+	const router = useRouter();
+	const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(
+		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
+	);
 
 	/** APOLLO REQUESTS **/
 	const [likeTargetProduct] = useMutation(LIKE_TARGET_PRODUCT);
@@ -58,6 +64,85 @@ const TrendProducts = (props: TrendProductsProps) => {
 			sweetMixinErrorAlert(err.message).then();
 		}
 	};
+
+	const pushBedHandler = async () => {
+		const updatedFilter = {
+			...searchFilter,
+			search: { ...searchFilter.search, typeList: [ProductType.BED] },
+		};
+		setSearchFilter(updatedFilter);
+
+		await router.push(
+			`/product?input=${JSON.stringify(updatedFilter)}`,
+			`/product?input=${JSON.stringify(updatedFilter)}`,
+		);
+	};
+
+	const pushChairHandler = async () => {
+		const updatedFilter = {
+			...searchFilter,
+			search: { ...searchFilter.search, typeList: [ProductType.CHAIR] },
+		};
+		setSearchFilter(updatedFilter);
+
+		await router.push(
+			`/product?input=${JSON.stringify(updatedFilter)}`,
+			`/product?input=${JSON.stringify(updatedFilter)}`,
+		);
+	};
+
+	const pushLampHandler = async () => {
+		const updatedFilter = {
+			...searchFilter,
+			search: { ...searchFilter.search, typeList: [ProductType.LAMP] },
+		};
+		setSearchFilter(updatedFilter);
+
+		await router.push(
+			`/product?input=${JSON.stringify(updatedFilter)}`,
+			`/product?input=${JSON.stringify(updatedFilter)}`,
+		);
+	};
+
+	const pushTableHandler = async () => {
+		const updatedFilter = {
+			...searchFilter,
+			search: { ...searchFilter.search, typeList: [ProductType.TABLE] },
+		};
+		setSearchFilter(updatedFilter);
+
+		await router.push(
+			`/product?input=${JSON.stringify(updatedFilter)}`,
+			`/product?input=${JSON.stringify(updatedFilter)}`,
+		);
+	};
+
+	const pushCabinetHandler = async () => {
+		const updatedFilter = {
+			...searchFilter,
+			search: { ...searchFilter.search, typeList: [ProductType.CABINET] },
+		};
+		setSearchFilter(updatedFilter);
+
+		await router.push(
+			`/product?input=${JSON.stringify(updatedFilter)}`,
+			`/product?input=${JSON.stringify(updatedFilter)}`,
+		);
+	};
+
+	const pushSofaHandler = useCallback(async () => {
+		const updatedFilter = {
+			...searchFilter,
+			search: { ...searchFilter.search, typeList: [ProductType.SOFA] },
+		};
+		setSearchFilter(updatedFilter);
+		console.log('searchFilter', searchFilter);
+
+		await router.push(
+			`/product?input=${JSON.stringify(updatedFilter)}`,
+			`/product?input=${JSON.stringify(updatedFilter)}`,
+		);
+	}, [searchFilter]);
 
 	if (trendProducts) console.log('trendProducts1:', trendProducts);
 	if (!trendProducts) return null;
@@ -109,17 +194,31 @@ const TrendProducts = (props: TrendProductsProps) => {
 							</p>
 						</Box>
 					</Stack>
-					{trendProducts.length === 0 ? (
-						<div>Products Empty</div>
-					) : (
-						<Stack className={'card-box'}>
-							<Box className={'trend-grid'}>
-								{trendProducts.map((product: Product) => (
-									<TrendPropertyCard key={product._id} product={product} likeProductHandler={likeProductHandler} />
-								))}
-							</Box>
+					<Stack className={'card-box'}>
+						<Stack className={'line-one'}>
+							<div className="big-card" data-value="">
+								<img src="/img/homePage/bed.png" alt="" className="big" onClick={pushBedHandler} />
+							</div>
+
+							<div className="small-card">
+								<img src="/img/homePage/chair.jpg" alt="" className="small" onClick={pushChairHandler} />
+							</div>
+							<div className="small-card">
+								<img src="/img/homePage/lamp.jpg" alt="" className="small" onClick={pushLampHandler} />
+							</div>
 						</Stack>
-					)}
+						<Stack className={'line-one'}>
+							<div className="small-card">
+								<img src="/img/homePage/table.png" alt="" className="small" onClick={pushTableHandler} />
+							</div>
+							<div className="small-card">
+								<img src="/img/homePage/cabinet.png" alt="" className="small" onClick={pushCabinetHandler} />
+							</div>
+							<div className="big-card">
+								<img src="/img/homePage/sofa.png" alt="" className="big" onClick={pushSofaHandler} />
+							</div>
+						</Stack>
+					</Stack>
 				</Stack>
 			</Stack>
 		);
@@ -129,10 +228,13 @@ const TrendProducts = (props: TrendProductsProps) => {
 TrendProducts.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 4,
-		sort: 'productLikes',
-		direction: 'DESC',
-		search: {},
+		limit: 9,
+		search: {
+			pricesRange: {
+				start: 0,
+				end: 2000000,
+			},
+		},
 	},
 };
 

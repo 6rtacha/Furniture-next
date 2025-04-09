@@ -1,9 +1,15 @@
 import React from 'react';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Button, Stack } from '@mui/material';
+import { useRouter } from 'next/router';
 
 const Advertisement = () => {
 	const device = useDeviceDetect();
+	const router = useRouter();
+
+	const pushAgentPage = async () => {
+		await router.push(`/agent`);
+	};
 
 	if (device == 'mobile') {
 		return (
@@ -33,7 +39,7 @@ const Advertisement = () => {
 							harmony blend, A touch of beauty, a trend that won’t end.
 						</span>
 					</div>
-					<Button className={'btn'}>
+					<Button className={'btn'} onClick={pushAgentPage}>
 						Follow Our Designers
 						<img src="/img/icons/VectorRight.png" />
 					</Button>

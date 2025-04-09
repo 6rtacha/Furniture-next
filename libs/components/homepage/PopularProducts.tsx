@@ -123,7 +123,7 @@ const PopularProducts = (props: PopularProductsProps) => {
 PopularProducts.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 7,
+		limit: 10,
 		sort: 'productViews',
 		direction: 'DESC',
 		search: {},

@@ -196,9 +196,12 @@
 								}
 							}
 							.ytb_play {
+								width: 79.2%;
+								margin-top: 30px;
+								margin-bottom: 30px;
 								font-family: $font;
 								font-weight: 400;
-								font-size: 22px;
+								font-size: 20px;
 								line-height: 150%;
 								letter-spacing: 1%;
 							}
@@ -259,7 +262,7 @@
 										width: 100.077px;
 										height: 100%;
 										border-radius: 0;
-										background: #eb6753;
+										background: #cda274;
 										color: #fff;
 										font-family: $font;
 										font-size: 14px;
@@ -284,8 +287,8 @@
 								align-items: center;
 								justify-content: center;
 								padding: 16px 15px;
-								border-bottom: 2px solid #eb6753;
-								color: #eb6753;
+								border-bottom: 2px solid #cda274;
+								color: #cda274;
 								font-family: $font;
 								font-size: 14px;
 								font-style: normal;
