@@ -242,16 +242,20 @@
 						gap: 30px;
 						justify-content: center;
 						margin-top: 20px;
-						.btn {
+						#btn {
 							width: 150px;
 							background-color: #fff;
 							border-radius: 20px;
 							span {
 								font-family: $fontPrimary;
 								font-weight: 400;
-								font-size: 25px;
+								font-size: 20px;
 								line-height: 75px;
 								letter-spacing: 1%;
+							}
+							&.active {
+								background-color: #292f36;
+								color: #cda274;
 							}
 						}
 					}

@@ -31,6 +31,8 @@ import AgentFloowerCard from '../../libs/components/agent/AgentFollowerCard';
 import AgentProductCard from '../../libs/components/agent/AgentProductCard';
 import AgentProduct from '../../libs/components/agent/AgentProduct';
 import AgentBlogs from '../../libs/components/agent/AgentBlogs';
+import AgentFollowers from '../../libs/components/agent/AgentFollowers';
+import AgentFollowings from '../../libs/components/agent/AgentFollowings';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -172,6 +174,18 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	};
 	const tab = router.query.tab ?? 'product';
 
+	const changeTabHandler1 = (tab1: string) => {
+		router.push(
+			{
+				pathname: '/agent/detail',
+				query: { tab1: tab1 },
+			},
+			undefined,
+			{ scroll: false },
+		);
+	};
+	const tab1 = router.query.tab1 ?? 'followers';
+
 	if (device === 'mobile') {
 		return <div>AGENT DETAIL PAGE MOBILE</div>;
 	} else {
@@ -253,16 +267,30 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 						</Stack>
 						<Stack className={'follower-following'}>
 							<Stack className={'button'}>
-								<Button className={'btn'}>
+								<Button
+									id={'btn'}
+									className={tab1 == 'followers' ? 'active' : ''}
+									onClick={() => {
+										changeTabHandler1('followers');
+									}}
+								>
 									<span>Followers</span>
 								</Button>
-								<Button className={'btn'}>
+								<Button
+									id={'btn'}
+									className={tab1 == 'followings' ? 'active' : ''}
+									onClick={() => {
+										changeTabHandler1('followings');
+									}}
+								>
 									<span>Followings</span>
 								</Button>
 							</Stack>
 							<div className="divider"></div>
 							<Stack className={'cards'}>
-								<AgentFloowerCard />
+								{tab1 === 'followers' && <AgentFollowers searchFilter={searchFilter} />}
+
+								{tab1 === 'followings' && <AgentFollowings searchFilter={searchFilter} />}
 							</Stack>
 						</Stack>
 					</Stack>
