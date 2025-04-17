@@ -20,11 +20,18 @@
 				box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
 				border-radius: 12px;
 				.agent-image {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					width: 590px;
 					img {
 						width: 590px;
 						height: 689px;
-						object-fit: cover;
+						object-fit: contain;
 						border-radius: 40px;
+					}
+					span {
+						color: #dedbdb;
 					}
 				}
 				.agent-info {
@@ -142,16 +149,20 @@
 						justify-content: center;
 						gap: 30px;
 						margin-top: 20px;
-						.btn {
+						#btn {
 							width: 150px;
 							background-color: #fff;
 							border-radius: 20px;
-							span {
+							div {
 								font-family: $fontPrimary;
 								font-weight: 400;
-								font-size: 25px;
+								font-size: 20px;
 								line-height: 75px;
 								letter-spacing: 1%;
+							}
+							&.active {
+								background-color: #292f36;
+								color: #cda274;
 							}
 						}
 					}
@@ -172,12 +183,12 @@
 							display: flex;
 							flex-direction: row;
 							justify-content: space-evenly;
-
+							cursor: pointer;
 							img {
 								width: 150px;
 								height: 120px;
 								border-radius: 20px;
-								object-fit: cover;
+								object-fit: contain;
 							}
 							.card-info {
 								width: 350px;

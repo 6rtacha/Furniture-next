@@ -28,6 +28,9 @@ import TelegramIcon from '@mui/icons-material/Telegram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import AgentBlogCard from '../../libs/components/agent/AgentBlogCard';
 import AgentFloowerCard from '../../libs/components/agent/AgentFollowerCard';
+import AgentProductCard from '../../libs/components/agent/AgentProductCard';
+import AgentProduct from '../../libs/components/agent/AgentProduct';
+import AgentBlogs from '../../libs/components/agent/AgentBlogs';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -55,7 +58,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 
 	/** APOLLO REQUESTS **/
 	const [createComment] = useMutation(CREATE_COMMENT);
-	const [likeTargetProperty] = useMutation(LIKE_TARGET_PRODUCT);
+	const [likeTargetProduct] = useMutation(LIKE_TARGET_PRODUCT);
 
 	const {
 		loading: getMemberLoading,
@@ -75,28 +78,12 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	});
 
 	const {
-		loading: getPropertiesLoading,
-		data: getPropertiesData,
-		error: getPropertiesError,
-		refetch: getPropertiesRefetch,
-	} = useQuery(GET_PRODUCTS, {
-		fetchPolicy: 'network-only',
-		variables: { input: searchFilter },
-		skip: !searchFilter.search.memberId,
-		notifyOnNetworkStatusChange: true,
-		onCompleted: (data: T) => {
-			setAgentProducts(data?.getProperties?.list);
-			setProductTotal(data?.getProperties?.metaCounter[0].total ?? 0);
-		},
-	});
-
-	const {
 		loading: getCommentssLoading,
 		data: getCommentsData,
 		error: getCommentsError,
 		refetch: getCommentsRefetch,
 	} = useQuery(GET_COMMENTS, {
-		fetchPolicy: 'network-only',
+		fetchPolicy: 'cache-and-network',
 		variables: { input: commentInquiry },
 		skip: !commentInquiry.search.commentRefId,
 		notifyOnNetworkStatusChange: true,
@@ -116,6 +103,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	useEffect(() => {}, [commentInquiry]);
 
 	/** HANDLERS **/
+
 	const redirectToMemberPageHandler = async (memberId: string) => {
 		try {
 			if (memberId === user?._id) await router.push(`/mypage?memberId=${memberId}`);
@@ -125,7 +113,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 		}
 	};
 
-	const propertyPaginationChangeHandler = async (event: ChangeEvent<unknown>, value: number) => {
+	const productPaginationChangeHandler = async (event: ChangeEvent<unknown>, value: number) => {
 		searchFilter.page = value;
 		setSearchFilter({ ...searchFilter });
 	};
@@ -153,24 +141,36 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 		}
 	};
 
-	const likePropertyHandler = async (user: any, id: string) => {
+	const likeProductHandler = async (user: any, id: string) => {
 		try {
 			if (!id) return;
 			if (!user._id) throw new Error(Messages.error2);
 
-			await likeTargetProperty({
+			await likeTargetProduct({
 				variables: {
 					input: id,
 				},
 			});
 
-			await getPropertiesRefetch({ input: searchFilter });
+			// await getProductsRefetch({ input: searchFilter });
 			await sweetTopSmallSuccessAlert('success', 800);
 		} catch (err: any) {
-			console.log('Error, likePropertyHandler: ', err.message);
+			console.log('Error, likeProductHandler: ', err.message);
 			sweetMixinErrorAlert(err.message).then();
 		}
 	};
+
+	const changeTabHandler = (tab: string) => {
+		router.push(
+			{
+				pathname: '/agent/detail',
+				query: { tab: tab },
+			},
+			undefined,
+			{ scroll: false },
+		);
+	};
+	const tab = router.query.tab ?? 'product';
 
 	if (device === 'mobile') {
 		return <div>AGENT DETAIL PAGE MOBILE</div>;
@@ -180,7 +180,11 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 				<Stack className={'container'}>
 					<Stack className={'info-card'}>
 						<Stack className={'agent-image'}>
-							<img src={`${REACT_APP_API_URL}/${agent?.memberImage}`} alt="" />
+							{agent?.memberImage ? (
+								<img src={`${REACT_APP_API_URL}/${agent?.memberImage}`} alt="" />
+							) : (
+								<span>Agent's Image is not available right now!</span>
+							)}
 						</Stack>
 						<Stack className={'agent-info'}>
 							<Stack className={'agent-name'}>
@@ -220,16 +224,31 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 					<Stack className={'agent-home-list'}>
 						<Stack className={'project-blog'}>
 							<Stack className={'button'}>
-								<Button className={'btn'}>
-									<span>Projects</span>
+								<Button
+									// className={'btn'}
+									id={'btn'}
+									className={tab == 'product' ? 'active' : ''}
+									onClick={() => {
+										changeTabHandler('product');
+									}}
+								>
+									<div>Products</div>
 								</Button>
-								<Button className={'btn'}>
-									<span>Blog</span>
+								<Button
+									id={'btn'}
+									className={tab == 'blog' ? 'active' : ''}
+									onClick={() => {
+										changeTabHandler('blog');
+									}}
+								>
+									<div>Blog</div>
 								</Button>
 							</Stack>
 							<div className="divider"></div>
 							<Stack className={'cards'}>
-								<AgentBlogCard />
+								{tab === 'product' && <AgentProduct searchFilter={searchFilter} />}
+
+								{tab === 'blog' && <AgentBlogs searchFilter={searchFilter} />}
 							</Stack>
 						</Stack>
 						<Stack className={'follower-following'}>
