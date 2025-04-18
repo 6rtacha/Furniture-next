@@ -110,16 +110,16 @@ const PopularProductCard = (props: PopularProductCardProps) => {
 					</p>
 					<div className={'options'}>
 						<div>
-							<StraightenOutlinedIcon />
-							<span>{product?.productWidth} Width</span>
+							{/* <StraightenOutlinedIcon /> */}
+							<span> Width {product?.productWidth}cm</span>
 						</div>
 						<div>
-							<WidthNormalOutlinedIcon />
-							<span>{product?.productLength} Length</span>
+							{/* <WidthNormalOutlinedIcon /> */}
+							<span>Length {product?.productLength}cm </span>
 						</div>
 						<div>
-							<HeightOutlinedIcon />
-							<span>{product?.productHeight} Height</span>
+							{/* <HeightOutlinedIcon /> */}
+							<span> Height {product?.productHeight}cm</span>
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />

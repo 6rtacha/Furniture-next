@@ -27,7 +27,7 @@
 					img {
 						width: 590px;
 						height: 689px;
-						object-fit: contain;
+						object-fit: cover;
 						border-radius: 40px;
 					}
 					span {
@@ -52,18 +52,23 @@
 							letter-spacing: 1%;
 						}
 						.follow-btn {
-							height: 50px;
-							width: 150px;
-							padding: 5px;
-							background-color: #f4f0ec;
-							border-radius: 12px;
+							// height: 60px;
+							// width: 150px;
+							// padding: 5px;
+							// background-color: #f4f0ec;
+							// border-radius: 12px;
 							margin-top: 10px;
-							span {
+							// cursor: pointer;
+							.button {
 								font-family: $font;
 								font-weight: 400;
 								font-size: 30px;
-								line-height: 75px;
+								line-height: 15px;
 								letter-spacing: 1%;
+								width: 150px;
+								// background-color: #f4f0ec;
+								padding: 20px;
+								border-radius: 12px;
 							}
 						}
 					}
@@ -188,7 +193,7 @@
 								width: 150px;
 								height: 120px;
 								border-radius: 20px;
-								object-fit: contain;
+								object-fit: cover;
 							}
 							.card-info {
 								width: 350px;
@@ -296,17 +301,24 @@
 									width: 170px;
 									display: flex;
 									flex-direction: row;
+									align-items: center;
 									justify-content: space-between;
 									gap: 10px;
 									.name {
+										display: flex;
 										font-family: $fontPrimary;
 										font-weight: 400;
 										font-size: 18px;
 										letter-spacing: 1%;
+										text-align: center;
+									}
+									.like-button {
+										display: flex;
+										margin-right: 20px;
 									}
 								}
 								.status {
-									width: 170px;
+									width: 190px;
 									display: flex;
 									flex-direction: row;
 									justify-content: space-between;

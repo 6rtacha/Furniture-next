@@ -47,7 +47,18 @@ const AgentCard = (props: AgentCardProps) => {
 								height: '433px',
 							}}
 						>
-							<img src="/img/profile/agent1.png" />
+							<img
+								src={imagePath}
+								style={{
+									backgroundSize: 'cover',
+									backgroundPosition: 'center',
+									backgroundRepeat: 'no-repeat',
+									width: '283px',
+									height: '433px',
+									borderRadius: '30px',
+									objectFit: 'cover',
+								}}
+							/>
 						</Box>
 					</Link>
 

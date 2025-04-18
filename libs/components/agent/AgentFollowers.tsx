@@ -1,6 +1,6 @@
 import { Product } from '../../types/product/product';
 import { useEffect, useState } from 'react';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { GET_MEMBER_FOLLOWERS, GET_PRODUCTS } from '../../../apollo/user/query';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { useRouter } from 'next/router';
@@ -8,13 +8,17 @@ import { T } from '../../types/common';
 import { Follower } from '../../types/follow/follow';
 import AgentFollowerCard from './AgentFollowerCard';
 import { FollowInquiry } from '../../types/follow/follow.input';
+import { Messages } from '../../config';
+import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
+import { LIKE_TARGET_MEMBER } from '../../../apollo/user/mutation';
 
 interface AgentFollowersProps {
 	searchFilter: any;
+	refetchTrigger: any;
 }
 
 const AgentFollowers = (props: AgentFollowersProps) => {
-	const { searchFilter } = props;
+	const { searchFilter, refetchTrigger } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const [agentProducts, setAgentProducts] = useState<Product[]>([]);
@@ -40,7 +44,14 @@ const AgentFollowers = (props: AgentFollowersProps) => {
 		}
 	}, [searchFilter?.search?.memberId]);
 
+	useEffect(() => {
+		getMemberFollowersRefetch();
+	}, [refetchTrigger]);
+
 	/** APOLLO REQUESTS **/
+
+	const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
+
 	const {
 		loading: getMemberFollowersLoading,
 		data: getMemberFollowersData,
@@ -60,10 +71,31 @@ const AgentFollowers = (props: AgentFollowersProps) => {
 	console.log('searchFilter', searchFilter);
 	console.log('searchFollower', searchFollower);
 
+	const likeMemberHandler = async (user: any, id: string) => {
+		try {
+			if (!id) return;
+			if (!user._id) throw new Error(Messages.error2);
+
+			await likeTargetMember({
+				variables: {
+					input: id,
+				},
+			});
+
+			await getMemberFollowersRefetch({ input: searchFollower });
+			console.log('memberFollowers', memberFollowers);
+
+			await sweetTopSmallSuccessAlert('succes', 800);
+		} catch (err: any) {
+			console.log('Error, likeMemberHandler:', err.message);
+			sweetMixinErrorAlert(err.message).then();
+		}
+	};
+
 	return (
 		<>
 			{memberFollowers.map((memberFollower: Follower) => {
-				return <AgentFollowerCard memberFollower={memberFollower} />;
+				return <AgentFollowerCard memberFollower={memberFollower} likeMemberHandler={likeMemberHandler} />;
 			})}
 		</>
 	);

@@ -23,15 +23,7 @@ const AgentProduct = (props: AgentProductProps) => {
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const [agentProducts, setAgentProducts] = useState<Product[]>([]);
-	// const [searchFilter, setSearchFilter] = useState<ProductsInquiry>({
-	// 	page: 1,
-	// 	limit: 9,
-	// 	sort: 'createdAt',
-	// 	direction: Direction.ASC,
-	// 	search: {
-	// 		memberId: '',
-	// 	},
-	// });
+
 	const [productTotal, setProductTotal] = useState<number>(0);
 	const [agentId, setAgentId] = useState<string>('');
 
@@ -54,12 +46,6 @@ const AgentProduct = (props: AgentProductProps) => {
 
 	console.log('searchFilter', searchFilter);
 
-	/** LIFECYCLES **/
-	// useEffect(() => {
-	// 	setSearchFilter({ ...searchFilter, search: { memberId: agent?._id } });
-	// 	console.log('agent:', agent);
-	// }, [router]);
-
 	return (
 		<>
 			{agentProducts.map((agentProduct: Product) => {
@@ -68,17 +54,5 @@ const AgentProduct = (props: AgentProductProps) => {
 		</>
 	);
 };
-
-// AgentProduct.defaultProps = {
-// 	initialInput: {
-// 		page: 1,
-// 		limit: 9,
-// 		sort: 'createdAt',
-// 		direction: 'ASC',
-// 		search: {
-// 			memberId: '',
-// 		},
-// 	},
-// };
 
 export default AgentProduct;

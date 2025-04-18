@@ -100,7 +100,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 		error: getCommentsError,
 		refetch: getCommentsRefetch,
 	} = useQuery(GET_COMMENTS, {
-		fetchPolicy: 'network-only',
+		fetchPolicy: 'cache-and-network',
 		variables: {
 			input: articleId,
 		},
@@ -114,7 +114,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 	/** LIFECYCLES **/
 	useEffect(() => {
 		if (articleId) setSearchFilter({ ...searchFilter, search: { commentRefId: articleId } });
-		getCommentsRefetch({ input: searchFilter });
+		// getCommentsRefetch({ input: searchFilter });
 		console.log('articleId:', articleId);
 	}, [articleId]);
 
@@ -312,10 +312,8 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 										</Button>
 									</Stack>
 									<Stack className={'blog-image'}>
-										<img
-											className={'image'}
-											src="https://s3-alpha-sig.figma.com/img/af52/437c/53959c93c2008f27c1e1049e0731c002?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=WU6Fxsel7sU85cplB~YkU3Qxme6SCCrJdmG7NTiEQfTBPCNvgMupjV0PeKFPisY5AF00AGqWbtYyr5RDRFYHuxYxRDuDrPOuGKj7RXxul8su2vWTwlFnqY-HEWK45dgU1XvKbFjsX3HY549fHBxQJ9Ewh~0CflgsyF1NzxNAdzMHt-M~ltoTVFwOLTryPSFMFBEvwf8xJusL1K7mRstF04j20D8ubiaSDthibDS1nuLfy1QyXnyXcZUCIhpvkOvE0T11vkjuC5gtMKAhDiWV7prlEBonllUvE9c0hl3FGYuYLUVx34TxB1EzJ2GJUF9Rt3IET0ppUCc-Klay-21hlA__"
-										/>
+										<img className={'image'} src={imagePath} />
+										<Stack className={'ytb_play'}>{boardArticle?.articleContent}</Stack>
 										<Stack className="left-config">
 											<Stack className={'image-info'}>
 												<img src={'/img/logo/Logo.png'} />
@@ -355,7 +353,6 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 											</Tabs>
 										</Stack>
 									</Stack>
-									<Stack className={'ytb_play'}>{boardArticle?.articleContent}</Stack>
 								</Stack>
 								<Stack
 									className="second-box-config"

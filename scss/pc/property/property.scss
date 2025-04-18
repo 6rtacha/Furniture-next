@@ -96,13 +96,21 @@
 							width: 100%;
 							height: auto;
 							margin-top: 50px;
+							margin-bottom: 30px;
+
+							border-radius: 15px;
 							.btn {
-								width: 150px;
-								height: 150px;
-								border: 1px solid #cda274;
-								border-radius: 50%;
+								width: 14%;
+								height: 60px;
+								border-radius: 15px;
+								border: 1.5px solid #cda274;
 								color: black;
 								cursor: pointer;
+								font-size: 18px;
+								font-family: $font;
+								// font-weight: 600;
+								line-height: 125%;
+								letter-spacing: 2%;
 							}
 							:hover {
 								background-color: #cda274;

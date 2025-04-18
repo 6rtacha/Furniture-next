@@ -4,7 +4,6 @@ import { NextPage } from 'next';
 import { Button, Stack } from '@mui/material';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-import MyProperties from '../../libs/components/mypage/MyProperties';
 import MyFavorites from '../../libs/components/mypage/MyFavorites';
 import RecentlyVisited from '../../libs/components/mypage/RecentlyVisited';
 import AddProperty from '../../libs/components/mypage/AddNewProperty';
@@ -15,17 +14,20 @@ import { userVar } from '../../apollo/store';
 import MyMenu from '../../libs/components/mypage/MyMenu';
 import WriteArticle from '../../libs/components/mypage/WriteArticle';
 import MemberFollowers from '../../libs/components/member/MemberFollowers';
-import { sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import { sweetConfirmAlert, sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import MemberFollowings from '../../libs/components/member/MemberFollowings';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { LIKE_TARGET_MEMBER, SUBSCRIBE, UNSUBSCRIBE } from '../../apollo/user/mutation';
-import { Messages } from '../../libs/config';
+import { Messages, REACT_APP_API_URL } from '../../libs/config';
 import AgentBlogCard from '../../libs/components/agent/AgentBlogCard';
 import AgentFloowerCard from '../../libs/components/agent/AgentFollowerCard';
 import MyProducts from '../../libs/components/mypage/MyProducts';
 import { GET_MEMBER } from '../../apollo/user/query';
 import { Member } from '../../libs/types/member/member';
 import { T } from '../../libs/types/common';
+import AgentFollowerCard from '../../libs/components/agent/AgentFollowerCard';
+import { MemberType } from '../../libs/enums/member.enum';
+import { logOut } from '../../libs/auth';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -40,6 +42,9 @@ const MyPage: NextPage = () => {
 	const category: any = router.query?.category ?? 'myProfile';
 	const [member, setMember] = useState<Member | null>(null);
 	const { memberId } = router.query;
+	const imagePath: string = user.memberImage
+		? `${REACT_APP_API_URL}/${user.memberImage}`
+		: '/img/community/communityImg.png';
 
 	/** APOLLO REQUESTS **/
 	const [subscribe] = useMutation(SUBSCRIBE);
@@ -59,10 +64,11 @@ const MyPage: NextPage = () => {
 			setMember(data?.getMember);
 		},
 	});
+	console.log('memberId', memberId);
 
 	/** LIFECYCLES **/
 	useEffect(() => {
-		if (!user._id) router.push('/').then();
+		if (!user._id) router.push('/mypage').then();
 	}, [user]);
 
 	/** HANDLERS **/
@@ -127,6 +133,15 @@ const MyPage: NextPage = () => {
 		}
 	};
 
+	const logoutHandler = async () => {
+		try {
+			if (await sweetConfirmAlert('Do you want to logout?')) logOut();
+			router.push('/');
+		} catch (err: any) {
+			console.log('ERROR, logoutHandler:', err.message);
+		}
+	};
+
 	if (device === 'mobile') {
 		return <div>MY PAGE</div>;
 	} else {
@@ -135,19 +150,20 @@ const MyPage: NextPage = () => {
 				<Stack className={'container'}>
 					<Stack className={'info-card'}>
 						<Stack className={'agent-image'}>
-							<img src="https://s3-alpha-sig.figma.com/img/ef08/0257/2c6e28c6aa31cb138d47922a76a4bf10?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=pbQj8T20uv6M96bjpR15Pbotqnyps1AUdp8rlAL1JgQ23Z8Ddil0gGcNW5HlvLrMckXnr1be5FrGJ~-KxBncwJAJHM62wvMPOkF8nqWkEdhfNiB686vj71hK5DX8DkiTZu2A8IhxBaENJLO0OFmaQnNhqwK4y-QLehtLMfTynqy36n1jtYcCc258bfOvza5Z8f7-G~a9meIVFEo9g3JKYohA978WLMS9nhh2aV357VnbtoKvoCqkwxC2EQeYIBlHKBPk1WDNsqLEQ6z9eur1Nnr9C5h7Xw-7VQL~blWeSUqzIKBJUES9WYc7tIPOkDG7Nd0zOhnlw30a85f0C3b-1w__" />
+							<img src={imagePath} />
 						</Stack>
 						<Stack className={'agent-info'}>
 							<Stack className={'agent-name'}>
-								<span>{member?.memberNick}</span>
-								<Button className={'logout-btn'}>
+								<span>{user?.memberNick}</span>
+								<Button className={'logout-btn'} onClick={logoutHandler}>
 									<span>Logout</span>
 								</Button>
 							</Stack>
 							<Stack className={'agent-desc'}>
 								<Stack className={'designer'}>
-									<span>Designer</span>
-									<span>{member?.memberPhone}</span>
+									{user.memberType == MemberType.AGENT ? <span>Designer</span> : <span>User</span>}
+
+									<span>{user?.memberPhone}</span>
 								</Stack>
 							</Stack>
 							<MyProfile />
@@ -178,9 +194,7 @@ const MyPage: NextPage = () => {
 								</Button>
 							</Stack>
 							<div className="divider"></div>
-							<Stack className={'cards'}>
-								<AgentFloowerCard />
-							</Stack>
+							<Stack className={'cards'}>{/* <AgentFollowerCard memberFollower={undef /> */}</Stack>
 						</Stack>
 					</Stack>
 					<AddProperty />

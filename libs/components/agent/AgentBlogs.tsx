@@ -21,7 +21,6 @@ const AgentBlogs = (props: AgentBlogsProps) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const [agentBlogs, setAgentBlogs] = useState<BoardArticle[]>([]);
-	// const [searchCommunity, setSearchCommunity] = useState<BoardArticlesInquiry>(initialInput);
 	const [agentId, setAgentId] = useState<string>('');
 	const [totalCount, setTotalCount] = useState<number>(0);
 
@@ -44,17 +43,6 @@ const AgentBlogs = (props: AgentBlogsProps) => {
 		},
 	});
 
-	/** LIFECYCLES **/
-	// useEffect(() => {
-	// 	if (router.query.agentId) setAgentId(router.query.agentId as string);
-	// 	setSearchCommunity({
-	// 		...searchCommunity,
-	// 		search: {
-	// 			memberId: agentId,
-	// 		},
-	// 	});
-	// 	console.log('agentId:', agentId);
-	// }, [router]);
 	return (
 		<>
 			{agentBlogs.map((agentBlog: BoardArticle) => {
@@ -63,17 +51,5 @@ const AgentBlogs = (props: AgentBlogsProps) => {
 		</>
 	);
 };
-
-// AgentBlogs.defaultProps = {
-// 	initialInput: {
-// 		page: 1,
-// 		limit: 6,
-// 		sort: 'createdAt',
-// 		direction: 'ASC',
-// 		search: {
-// 			memberId: '',
-// 		},
-// 	},
-// };
 
 export default AgentBlogs;

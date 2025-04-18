@@ -208,6 +208,85 @@ const NewFilter = (props: FilterType) => {
 
 	return (
 		<Stack className={'main-filter'}>
+			<Stack className={'product-type'}>
+				<Button
+					className={'btn'}
+					sx={{
+						backgroundColor: searchFilter?.search?.typeList?.includes(ProductType.SOFA) ? '#cda274' : 'none',
+						color: searchFilter?.search?.typeList?.includes(ProductType.SOFA) ? '#fff !important' : '#292f36',
+						fontWeight: searchFilter?.search?.typeList?.includes(ProductType.SOFA) ? '600' : '280',
+					}}
+					onClick={() => productTypeSelectHandler(ProductType.SOFA)}
+				>
+					Sofa
+				</Button>
+				<Button
+					className={'btn'}
+					sx={{
+						backgroundColor: searchFilter?.search?.typeList?.includes(ProductType.BED) ? '#cda274' : 'none',
+						color: searchFilter?.search?.typeList?.includes(ProductType.BED) ? '#fff !important' : '#292f36',
+						fontWeight: searchFilter?.search?.typeList?.includes(ProductType.BED) ? '600' : '280',
+					}}
+					onClick={() => productTypeSelectHandler(ProductType.BED)}
+				>
+					<span>Bed</span>
+				</Button>
+				<Button
+					className={'btn'}
+					sx={{
+						backgroundColor: searchFilter?.search?.typeList?.includes(ProductType.TABLE) ? '#cda274' : 'none',
+						color: searchFilter?.search?.typeList?.includes(ProductType.TABLE) ? '#fff !important' : '#292f36',
+						fontWeight: searchFilter?.search?.typeList?.includes(ProductType.TABLE) ? '600' : '280',
+					}}
+					onClick={() => productTypeSelectHandler(ProductType.TABLE)}
+				>
+					<span>Table</span>
+				</Button>
+				<Button
+					className={'btn'}
+					sx={{
+						backgroundColor: searchFilter?.search?.typeList?.includes(ProductType.CHAIR) ? '#cda274' : 'none',
+						color: searchFilter?.search?.typeList?.includes(ProductType.CHAIR) ? '#fff !important' : '#292f36',
+						fontWeight: searchFilter?.search?.typeList?.includes(ProductType.CHAIR) ? '600' : '280',
+					}}
+					onClick={() => productTypeSelectHandler(ProductType.CHAIR)}
+				>
+					<span>Chair</span>
+				</Button>
+				<Button
+					className={'btn'}
+					sx={{
+						backgroundColor: searchFilter?.search?.typeList?.includes(ProductType.CABINET) ? '#cda274' : 'none',
+						color: searchFilter?.search?.typeList?.includes(ProductType.CABINET) ? '#fff !important' : '#292F36',
+						fontWeight: searchFilter?.search?.typeList?.includes(ProductType.CABINET) ? '600' : '280',
+					}}
+					onClick={() => productTypeSelectHandler(ProductType.CABINET)}
+				>
+					<span>Cabinet</span>
+				</Button>
+				<Button
+					className={'btn'}
+					sx={{
+						backgroundColor: searchFilter?.search?.typeList?.includes(ProductType.OUTDOOR) ? '#cda274' : 'none',
+						color: searchFilter?.search?.typeList?.includes(ProductType.OUTDOOR) ? '#fff !important' : '#292f36',
+						fontWeight: searchFilter?.search?.typeList?.includes(ProductType.OUTDOOR) ? '600' : '280',
+					}}
+					onClick={() => productTypeSelectHandler(ProductType.OUTDOOR)}
+				>
+					<span>Outdoor</span>
+				</Button>
+				<Button
+					className={'btn'}
+					sx={{
+						backgroundColor: searchFilter?.search?.typeList?.includes(ProductType.LAMP) ? '#cda274' : 'none',
+						color: searchFilter?.search?.typeList?.includes(ProductType.LAMP) ? '#fff !important' : '#292f36',
+						fontWeight: searchFilter?.search?.typeList?.includes(ProductType.LAMP) ? '600' : '280',
+					}}
+					onClick={() => productTypeSelectHandler(ProductType.LAMP)}
+				>
+					<span>Lamp</span>
+				</Button>
+			</Stack>
 			<Stack className={'search-product'}>
 				<div>
 					<FormControl sx={{ width: 300, mt: '3px' }}>
@@ -313,79 +392,6 @@ const NewFilter = (props: FilterType) => {
 						<RefreshIcon />
 					</IconButton>
 				</Tooltip>
-			</Stack>
-
-			<Stack className={'product-type'}>
-				<Button
-					className={'btn'}
-					sx={{
-						backgroundColor: searchFilter?.search?.typeList?.includes(ProductType.SOFA) ? '#cda274' : 'none',
-						color: searchFilter?.search?.typeList?.includes(ProductType.SOFA) ? '#fff !important' : '#292f36',
-					}}
-					onClick={() => productTypeSelectHandler(ProductType.SOFA)}
-				>
-					Sofa
-				</Button>
-				<Button
-					className={'btn'}
-					sx={{
-						backgroundColor: searchFilter?.search?.typeList?.includes(ProductType.BED) ? '#cda274' : 'none',
-						color: searchFilter?.search?.typeList?.includes(ProductType.BED) ? '#fff !important' : '#292f36',
-					}}
-					onClick={() => productTypeSelectHandler(ProductType.BED)}
-				>
-					<span>Bed</span>
-				</Button>
-				<Button
-					className={'btn'}
-					sx={{
-						backgroundColor: searchFilter?.search?.typeList?.includes(ProductType.TABLE) ? '#cda274' : 'none',
-						color: searchFilter?.search?.typeList?.includes(ProductType.TABLE) ? '#fff !important' : '#292f36',
-					}}
-					onClick={() => productTypeSelectHandler(ProductType.TABLE)}
-				>
-					<span>Table</span>
-				</Button>
-				<Button
-					className={'btn'}
-					sx={{
-						backgroundColor: searchFilter?.search?.typeList?.includes(ProductType.CHAIR) ? '#cda274' : 'none',
-						color: searchFilter?.search?.typeList?.includes(ProductType.CHAIR) ? '#fff !important' : '#292f36',
-					}}
-					onClick={() => productTypeSelectHandler(ProductType.CHAIR)}
-				>
-					<span>Chair</span>
-				</Button>
-				<Button
-					className={'btn'}
-					sx={{
-						backgroundColor: searchFilter?.search?.typeList?.includes(ProductType.CABINET) ? '#cda274' : 'none',
-						color: searchFilter?.search?.typeList?.includes(ProductType.CABINET) ? '#fff !important' : '#292f36',
-					}}
-					onClick={() => productTypeSelectHandler(ProductType.CABINET)}
-				>
-					<span>Cabinet</span>
-				</Button>
-				<Button
-					className={'btn'}
-					sx={{
-						backgroundColor: searchFilter?.search?.typeList?.includes(ProductType.OUTDOOR) ? '#cda274' : 'none',
-						color: searchFilter?.search?.typeList?.includes(ProductType.OUTDOOR) ? '#fff !important' : '#292f36',
-					}}
-					onClick={() => productTypeSelectHandler(ProductType.OUTDOOR)}
-				>
-					<span>Outdoor</span>
-				</Button>
-				<Button
-					className={'btn'}
-					sx={{
-						backgroundColor: searchFilter?.search?.typeList?.includes(ProductType.LAMP) ? '#cda274' : 'none',
-						color: searchFilter?.search?.typeList?.includes(ProductType.LAMP) ? '#fff !important' : '#292f36',
-					}}
-					onClick={() => productTypeSelectHandler(ProductType.LAMP)}
-				>
-					<span>Lamp</span>
-				</Button>
 			</Stack>
 		</Stack>
 	);

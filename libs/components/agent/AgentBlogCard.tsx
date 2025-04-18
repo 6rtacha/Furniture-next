@@ -9,9 +9,12 @@ interface AgentBlogCardProps {
 
 const AgentBlogCard = (props: AgentBlogCardProps) => {
 	const { agentBlog } = props;
+	const imagePath: string = agentBlog?.articleImage
+		? `${REACT_APP_API_URL}/${agentBlog?.articleImage}`
+		: '/img/community/communityImg.png';
 	return (
 		<Stack className={'pb-card'}>
-			<img src={`${REACT_APP_API_URL}/${agentBlog?.articleImage}`} alt="" />
+			<img src={imagePath} alt="" />
 			<Stack className={'card-info'}>
 				<Stack className={'pb-name'}>
 					<div className="name">{agentBlog?.articleTitle}</div>

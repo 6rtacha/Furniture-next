@@ -2,7 +2,6 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-import PropertyBigCard from '../../libs/components/common/PropertyBigCard';
 import ReviewCard from '../../libs/components/agent/ReviewCard';
 import { Box, Button, Pagination, Stack, Typography } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
@@ -18,17 +17,19 @@ import { Comment } from '../../libs/types/comment/comment';
 import { CommentGroup } from '../../libs/enums/comment.enum';
 import { Messages, REACT_APP_API_URL } from '../../libs/config';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { CREATE_COMMENT, LIKE_TARGET_PRODUCT } from '../../apollo/user/mutation';
-import { GET_COMMENTS, GET_MEMBER, GET_PRODUCTS } from '../../apollo/user/query';
+import {
+	CREATE_COMMENT,
+	LIKE_TARGET_MEMBER,
+	LIKE_TARGET_PRODUCT,
+	SUBSCRIBE,
+	UNSUBSCRIBE,
+} from '../../apollo/user/mutation';
+import { GET_COMMENTS, GET_MEMBER } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
-
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import AgentBlogCard from '../../libs/components/agent/AgentBlogCard';
-import AgentFloowerCard from '../../libs/components/agent/AgentFollowerCard';
-import AgentProductCard from '../../libs/components/agent/AgentProductCard';
 import AgentProduct from '../../libs/components/agent/AgentProduct';
 import AgentBlogs from '../../libs/components/agent/AgentBlogs';
 import AgentFollowers from '../../libs/components/agent/AgentFollowers';
@@ -43,9 +44,10 @@ export const getStaticProps = async ({ locale }: any) => ({
 const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
+	const { memberId } = router.query;
 	const user = useReactiveVar(userVar);
 	const [agentId, setAgentId] = useState<string | null>(null);
-	const [agent, setAgent] = useState<Member | null>(null);
+	const [member, setMember] = useState<Member | null>(null);
 	const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(initialInput);
 	const [agentProducts, setAgentProducts] = useState<Product[]>([]);
 	const [productTotal, setProductTotal] = useState<number>(0);
@@ -57,10 +59,14 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 		commentContent: '',
 		commentRefId: '',
 	});
+	const [refetchTrigger, setRefetchTrigger] = useState<number>(0);
 
 	/** APOLLO REQUESTS **/
 	const [createComment] = useMutation(CREATE_COMMENT);
 	const [likeTargetProduct] = useMutation(LIKE_TARGET_PRODUCT);
+	const [subscribe] = useMutation(SUBSCRIBE);
+	const [unsubscribe] = useMutation(UNSUBSCRIBE);
+	const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
 
 	const {
 		loading: getMemberLoading,
@@ -68,11 +74,11 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 		error: getMemberError,
 		refetch: getMemberRefetch,
 	} = useQuery(GET_MEMBER, {
-		fetchPolicy: 'network-only',
+		fetchPolicy: 'cache-and-network',
 		variables: { input: agentId },
 		skip: !agentId,
 		onCompleted: (data: T) => {
-			setAgent(data?.getMember);
+			setMember(data?.getMember);
 			setSearchFilter({ ...searchFilter, search: { memberId: data?.getMember?._id } });
 			setCommentInquiry({ ...commentInquiry, search: { commentRefId: data?.getMember?._id } });
 			setInsertCommentData({ ...insertCommentData, commentRefId: data?.getMember?._id });
@@ -85,7 +91,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 		error: getCommentsError,
 		refetch: getCommentsRefetch,
 	} = useQuery(GET_COMMENTS, {
-		fetchPolicy: 'cache-and-network',
+		fetchPolicy: 'network-only',
 		variables: { input: commentInquiry },
 		skip: !commentInquiry.search.commentRefId,
 		notifyOnNetworkStatusChange: true,
@@ -186,6 +192,45 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	};
 	const tab1 = router.query.tab1 ?? 'followers';
 
+	const subscribeHandler = async (id: string, refetch: any, query: any) => {
+		try {
+			console.log('id:', id);
+			console.log('query', query);
+
+			if (!id) return;
+			if (!user._id) throw new Error(Messages.error2);
+
+			await subscribe({
+				variables: {
+					input: id,
+				},
+			});
+			await sweetTopSmallSuccessAlert('Followed', 800);
+			await refetch({ input: query });
+			setRefetchTrigger((prev) => prev + 1);
+		} catch (err: any) {
+			sweetErrorHandling(err).then();
+		}
+	};
+
+	const unsubscribeHandler = async (id: string, refetch: any, query: any) => {
+		try {
+			if (!id) return;
+			if (!user._id) throw new Error(Messages.error2);
+
+			await unsubscribe({
+				variables: {
+					input: id,
+				},
+			});
+			await sweetTopSmallSuccessAlert('Unfollowed', 800);
+			await refetch({ input: query });
+			setRefetchTrigger((prev) => prev + 1);
+		} catch (err: any) {
+			sweetErrorHandling(err).then();
+		}
+	};
+
 	if (device === 'mobile') {
 		return <div>AGENT DETAIL PAGE MOBILE</div>;
 	} else {
@@ -194,25 +239,49 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 				<Stack className={'container'}>
 					<Stack className={'info-card'}>
 						<Stack className={'agent-image'}>
-							{agent?.memberImage ? (
-								<img src={`${REACT_APP_API_URL}/${agent?.memberImage}`} alt="" />
+							{member?.memberImage ? (
+								<img src={`${REACT_APP_API_URL}/${member?.memberImage}`} alt="" />
 							) : (
 								<span>Agent's Image is not available right now!</span>
 							)}
 						</Stack>
 						<Stack className={'agent-info'}>
 							<Stack className={'agent-name'}>
-								<span>{agent?.memberNick}</span>
-								<Button className={'follow-btn'}>
-									<span>Follow</span>
-								</Button>
+								<span>{member?.memberNick}</span>
+								<Stack className={'follow-btn'}>
+									{member?.meFollowed && member?.meFollowed[0]?.myFollowing ? (
+										<>
+											<Button
+												className={'button'}
+												// variant="outlined"
+												sx={{ background: '#f4f0ec' }}
+												onClick={() => unsubscribeHandler(member?._id, getMemberRefetch, agentId)}
+											>
+												Unfollow
+											</Button>
+											{/* <Typography>Following</Typography> */}
+										</>
+									) : (
+										<Button
+											className={'button'}
+											// variant="contained"
+											sx={{
+												background: '#292f36',
+												color: '#cda274',
+											}}
+											onClick={() => subscribeHandler(member?._id as string, getMemberRefetch, agentId)}
+										>
+											Follow
+										</Button>
+									)}
+								</Stack>
 							</Stack>
 							<Stack className={'agent-desc'}>
 								<Stack className={'designer'}>
 									<span>Designer</span>
 								</Stack>
 								<Stack className={'description'}>
-									<span>{agent?.memberDesc}</span>
+									<span>{member?.memberDesc}</span>
 								</Stack>
 								<Stack className={'mail-info'}>
 									<img src="/img/icons/mail.png" />
@@ -288,9 +357,11 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 							</Stack>
 							<div className="divider"></div>
 							<Stack className={'cards'}>
-								{tab1 === 'followers' && <AgentFollowers searchFilter={searchFilter} />}
+								{tab1 === 'followers' && <AgentFollowers refetchTrigger={refetchTrigger} searchFilter={searchFilter} />}
 
-								{tab1 === 'followings' && <AgentFollowings searchFilter={searchFilter} />}
+								{tab1 === 'followings' && (
+									<AgentFollowings refetchTrigger={refetchTrigger} searchFilter={searchFilter} />
+								)}
 							</Stack>
 						</Stack>
 					</Stack>

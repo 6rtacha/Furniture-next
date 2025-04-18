@@ -15,8 +15,9 @@ import { useMutation, useQuery } from '@apollo/client';
 import { LIKE_TARGET_BOARD_ARTICLE } from '../../apollo/user/mutation';
 import { GET_BOARD_ARTICLES } from '../../apollo/user/query';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
-import { Messages } from '../../libs/config';
+import { Messages, REACT_APP_API_URL } from '../../libs/config';
 import BlogCard from '../../libs/components/common/BlogCard';
+import Moment from 'react-moment';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -32,6 +33,9 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 	const [searchCommunity, setSearchCommunity] = useState<BoardArticlesInquiry>(initialInput);
 	const [boardArticles, setBoardArticles] = useState<BoardArticle[]>([]);
 	const [totalCount, setTotalCount] = useState<number>(0);
+	const imagePath: string = boardArticles[0]?.articleImage
+		? `${REACT_APP_API_URL}/${boardArticles[0]?.articleImage}`
+		: '/img/community/communityImg.png';
 	if (articleCategory) initialInput.search.articleCategory = articleCategory;
 
 	/** APOLLO REQUESTS **/
@@ -115,7 +119,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 						<Stack className="main-box">
 							<Stack className="right-config">
 								<Stack className="panel-config">
-									<Stack className="title-box">
+									{/* <Stack className="title-box">
 										<Stack className="left">
 											<Typography className="title">{searchCommunity.search.articleCategory} BOARD</Typography>
 											<Typography className="sub-title">
@@ -135,19 +139,17 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 										>
 											Write
 										</Button>
-									</Stack>
+									</Stack> */}
 									<Stack className={'latest-post'}>
 										<Stack className={'title'}>
 											<span>Latest Post</span>
 										</Stack>
 										<Stack className={'post-card'}>
-											<img src="https://s3-alpha-sig.figma.com/img/af52/437c/53959c93c2008f27c1e1049e0731c002?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=WU6Fxsel7sU85cplB~YkU3Qxme6SCCrJdmG7NTiEQfTBPCNvgMupjV0PeKFPisY5AF00AGqWbtYyr5RDRFYHuxYxRDuDrPOuGKj7RXxul8su2vWTwlFnqY-HEWK45dgU1XvKbFjsX3HY549fHBxQJ9Ewh~0CflgsyF1NzxNAdzMHt-M~ltoTVFwOLTryPSFMFBEvwf8xJusL1K7mRstF04j20D8ubiaSDthibDS1nuLfy1QyXnyXcZUCIhpvkOvE0T11vkjuC5gtMKAhDiWV7prlEBonllUvE9c0hl3FGYuYLUVx34TxB1EzJ2GJUF9Rt3IET0ppUCc-Klay-21hlA__" />
+											<img src={imagePath} />
 											<Stack className={'post-info'}>
-												<Stack className={'post-title'}>Low Cost Latest </Stack>
-												<span>
-													aefjoijai ijfaioja ijafiojao fjaioj aoij fifj afio jaoeij ijafio ajjm ijaf jaiojfaioj aiojaoi
-												</span>
-												<div className="date">26 December, 2022</div>
+												<Stack className={'post-title'}>{boardArticles[0]?.articleTitle}</Stack>
+												<span>{boardArticles[0]?.articleContent}</span>
+												<Moment format="DD MMMM, YYYY">{boardArticles[0]?.createdAt}</Moment>
 											</Stack>
 										</Stack>
 									</Stack>
@@ -304,7 +306,7 @@ Community.defaultProps = {
 		page: 1,
 		limit: 6,
 		sort: 'createdAt',
-		direction: 'ASC',
+		direction: 'DESC',
 		search: {
 			articleCategory: 'NEWS',
 		},
