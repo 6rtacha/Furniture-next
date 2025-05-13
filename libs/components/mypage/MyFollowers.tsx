@@ -1,0 +1,92 @@
+import { Product } from '../../types/product/product';
+import { useEffect, useState } from 'react';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
+import { GET_MEMBER_FOLLOWERS, GET_PRODUCTS } from '../../../apollo/user/query';
+import useDeviceDetect from '../../hooks/useDeviceDetect';
+import { useRouter } from 'next/router';
+import { T } from '../../types/common';
+import { Follower, Followers } from '../../types/follow/follow';
+import { FollowInquiry } from '../../types/follow/follow.input';
+import { Messages } from '../../config';
+import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
+import { LIKE_TARGET_MEMBER } from '../../../apollo/user/mutation';
+import { userVar } from '../../../apollo/store';
+import AgentFollowerCard from '../agent/AgentFollowerCard';
+
+const MyFollowers = () => {
+	const device = useDeviceDetect();
+	const router = useRouter();
+	const user = useReactiveVar(userVar);
+	const [myFollowers, setMyFollowers] = useState<Followers[]>([]);
+	const [searchFollower, setSearchFollower] = useState<FollowInquiry>({
+		page: 1,
+		limit: 20,
+		search: {
+			followingId: user?._id,
+		},
+	});
+	const [memberFollowers, setMemberFollowers] = useState<Follower[]>([]);
+
+	/** APOLLO REQUESTS **/
+
+	const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
+
+	const {
+		loading: getMemberFollowersLoading,
+		data: getMemberFollowersData,
+		error: getMemberFollowersError,
+		refetch: getMemberFollowersRefetch,
+	} = useQuery(GET_MEMBER_FOLLOWERS, {
+		skip: !searchFollower?.search?.followingId,
+		fetchPolicy: 'network-only',
+		variables: { input: searchFollower },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setMemberFollowers(data?.getMemberFollowers?.list);
+		},
+	});
+
+	console.log('memberFollowers', memberFollowers);
+	console.log('searchFollower', searchFollower);
+
+	const likeMemberHandler = async (user: any, id: string) => {
+		try {
+			if (!id) return;
+			if (!user._id) throw new Error(Messages.error2);
+
+			await likeTargetMember({
+				variables: {
+					input: id,
+				},
+			});
+
+			await getMemberFollowersRefetch({ input: searchFollower });
+			console.log('memberFollowers', memberFollowers);
+
+			await sweetTopSmallSuccessAlert('succes', 800);
+		} catch (err: any) {
+			console.log('Error, likeMemberHandler:', err.message);
+			sweetMixinErrorAlert(err.message).then();
+		}
+	};
+
+	return (
+		<>
+			{memberFollowers.map((memberFollower: Follower) => {
+				return <AgentFollowerCard memberFollower={memberFollower} likeMemberHandler={likeMemberHandler} />;
+			})}
+		</>
+	);
+};
+
+MyFollowers.defaultProps = {
+	initialInput: {
+		page: 1,
+		limit: 20,
+		search: {
+			memberId: '',
+		},
+	},
+};
+
+export default MyFollowers;

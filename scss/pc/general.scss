@@ -11,7 +11,9 @@
 		position: relative;
 		width: 100%;
 		height: 264px;
-		background-size: cover;
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
 		border-radius: 20px 20px 0px 0px;
 		border: 1px solid #f4f0ec;
 		cursor: pointer;
@@ -289,51 +291,51 @@
 		}
 	}
 }
-.card {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	width: 30%;
-	height: 418px;
-	margin-top: 30px;
-	border: solid 1px none;
-	border-radius: 60px;
-	background-color: #f4f0ec;
-	cursor: pointer;
-	transition: opacity 0.4s;
-	&:hover {
-		opacity: 1;
-		scale: 1.05;
-		transition: 0.3s;
-		.more {
-			opacity: 1;
-		}
-	}
-	img {
-		width: 90%;
-		height: 259px;
-		object-fit: cover;
-		object-position: 0 100%;
-		border-radius: 50px 50px 0 0;
-	}
-	.title {
-		width: auto;
-		height: auto;
-		margin-top: 20px;
-		.article-title {
-			width: 260px;
-			span {
-				font-family: $fontPrimary;
-				font-weight: 400;
-				font-size: 20px;
-				line-height: 31.25px;
-				letter-spacing: 2%;
-			}
-		}
-		.date {
-			margin-top: 20px;
-		}
-	}
-}
+// .card {
+// 	position: relative;
+// 	display: flex;
+// 	flex-direction: column;
+// 	justify-content: center;
+// 	align-items: center;
+// 	width: 30%;
+// 	height: 418px;
+// 	margin-top: 30px;
+// 	border: solid 1px none;
+// 	border-radius: 60px;
+// 	background-color: #f4f0ec;
+// 	cursor: pointer;
+// 	transition: opacity 0.4s;
+// 	&:hover {
+// 		opacity: 1;
+// 		scale: 1.05;
+// 		transition: 0.3s;
+// 		.more {
+// 			opacity: 1;
+// 		}
+// 	}
+// 	img {
+// 		width: 90%;
+// 		height: 259px;
+// 		object-fit: cover;
+// 		object-position: 0 100%;
+// 		border-radius: 50px 50px 0 0;
+// 	}
+// 	.title {
+// 		width: auto;
+// 		height: auto;
+// 		margin-top: 20px;
+// 		.article-title {
+// 			width: 260px;
+// 			span {
+// 				font-family: $fontPrimary;
+// 				font-weight: 400;
+// 				font-size: 20px;
+// 				line-height: 31.25px;
+// 				letter-spacing: 2%;
+// 			}
+// 		}
+// 		.date {
+// 			margin-top: 20px;
+// 		}
+// 	}
+// }

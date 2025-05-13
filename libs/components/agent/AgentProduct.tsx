@@ -1,17 +1,12 @@
-import { Stack } from '@mui/material';
 import { Product } from '../../types/product/product';
-import { REACT_APP_API_URL } from '../../config';
-import Moment from 'react-moment';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import AgentProductCard from './AgentProductCard';
 import { useQuery, useReactiveVar } from '@apollo/client';
 import { GET_PRODUCTS } from '../../../apollo/user/query';
-import { ProductsInquiry } from '../../types/product/product.input';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { useRouter } from 'next/router';
 import { T } from '../../types/common';
 import { userVar } from '../../../apollo/store';
-import { Direction } from '../../enums/common.enum';
 
 interface AgentProductProps {
 	searchFilter: any;

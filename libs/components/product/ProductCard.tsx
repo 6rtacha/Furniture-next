@@ -9,6 +9,7 @@ import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { REACT_APP_API_URL } from '../../config';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 interface ProductCardType {
 	product: Product;
@@ -42,23 +43,25 @@ const ProductCard = (props: ProductCardType) => {
 								}}
 							>
 								<img src={imagePath} alt="" />
+								<div className="price">${product.productPrice}</div>
 							</Link>{' '}
 						</div>
 
 						<div className="title">
 							<div className="article-title">
 								<span>{product.productTitle}</span>
+								<Stack className="info">
+									<div className="type">{product.productType}</div>
+									<div className="material">{product.productMaterial}</div>
+								</Stack>
 							</div>
 							<div className="address">
 								{product.productAddress}, {product.productLocation}
 							</div>
-							<Stack className="info">
-								<div className="type">{product.productType}</div>
-								<div className="material">{product.productMaterial}</div>
-								<div className="price">${product.productPrice}</div>
-							</Stack>
+
 							<Stack className={'view-like'}>
 								<Typography>Available</Typography>
+								<ShoppingCartIcon sx={{ mt: '7px' }} />
 								<Stack className="buttons">
 									<IconButton color={'default'}>
 										<RemoveRedEyeIcon />

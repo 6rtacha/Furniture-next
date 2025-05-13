@@ -664,3 +664,74 @@ export const GET_MEMBER_FOLLOWINGS = gql`
 		}
 	}
 `;
+
+/**************************
+ *         NOTIFICATION        *
+ *************************/
+export const GET_ALL_NOTIFICATIONS = gql`
+	query GetAllNotifications($input: NotificationsInquiry!) {
+		getAllNotifications(input: $input) {
+			list {
+				_id
+				notificationType
+				notificationStatus
+				notificationGroup
+				notificationTitle
+				notificationDesc
+				authorId
+				receiverId
+				memberData {
+					_id
+					memberType
+					memberStatus
+					memberAuthType
+					memberPhone
+					memberNick
+					memberFullName
+					memberImage
+					memberAddress
+					memberDesc
+					memberProducts
+					memberProjects
+					memberArticles
+					memberFollowers
+					memberFollowings
+					memberPoints
+					memberLikes
+					memberViews
+					memberComments
+					memberRank
+					memberWarnings
+					memberBlocks
+					deletedAt
+					createdAt
+					updatedAt
+					accessToken
+				}
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+export const GET_ALL_NOTIFICATIONS1 = gql`
+	query GetAllNotifications1($input: NotificationsInquiry!) {
+		getAllNotifications1(input: $input) {
+			list {
+				_id
+				notificationType
+				notificationStatus
+				notificationGroup
+				notificationTitle
+				notificationDesc
+				authorId
+				receiverId
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;

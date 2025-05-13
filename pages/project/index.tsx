@@ -23,7 +23,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 	},
 });
 
-const ProductList: NextPage = ({ initialInput, ...props }: any) => {
+const ProjectList: NextPage = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(
@@ -130,93 +130,11 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 	if (device === 'mobile') {
 		return <h1>PROPERTIES MOBILE</h1>;
 	} else {
-		return (
-			<div id="property-list-page" style={{ position: 'relative' }}>
-				<div className="container">
-					<Box component={'div'} className={'right'}>
-						<span>Sort by</span>
-						<div>
-							<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
-								{filterSortName}
-							</Button>
-							<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
-								<MenuItem
-									onClick={sortingHandler}
-									id={'new'}
-									disableRipple
-									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-								>
-									New
-								</MenuItem>
-								<MenuItem
-									onClick={sortingHandler}
-									id={'lowest'}
-									disableRipple
-									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-								>
-									Lowest Price
-								</MenuItem>
-								<MenuItem
-									onClick={sortingHandler}
-									id={'highest'}
-									disableRipple
-									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
-								>
-									Highest Price
-								</MenuItem>
-							</Menu>
-						</div>
-					</Box>
-					<Stack className={'property-page'}>
-						<Stack className={'filter-config'}>
-							{/* @ts-ignore */}
-							<NewFilter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
-
-							{/* <Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} /> */}
-						</Stack>
-						<Stack className="main-config">
-							<Stack className={'list-config'}>
-								{products?.length === 0 ? (
-									<div className={'no-data'}>
-										<img src="/img/icons/icoAlert.svg" alt="" />
-										<p>No Products found!</p>
-									</div>
-								) : (
-									products.map((product: Product) => {
-										return <ProductCard product={product} likeProductHandler={likeProductHandler} key={product?._id} />;
-									})
-								)}
-							</Stack>
-							<Stack className="pagination-config">
-								{products.length !== 0 && (
-									<Stack className="pagination-box">
-										<Pagination
-											page={currentPage}
-											count={Math.ceil(total / searchFilter.limit)}
-											onChange={handlePaginationChange}
-											shape="circular"
-											color="primary"
-										/>
-									</Stack>
-								)}
-
-								{products.length !== 0 && (
-									<Stack className="total-result">
-										<Typography>
-											Total {total} product{total > 1 ? 's' : ''} available
-										</Typography>
-									</Stack>
-								)}
-							</Stack>
-						</Stack>
-					</Stack>
-				</div>
-			</div>
-		);
+		return <>ProjectList</>;
 	}
 };
 
-ProductList.defaultProps = {
+ProjectList.defaultProps = {
 	initialInput: {
 		page: 1,
 		limit: 12,
@@ -231,4 +149,4 @@ ProductList.defaultProps = {
 	},
 };
 
-export default withLayoutBasic(ProductList);
+export default withLayoutBasic(ProjectList);

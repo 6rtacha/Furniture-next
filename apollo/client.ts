@@ -30,7 +30,7 @@ const tokenRefreshLink = new TokenRefreshLink({
 });
 
 // Custom WebSocket client
-class LoggingWebSocket {
+export class LoggingWebSocket {
 	private socket: WebSocket;
 
 	constructor(url: string) {
@@ -42,7 +42,8 @@ class LoggingWebSocket {
 		};
 
 		this.socket.onmessage = (msg) => {
-			console.log('WebSocket message:', msg.data);
+			const data = JSON.parse(msg.data);
+			console.log('WebSocket message:', data);
 		};
 
 		this.socket.onerror = (error) => {
@@ -59,7 +60,7 @@ class LoggingWebSocket {
 	}
 }
 
-function createIsomorphicLink() {
+export function createIsomorphicLink() {
 	if (typeof window !== 'undefined') {
 		const authLink = new ApolloLink((operation, forward) => {
 			operation.setContext(({ headers = {} }) => ({

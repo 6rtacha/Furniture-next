@@ -6,7 +6,7 @@ import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import MyFavorites from '../../libs/components/mypage/MyFavorites';
 import RecentlyVisited from '../../libs/components/mypage/RecentlyVisited';
-import AddProperty from '../../libs/components/mypage/AddNewProperty';
+import AddProperty from '../../libs/components/mypage/AddNewProduct';
 import MyProfile from '../../libs/components/mypage/MyProfile';
 import MyArticles from '../../libs/components/mypage/MyArticles';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
@@ -28,6 +28,13 @@ import { T } from '../../libs/types/common';
 import AgentFollowerCard from '../../libs/components/agent/AgentFollowerCard';
 import { MemberType } from '../../libs/enums/member.enum';
 import { logOut } from '../../libs/auth';
+import AgentProduct from '../../libs/components/agent/AgentProduct';
+import AgentBlogs from '../../libs/components/agent/AgentBlogs';
+import { AgentProductsInquiry, ProductsInquiry } from '../../libs/types/product/product.input';
+import { ProductStatus } from '../../libs/enums/product.enum';
+import MyFollowers from '../../libs/components/mypage/MyFollowers';
+import MyFollowings from '../../libs/components/mypage/MyFollowings';
+import AddProduct from '../../libs/components/mypage/AddNewProduct';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -46,6 +53,14 @@ const MyPage: NextPage = () => {
 		? `${REACT_APP_API_URL}/${user.memberImage}`
 		: '/img/community/communityImg.png';
 
+	const [searchFilter, setSearchFilter] = useState<AgentProductsInquiry>({
+		page: 1,
+		limit: 5,
+		sort: 'createdAt',
+		search: {
+			productStatus: ProductStatus.ACTIVE,
+		},
+	});
 	/** APOLLO REQUESTS **/
 	const [subscribe] = useMutation(SUBSCRIBE);
 	const [unsubscribe] = useMutation(UNSUBSCRIBE);
@@ -62,9 +77,11 @@ const MyPage: NextPage = () => {
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
 			setMember(data?.getMember);
+			// setSearchFilter({ ...searchFilter, search: { memberId: data?.getMember?._id } });
 		},
 	});
 	console.log('memberId', memberId);
+	console.log('searchFilter', searchFilter);
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -142,6 +159,30 @@ const MyPage: NextPage = () => {
 		}
 	};
 
+	const changeTabHandler = (tab: string) => {
+		router.push(
+			{
+				pathname: '/mypage',
+				query: { tab: tab },
+			},
+			undefined,
+			{ scroll: false },
+		);
+	};
+	const tab = router.query.tab ?? 'product';
+
+	const changeTabHandler1 = (tab1: string) => {
+		router.push(
+			{
+				pathname: '/mypage',
+				query: { tab1: tab1 },
+			},
+			undefined,
+			{ scroll: false },
+		);
+	};
+	const tab1 = router.query.tab1 ?? 'followers';
+
 	if (device === 'mobile') {
 		return <div>MY PAGE</div>;
 	} else {
@@ -172,32 +213,62 @@ const MyPage: NextPage = () => {
 					<Stack className={'agent-home-list'}>
 						<Stack className={'project-blog'}>
 							<Stack className={'button'}>
-								<Button className={'btn'}>
-									<span>Projects</span>
+								<Button
+									id={'btn'}
+									className={tab == 'product' ? 'active' : ''}
+									onClick={() => {
+										changeTabHandler('product');
+									}}
+								>
+									<div>Products</div>
 								</Button>
-								<Button className={'btn'}>
-									<span>Blog</span>
+								<Button
+									id={'btn'}
+									className={tab == 'blog' ? 'active' : ''}
+									onClick={() => {
+										changeTabHandler('blog');
+									}}
+								>
+									<div>Blog</div>
 								</Button>
 							</Stack>
 							<div className="divider"></div>
 							<Stack className={'cards'}>
-								<MyProducts />
+								{tab === 'product' && <MyProducts />}
+
+								{tab === 'blog' && <MyArticles />}
 							</Stack>
 						</Stack>
 						<Stack className={'follower-following'}>
 							<Stack className={'button'}>
-								<Button className={'btn'}>
+								<Button
+									id={'btn'}
+									className={tab1 == 'followers' ? 'active' : ''}
+									onClick={() => {
+										changeTabHandler1('followers');
+									}}
+								>
 									<span>Followers</span>
 								</Button>
-								<Button className={'btn'}>
+								<Button
+									id={'btn'}
+									className={tab1 == 'followings' ? 'active' : ''}
+									onClick={() => {
+										changeTabHandler1('followings');
+									}}
+								>
 									<span>Followings</span>
 								</Button>
 							</Stack>
 							<div className="divider"></div>
-							<Stack className={'cards'}>{/* <AgentFollowerCard memberFollower={undef /> */}</Stack>
+							<Stack className={'cards'}>
+								{tab1 === 'followers' && <MyFollowers />}
+
+								{tab1 === 'followings' && <MyFollowings />}
+							</Stack>
 						</Stack>
 					</Stack>
-					<AddProperty />
+					<AddProduct />
 				</Stack>
 			</div>
 		);

@@ -96,7 +96,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 		variables: {
 			input: {
 				page: 1,
-				limit: 4,
+				limit: 20,
 				sort: 'createdAt',
 				direction: Direction.DESC,
 				search: { locationList: product?.productLocation ? [product?.productLocation] : [] },

@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import { ProductLocation, ProductType } from '../../enums/product.enum';
-import { REACT_APP_API_URL, propertySquare } from '../../config';
+import { ProductLocation, ProductMaterial, ProductType } from '../../enums/product.enum';
+import { productSquare, REACT_APP_API_URL } from '../../config';
 import { ProductInput } from '../../types/product/product.input';
 import axios from 'axios';
 import { getJwtToken } from '../../auth';
@@ -13,13 +13,14 @@ import { userVar } from '../../../apollo/store';
 import { CREATE_PRODUCT, UPDATE_PRODUCT } from '../../../apollo/user/mutation';
 import { GET_PRODUCT } from '../../../apollo/user/query';
 
-const AddProperty = ({ initialValues, ...props }: any) => {
+const AddProduct = ({ initialValues, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const inputRef = useRef<any>(null);
 	const [insertProductData, setInsertProductData] = useState<ProductInput>(initialValues);
 	const [productType, setProductType] = useState<ProductType[]>(Object.values(ProductType));
 	const [productLocation, setProductLocation] = useState<ProductLocation[]>(Object.values(ProductLocation));
+	const [productMaterial, setProductMaterial] = useState<ProductMaterial[]>(Object.values(ProductMaterial));
 	const token = getJwtToken();
 	const user = useReactiveVar(userVar);
 
@@ -35,7 +36,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 	} = useQuery(GET_PRODUCT, {
 		fetchPolicy: 'network-only',
 		variables: {
-			input: router.query.propertyId,
+			input: router.query.productId,
 		},
 	});
 
@@ -47,7 +48,9 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 			productPrice: getProductData?.getProduct ? getProductData?.getProduct?.productPrice : 0,
 			productType: getProductData?.getProduct ? getProductData?.getProduct?.productType : '',
 			productLocation: getProductData?.getProduct ? getProductData?.getProduct?.productLocation : '',
+			productMaterial: getProductData?.getProduct ? getProductData?.getProduct?.productMaterial : '',
 			productAddress: getProductData?.getProduct ? getProductData?.getProduct?.productAddress : '',
+			productColors: getProductData?.getProduct ? getProductData?.getProduct?.productColors : '',
 			productPurchase: getProductData?.getProduct ? getProductData?.getProduct?.productPurchase : false,
 			productRent: getProductData?.getProduct ? getProductData?.getProduct?.productRent : false,
 			productWidth: getProductData?.getProduct ? getProductData?.getProduct?.productWidth : 0,
@@ -75,7 +78,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 				  }`,
 					variables: {
 						files: [null, null, null, null, null],
-						target: 'property',
+						target: 'product',
 					},
 				}),
 			);
@@ -117,7 +120,9 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 			insertProductData.productPrice === 0 || // @ts-ignore
 			insertProductData.productType === '' || // @ts-ignore
 			insertProductData.productLocation === '' || // @ts-ignore
+			insertProductData.productMaterial === '' || // @ts-ignore
 			insertProductData.productAddress === '' || // @ts-ignore
+			insertProductData.productColors === '' || // @ts-ignore
 			insertProductData.productPurchase === '' || // @ts-ignore
 			insertProductData.productRent === '' ||
 			insertProductData.productWidth === 0 ||
@@ -138,13 +143,16 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 				},
 			});
 
+			console.log('insertProductData', insertProductData);
+
 			await sweetMixinSuccessAlert('This product has been created successfully.');
-			await router.push({
-				pathname: '/mypage',
-				// query: {
-				// 	category: 'myProducts',
-				// },
-			});
+			// await router.push({
+			// 	pathname: '/mypage',
+			// 	query: {
+			// 		category: 'myProducts',
+			// 	},
+			// });
+			await router.reload();
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
 		}
@@ -286,6 +294,43 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 
 							<Stack className="config-row">
 								<Stack className="price-year-after-price">
+									<Typography className="title">Select Material</Typography>
+									<select
+										className={'select-description'}
+										defaultValue={insertProductData.productMaterial || 'select'}
+										value={insertProductData.productMaterial || 'select'}
+										onChange={({ target: { value } }) =>
+											// @ts-ignore
+											setInsertProductData({ ...insertProductData, productMaterial: value })
+										}
+									>
+										<>
+											<option selected={true} disabled={true} value={'select'}>
+												Select
+											</option>
+											{productMaterial.map((material: any) => (
+												<option value={`${material}`} key={material}>
+													{material}
+												</option>
+											))}
+										</>
+									</select>
+									<div className={'divider'}></div>
+									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
+								</Stack>
+								<Stack className="price-year-after-price">
+									<Typography className="title">Colors</Typography>
+									<input
+										type="text"
+										className="description-input"
+										placeholder={'Colors'}
+										value={insertProductData.productColors}
+										onChange={({ target: { value } }) =>
+											setInsertProductData({ ...insertProductData, productColors: value })
+										}
+									/>
+								</Stack>
+								{/* <Stack className="price-year-after-price">
 									<Typography className="title">Purchase</Typography>
 									<select
 										className={'select-description'}
@@ -303,26 +348,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 									</select>
 									<div className={'divider'}></div>
 									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
-								</Stack>
-								<Stack className="price-year-after-price">
-									<Typography className="title">Rent</Typography>
-									<select
-										className={'select-description'}
-										value={insertProductData.productRent ? 'yes' : 'no'}
-										defaultValue={insertProductData.productRent ? 'yes' : 'no'}
-										onChange={({ target: { value } }) =>
-											setInsertProductData({ ...insertProductData, productRent: value === 'yes' })
-										}
-									>
-										<option disabled={true} selected={true}>
-											Select
-										</option>
-										<option value={'yes'}>Yes</option>
-										<option value={'no'}>No</option>
-									</select>
-									<div className={'divider'}></div>
-									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
-								</Stack>
+								</Stack> */}
 							</Stack>
 
 							<Stack className="config-row">
@@ -379,7 +405,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 										<option disabled={true} selected={true} value={'select'}>
 											Select
 										</option>
-										{propertySquare.map((square: number) => {
+										{productSquare.map((square: number) => {
 											if (square !== 0) {
 												return <option value={`${square}`}>{square}</option>;
 											}
@@ -390,7 +416,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 								</Stack>
 							</Stack>
 
-							<Typography className="property-title">Property Description</Typography>
+							<Typography className="property-title">Product Description</Typography>
 							<Stack className="config-column">
 								<Typography className="title">Description</Typography>
 								<textarea
@@ -496,7 +522,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 						</Stack>
 
 						<Stack className="buttons-row">
-							{router.query.propertyId ? (
+							{router.query.productId ? (
 								<Button className="next-button" disabled={doDisabledCheck()} onClick={updateProductHandler}>
 									<Typography className="next-button-text">Save</Typography>
 								</Button>
@@ -513,13 +539,15 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 	}
 };
 
-AddProperty.defaultProps = {
+AddProduct.defaultProps = {
 	initialValues: {
 		productTitle: '',
 		productPrice: 0,
 		productType: '',
 		productLocation: '',
 		productAddress: '',
+		productMaterial: '',
+		productColors: '',
 		productPurchase: false,
 		productRent: false,
 		productWidth: 0,
@@ -530,4 +558,4 @@ AddProperty.defaultProps = {
 	},
 };
 
-export default AddProperty;
+export default AddProduct;

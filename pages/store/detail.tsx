@@ -41,7 +41,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 	},
 });
 
-const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) => {
+const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const { memberId } = router.query;
@@ -253,18 +253,15 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 										<>
 											<Button
 												className={'button'}
-												// variant="outlined"
 												sx={{ background: '#f4f0ec' }}
 												onClick={() => unsubscribeHandler(member?._id, getMemberRefetch, agentId)}
 											>
 												Unfollow
 											</Button>
-											{/* <Typography>Following</Typography> */}
 										</>
 									) : (
 										<Button
 											className={'button'}
-											// variant="contained"
 											sx={{
 												background: '#292f36',
 												color: '#cda274',
@@ -432,7 +429,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	}
 };
 
-AgentDetail.defaultProps = {
+StoreDetail.defaultProps = {
 	initialInput: {
 		page: 1,
 		limit: 9,
@@ -451,4 +448,4 @@ AgentDetail.defaultProps = {
 	},
 };
 
-export default withLayoutBasic(AgentDetail);
+export default withLayoutBasic(StoreDetail);

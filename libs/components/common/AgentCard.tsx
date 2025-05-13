@@ -31,7 +31,7 @@ const AgentCard = (props: AgentCardProps) => {
 				<Stack className="agent-general-card">
 					<Link
 						href={{
-							pathname: '/agent/detail',
+							pathname: '/store/detail',
 							query: { agentId: agent?._id },
 						}}
 					>

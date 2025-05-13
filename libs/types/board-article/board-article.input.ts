@@ -20,7 +20,7 @@ export interface BoardArticlesInquiry {
 	limit: number;
 	sort?: string;
 	direction?: Direction;
-	search: BAISearch;
+	search?: BAISearch;
 }
 
 interface ABAISearch {

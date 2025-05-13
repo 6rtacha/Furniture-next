@@ -5,7 +5,7 @@ import useDeviceDetect from '../../hooks/useDeviceDetect';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Product } from '../../types/product/product';
-import { REACT_APP_API_URL, topPropertyRank } from '../../config';
+import { REACT_APP_API_URL } from '../../config';
 import { formatterStr } from '../../utils';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
@@ -46,18 +46,19 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 				<Box component={'div'} className={'info'}>
 					<strong className={'title'}>{product?.productTitle}</strong>
 					<p className={'desc'}>{product?.productAddress}</p>
+					<span>{product?.productLocation}</span>
 					<div className={'options'}>
 						<div>
-							<StraightenOutlinedIcon />
-							<span>{product?.productWidth} Width</span>
+							{/* <StraightenOutlinedIcon /> */}
+							<span>Width {product?.productWidth}cm</span>
 						</div>
 						<div>
-							<WidthNormalOutlinedIcon />
-							<span>{product?.productLength} Length</span>
+							{/* <WidthNormalOutlinedIcon /> */}
+							<span>Length {product?.productLength}cm </span>
 						</div>
 						<div>
-							<HeightOutlinedIcon />
-							<span>{product?.productHeight} Height</span>
+							{/* <HeightOutlinedIcon /> */}
+							<span>Height {product?.productHeight}cm </span>
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />

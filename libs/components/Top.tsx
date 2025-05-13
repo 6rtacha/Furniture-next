@@ -14,13 +14,18 @@ import useDeviceDetect from '../hooks/useDeviceDetect';
 import Link from 'next/link';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import { useReactiveVar } from '@apollo/client';
-import { userVar } from '../../apollo/store';
+import { socketVar, userVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
 import { REACT_APP_API_URL } from '../config';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { Notification1 } from '../types/notification/notification';
+import { Member } from '../types/member/member';
+import Notifications from './Notification';
 
 const Top = () => {
 	const device = useDeviceDetect();
 	const user = useReactiveVar(userVar);
+	const socket = useReactiveVar(socketVar);
 	const { t, i18n } = useTranslation('common');
 	const router = useRouter();
 	const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
@@ -34,6 +39,7 @@ const Top = () => {
 	const logoutOpen = Boolean(logoutAnchor);
 
 	/** LIFECYCLES **/
+
 	useEffect(() => {
 		if (localStorage.getItem('locale') === null) {
 			localStorage.setItem('locale', 'en');
@@ -45,7 +51,7 @@ const Top = () => {
 
 	useEffect(() => {
 		switch (router.pathname) {
-			case '/property/detail':
+			case '/product/detail':
 				setBgColor(true);
 				break;
 			default:
@@ -145,11 +151,14 @@ const Top = () => {
 				<Link href={'/'}>
 					<div>{t('Home')}</div>
 				</Link>
+				<Link href={'/project'}>
+					<div>{t('Projects')}</div>
+				</Link>
 				<Link href={'/product'}>
 					<div>{t('Products')}</div>
 				</Link>
-				<Link href={'/agent'}>
-					<div> {t('Agents')} </div>
+				<Link href={'/store'}>
+					<div> {t('Store')} </div>
 				</Link>
 				<Link href={'/community?articleCategory=NEWS'}>
 					<div> {t('Community')} </div>
@@ -176,11 +185,14 @@ const Top = () => {
 							<Link href={'/'}>
 								<div>{t('Home')}</div>
 							</Link>
+							<Link href={'/project'}>
+								<div>{t('Projects')}</div>
+							</Link>
 							<Link href={'/product'}>
 								<div>{t('Products')}</div>
 							</Link>
-							<Link href={'/agent'}>
-								<div> {t('Agents')} </div>
+							<Link href={'/store'}>
+								<div> {t('Store')} </div>
 							</Link>
 							<Link href={'/community?articleCategory=NEWS'}>
 								<div> {t('Community')} </div>
@@ -233,7 +245,9 @@ const Top = () => {
 							)}
 
 							<div className={'lan-box'}>
-								{user?._id && <NotificationsOutlinedIcon className={'notification-icon'} />}
+								{/* {user?._id && <NotificationsOutlinedIcon className={'notification-icon'} />} */}
+								<Notifications />
+
 								<Button
 									disableRipple
 									className="btn-lang"

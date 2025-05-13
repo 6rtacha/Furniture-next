@@ -8,7 +8,7 @@ export interface ProductInput {
 	productTitle: string;
 	productPrice: number;
 	productMaterial: ProductMaterial;
-	productColors?: string;
+	productColors: string;
 	productWidth: number;
 	productLength: number;
 	productHeight: number;
