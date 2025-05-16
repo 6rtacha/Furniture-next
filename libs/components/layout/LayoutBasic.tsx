@@ -39,8 +39,8 @@ const withLayoutBasic = (Component: any) => {
 					bgImage = '/img/page_product.png';
 					break;
 				case '/store':
-					title = 'Designers';
-					desc = 'Home / Designers';
+					title = 'Stores';
+					desc = 'Home / Stores';
 					bgImage = '/img/page_my.png';
 					break;
 				case '/store/detail':

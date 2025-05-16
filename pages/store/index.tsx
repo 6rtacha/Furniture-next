@@ -203,7 +203,7 @@ const StoreList: NextPage = ({ initialInput, ...props }: any) => {
 
 						{agents.length !== 0 && (
 							<span>
-								Total {total} agent{total > 1 ? 's' : ''} available
+								Total {total} store{total > 1 ? 's' : ''} available
 							</span>
 						)}
 					</Stack>

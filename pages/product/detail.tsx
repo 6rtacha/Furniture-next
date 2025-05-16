@@ -219,30 +219,12 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 					<Stack className={'property-detail-config'}>
 						<Stack className={'property-info-config'}>
 							<Stack className={'images'}>
-								<Stack className={'left'}>
-									<Stack className={'main-image'}>
-										<img
-											src={slideImage ? `${REACT_APP_API_URL}/${slideImage}` : '/img/property/bigImage.png'}
-											alt={'main-image'}
-										/>
-									</Stack>
-									<Stack className={'sub-images'}>
-										{product?.productImages.map((subImg: string) => {
-											const imagePath: string = `${REACT_APP_API_URL}/${subImg}`;
-											return (
-												<Stack className={'sub-img-box'} onClick={() => changeImageHandler(subImg)} key={subImg}>
-													<img src={imagePath} alt={'sub-image'} />
-												</Stack>
-											);
-										})}
-									</Stack>
-								</Stack>
 								<Stack className={'right'}>
 									<Stack className={'prop-desc-config'}>
 										<Stack className={'info'}>
 											<Stack className={'left-box'}>
 												<Typography className={'title-main'}>{product?.productTitle}</Typography>
-												<Stack className={'top-box'}>
+												{/* <Stack className={'top-box'}>
 													<Typography className={'city'}>{product?.productLocation}</Typography>
 													<Stack className={'divider'}></Stack>
 													<Stack className={'buy-rent-box'}>
@@ -307,7 +289,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 													<Typography className={'date'}>
 														{moment().diff(product?.createdAt, 'days')} days ago
 													</Typography>
-												</Stack>
+												</Stack> */}
 											</Stack>
 											<Stack className={'right-box'}>
 												<Stack className="buttons">
@@ -374,6 +356,24 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 												</Stack>
 											</Stack>
 										</Stack>
+									</Stack>
+								</Stack>
+								<Stack className={'left'}>
+									<Stack className={'main-image'}>
+										<img
+											src={slideImage ? `${REACT_APP_API_URL}/${slideImage}` : '/img/property/bigImage.png'}
+											alt={'main-image'}
+										/>
+									</Stack>
+									<Stack className={'sub-images'}>
+										{product?.productImages.map((subImg: string) => {
+											const imagePath: string = `${REACT_APP_API_URL}/${subImg}`;
+											return (
+												<Stack className={'sub-img-box'} onClick={() => changeImageHandler(subImg)} key={subImg}>
+													<img src={imagePath} alt={'sub-image'} />
+												</Stack>
+											);
+										})}
 									</Stack>
 								</Stack>
 							</Stack>

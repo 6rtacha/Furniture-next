@@ -22,6 +22,11 @@ import Typography from '@mui/material/Typography';
 import { Stack } from '@mui/material';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { NotePencil } from 'phosphor-react';
+import { Notice1 } from '../../../types/notice/notice';
+import { useQuery } from '@apollo/client';
+import { GET_NOTICES } from '../../../../apollo/user/query';
+import { T } from '../../../types/common';
+import Moment from 'react-moment';
 
 type Order = 'asc' | 'desc';
 
@@ -186,8 +191,27 @@ export const NoticeList = (props: NoticeListType) => {
 		generateMentorTypeHandle,
 	} = props;
 	const router = useRouter();
+	const [notices, setNotices] = useState<Notice1[]>([]);
 
 	/** APOLLO REQUESTS **/
+	const {
+		loading: getNoticesLoading,
+		data: getNoticesData,
+		error: getNoticesError,
+		refetch: getNoticesRefetch,
+	} = useQuery(GET_NOTICES, {
+		fetchPolicy: 'cache-and-network',
+		variables: {
+			input: {
+				page: 1,
+				limit: 100,
+			},
+		},
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setNotices(data?.getNotices?.list);
+		},
+	});
 	/** LIFECYCLES **/
 	/** HANDLERS **/
 
@@ -198,7 +222,7 @@ export const NoticeList = (props: NoticeListType) => {
 					{/*@ts-ignore*/}
 					<EnhancedTableToolbar />
 					<TableBody>
-						{[1, 2, 3, 4, 5].map((ele: any, index: number) => {
+						{notices.map((notice: Notice1, index: number) => {
 							const member_image = '/img/profile/defaultUser.svg';
 
 							return (
@@ -206,9 +230,9 @@ export const NoticeList = (props: NoticeListType) => {
 									<TableCell padding="checkbox">
 										<Checkbox color="primary" />
 									</TableCell>
-									<TableCell align="left">mb id</TableCell>
-									<TableCell align="left">member.mb_full_name</TableCell>
-									<TableCell align="left">member.mb_phone</TableCell>
+									<TableCell align="left">{notice?._id}</TableCell>
+									<TableCell align="left">{notice?.noticeTitle}</TableCell>
+									<TableCell align="left">{notice?.memberId}</TableCell>
 									<TableCell align="left" className={'name'}>
 										<Stack direction={'row'}>
 											<Link href={`/_admin/users/detail?mb_id=$'{member._id'}`}>
@@ -217,12 +241,16 @@ export const NoticeList = (props: NoticeListType) => {
 												</div>
 											</Link>
 											<Link href={`/_admin/users/detail?mb_id=${'member._id'}`}>
-												<div>member.mb_nick</div>
+												<div>Admin</div>
 											</Link>
 										</Stack>
 									</TableCell>
-									<TableCell align="left">member.mb_phone</TableCell>
-									<TableCell align="left">member.mb_phone</TableCell>
+									<TableCell align="left">
+										<Moment format="DD MMMM, YYYY" className={'notice-date'}>
+											{notice?.createdAt}
+										</Moment>
+									</TableCell>
+									<TableCell align="left">No view</TableCell>
 									<TableCell align="right">
 										<Tooltip title={'delete'}>
 											<IconButton>
