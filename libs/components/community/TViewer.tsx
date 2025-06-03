@@ -3,24 +3,29 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import { Viewer } from '@toast-ui/react-editor';
 import { Box, Stack, CircularProgress } from '@mui/material';
 
-const TViewer = (props: any) => {
+const removeImagesFromHTML = (html: string): string => {
+	if (!html) return '';
+	const parser = new DOMParser();
+	const doc = parser.parseFromString(html, 'text/html');
+	const images = doc.querySelectorAll('img');
+	images.forEach((img) => img.remove());
+	return doc.body.innerHTML;
+};
+
+const TViewer = ({ markdown, sx }: { markdown: string; sx?: any }) => {
 	const [editorLoaded, setEditorLoaded] = useState(false);
 
-	/** LIFECYCLES **/
 	useEffect(() => {
-		if (props.markdown) {
-			setEditorLoaded(true);
-		} else {
-			setEditorLoaded(false);
-		}
-	}, [props.markdown]);
+		setEditorLoaded(!!markdown);
+	}, [markdown]);
 
 	return (
-		<Stack sx={{ background: 'white', mt: '30px', borderRadius: '10px' }}>
+		<Stack sx={{ background: 'white', mt: '30px', borderRadius: '10px', ...sx }}>
 			<Box component={'div'} sx={{ m: '40px' }}>
 				{editorLoaded ? (
 					<Viewer
-						initialValue={props.markdown}
+						initialValue={removeImagesFromHTML(markdown)}
+						className="toast-editor-viewer"
 						customHTMLRenderer={{
 							htmlBlock: {
 								iframe(node: any) {

@@ -79,77 +79,22 @@
 										letter-spacing: 0.6px;
 										text-transform: capitalize;
 									}
-									.top-box {
-										width: auto;
-										height: auto;
-										flex-direction: row;
-										align-items: center;
-										gap: 10px;
-										margin-bottom: 17px;
-										.city {
-											color: #717171;
-											font-family: $font;
-											font-size: 13px;
-											font-style: normal;
-											font-weight: 400;
-											line-height: normal;
-										}
-										.divider {
-											width: 1px;
-											height: 20px;
-											background: #ddd;
-										}
-										.buy-rent-box {
-											flex-direction: row;
-											align-items: center;
-											gap: 7px;
-											.buy-rent {
-												color: #eb6753;
-												font-family: $font;
-												font-size: 15px;
-												font-style: normal;
-												font-weight: 600;
-												line-height: normal;
-											}
-										}
-										.date {
-											color: #181a20;
-											font-family: $font;
-											font-size: 15px;
-											font-style: normal;
-											font-weight: 400;
-											line-height: 28px;
-										}
+									.price {
+										color: #181a20;
+										font-family: $fontPrimary;
+										font-size: 32px;
+										font-style: normal;
+										font-weight: 400;
+										line-height: normal;
+										letter-spacing: 0.6px;
+										text-transform: capitalize;
 									}
 								}
 								.right-box {
 									width: auto;
 									height: auto;
 									align-items: flex-end;
-									.buttons {
-										width: auto;
-										height: auto;
-										flex-direction: row;
-										align-items: center;
-										gap: 11px;
-										margin: 0 10px 27px 0;
-										p {
-											color: #181a20;
-											text-align: right;
-											font-family: $font;
-											font-size: 18px;
-											font-style: normal;
-											font-weight: 400;
-											line-height: normal;
-											letter-spacing: 0.52px;
-											text-transform: capitalize;
-										}
-										.button-box {
-											flex-direction: row;
-											gap: 5px;
-											align-items: center;
-										}
-									}
+
 									img {
 										width: 28px;
 										height: 27px;
@@ -251,6 +196,40 @@
 											}
 										}
 									}
+								}
+							}
+						}
+						.like-view-basket {
+							.buttons {
+								width: auto;
+								height: auto;
+								flex-direction: row;
+								align-items: center;
+								gap: 11px;
+								margin: 0 10px 27px 0;
+								padding-left: 40px;
+								p {
+									color: #181a20;
+									text-align: right;
+									font-family: $font;
+									font-size: 18px;
+									font-style: normal;
+									font-weight: 400;
+									line-height: normal;
+									letter-spacing: 0.52px;
+									text-transform: capitalize;
+								}
+								.button-box {
+									flex-direction: row;
+									gap: 5px;
+									align-items: center;
+								}
+								.add-basket {
+									width: 30%;
+									height: 40px;
+									// border: 1px solid #181a20;
+									background-color: #292f36;
+									color: #cda274;
 								}
 							}
 						}
@@ -533,6 +512,131 @@
 						width: 100%;
 						.similar-homes-slide {
 							width: 411px;
+							.card-frame {
+								.card {
+									position: relative;
+									display: flex;
+									flex-direction: column;
+									justify-content: center;
+									align-items: center;
+									width: 306px;
+									height: 480px;
+									// border: solid 2px #f4f0ec;
+									// border-radius: 60px;
+									// background-color: #fdfbfa;
+
+									// transition: opacity 0.4s;
+									// &:hover {
+									// 	opacity: 1;
+									// 	scale: 1.05;
+									// 	transition: 0.3s;
+									// 	.more {
+									// 		opacity: 1;
+									// 	}
+									// }
+									img {
+										width: 300px;
+										height: 269px;
+										object-fit: contain;
+										// object-position: 0 100%;
+										// border-radius: 50px 50px 0 0;
+										cursor: pointer;
+									}
+									.price {
+										position: absolute;
+										padding: 6px;
+										width: 68px;
+										height: 42px;
+										top: 240px;
+										right: 30px;
+										background: #ffffff;
+										font-family: $fontPrimary;
+										font-weight: 400;
+										font-size: 25px;
+										line-height: 31.25px;
+										letter-spacing: 2%;
+										// color: #cda274;
+									}
+									.title {
+										width: 300px;
+										height: 152px;
+										margin-top: 20px;
+										padding-left: 4px;
+										padding-right: 4px;
+										.article-title {
+											display: flex;
+											flex-direction: row;
+											justify-content: space-between;
+											width: 100%;
+
+											.info {
+												position: relative;
+												width: 40%;
+												display: flex;
+												flex-direction: row;
+												justify-content: flex-end;
+												div {
+													width: 100%;
+													font-family: $font;
+													font-weight: 400;
+													font-size: 14px;
+													line-height: 31.25px;
+													letter-spacing: 2%;
+													text-align: end;
+													margin-right: 4px;
+													text-decoration: underline;
+												}
+											}
+											span {
+												font-family: $fontPrimary;
+												font-weight: 400;
+												font-size: 20px;
+												line-height: 31.25px;
+												letter-spacing: 2%;
+											}
+										}
+										.address {
+											margin-top: 10px;
+											color: #717171;
+											font-family: $font;
+											font-size: 13px;
+											font-style: normal;
+											font-weight: 400;
+											line-height: 26px;
+										}
+
+										.view-like {
+											display: flex;
+											flex-direction: row;
+											justify-content: space-between;
+											margin-top: 10px;
+											margin-right: 4px;
+											p {
+												font-family: $font;
+												font-weight: 400;
+												font-size: 20px;
+												line-height: 31.25px;
+												letter-spacing: 2%;
+												margin-top: 4px;
+											}
+											.buttons {
+												flex-direction: row;
+												width: auto;
+												justify-content: space-between;
+												align-items: center;
+												svg {
+													width: 24px;
+													height: 24px;
+													cursor: pointer;
+												}
+												.view-cnt {
+													font-size: 13px;
+												}
+											}
+										}
+									}
+								}
+							}
 						}
 					}
 				}

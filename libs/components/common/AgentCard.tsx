@@ -21,7 +21,9 @@ const AgentCard = (props: AgentCardProps) => {
 	const user = useReactiveVar(userVar);
 	const imagePath: string = agent?.memberImage
 		? `${REACT_APP_API_URL}/${agent?.memberImage}`
-		: '/img/profile/defaultUser.svg';
+		: '/img/profile/defaultStore.jpg';
+
+	console.log('agent', agent);
 
 	if (device === 'mobile') {
 		return <div>AGENT CARD</div>;
@@ -39,25 +41,27 @@ const AgentCard = (props: AgentCardProps) => {
 							component={'div'}
 							className={'agent-img'}
 							style={{
-								backgroundImage: '/img/profile/defaultUser.svg',
+								backgroundImage: '/img/profile/defaultStore.jpg',
 								backgroundSize: 'cover',
 								backgroundPosition: 'center',
 								backgroundRepeat: 'no-repeat',
-								width: '283px',
+								width: '100%',
 								height: '433px',
 							}}
 						>
 							<img
 								src={imagePath}
-								style={{
-									backgroundSize: 'cover',
-									backgroundPosition: 'center',
-									backgroundRepeat: 'no-repeat',
-									width: '283px',
-									height: '433px',
-									borderRadius: '30px',
-									objectFit: 'cover',
-								}}
+								// style={{
+								// 	position: 'relative',
+								// 	backgroundSize: 'cover',
+								// 	backgroundPosition: 'center',
+								// 	backgroundRepeat: 'no-repeat',
+								// 	width: '100%',
+								// 	height: '433px',
+								// 	borderRadius: '30px',
+								// 	objectFit: 'cover',
+								// 	marginTop: '5px',
+								// }}
 							/>
 						</Box>
 					</Link>
@@ -73,7 +77,7 @@ const AgentCard = (props: AgentCardProps) => {
 								<strong>{agent?.memberFullName ?? agent?.memberNick}</strong>
 								{/* <strong>John</strong> */}
 							</Link>
-							<span>Seoul</span>
+							<span>{agent?.memberAddress ?? 'Seoul'}</span>
 						</Box>
 						<Box component={'div'} className={'buttons'}>
 							<IconButton color={'default'}>

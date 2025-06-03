@@ -8,7 +8,7 @@ const Advertisement = () => {
 	const router = useRouter();
 
 	const pushAgentPage = async () => {
-		await router.push(`/agent`);
+		await router.push(`/store`);
 	};
 
 	if (device == 'mobile') {
@@ -40,7 +40,7 @@ const Advertisement = () => {
 						</span>
 					</div>
 					<Button className={'btn'} onClick={pushAgentPage}>
-						Follow Our Designers
+						Follow Our Stores
 						<img src="/img/icons/VectorRight.png" />
 					</Button>
 				</Stack>

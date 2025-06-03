@@ -4,6 +4,9 @@ import { Stack } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Member } from '../../types/member/member';
 import { BoardArticle } from '../../types/board-article/board-article';
+import dynamic from 'next/dynamic';
+const ToastViewerComponent = dynamic(() => import('../community/TViewer'), { ssr: false });
+import { GlobalStyles } from '@mui/material';
 
 interface PeopleOpinionProps {
 	article: BoardArticle;
@@ -32,7 +35,43 @@ const PeopleOpinionCard = (props: PeopleOpinionProps) => {
 						</div>
 					</Stack>
 					<Stack className={'text'}>
-						<span>{article?.articleContent}</span>
+						<span>
+							<ToastViewerComponent
+								markdown={article?.articleContent}
+								sx={{
+									'.toastui-editor-contents': {
+										margin: 0,
+										padding: 0,
+									},
+									'.toastui-editor-contents > *:first-child': {
+										marginTop: '0 !important',
+										paddingTop: 0,
+									},
+									'.toastui-editor-contents p': {
+										padding: 0, // removes default top/bottom margin from all paragraphs
+										fontSize: '20px',
+										lineHeight: '30px',
+										fontWeight: 400,
+										letterSpacing: '1%',
+									},
+								}}
+							/>
+
+							<GlobalStyles
+								styles={{
+									'.toastui-editor-contents': {
+										margin: 0,
+										padding: 0,
+									},
+									'.toastui-editor-contents > *:first-child': {
+										marginTop: '0 !important',
+									},
+									'.toastui-editor-contents p': {
+										margin: 0,
+									},
+								}}
+							/>
+						</span>
 					</Stack>
 				</Stack>
 			</>

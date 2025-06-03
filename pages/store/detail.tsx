@@ -134,7 +134,7 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	const createCommentHandler = async () => {
 		try {
 			if (!user._id) throw new Error(Messages.error2);
-			if (user._id === agentId) throw new Error('Cannot write a revieew for yourself');
+			if (user._id === agentId) throw new Error('Cannot write a review for yourself');
 			await createComment({
 				variables: {
 					input: insertCommentData,
@@ -171,7 +171,7 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	const changeTabHandler = (tab: string) => {
 		router.push(
 			{
-				pathname: '/agent/detail',
+				pathname: '/store/detail',
 				query: { tab: tab },
 			},
 			undefined,
@@ -183,7 +183,7 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	const changeTabHandler1 = (tab1: string) => {
 		router.push(
 			{
-				pathname: '/agent/detail',
+				pathname: '/store/detail',
 				query: { tab1: tab1 },
 			},
 			undefined,
@@ -207,7 +207,7 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 			});
 			await sweetTopSmallSuccessAlert('Followed', 800);
 			await refetch({ input: query });
-			setRefetchTrigger((prev) => prev + 1);
+			// setRefetchTrigger((prev) => prev + 1);
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
 		}
@@ -225,7 +225,7 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 			});
 			await sweetTopSmallSuccessAlert('Unfollowed', 800);
 			await refetch({ input: query });
-			setRefetchTrigger((prev) => prev + 1);
+			// setRefetchTrigger((prev) => prev + 1);
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
 		}
@@ -275,7 +275,7 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 							</Stack>
 							<Stack className={'agent-desc'}>
 								<Stack className={'designer'}>
-									<span>Designer</span>
+									<span>Store</span>
 								</Stack>
 								<Stack className={'description'}>
 									<span>{member?.memberDesc}</span>

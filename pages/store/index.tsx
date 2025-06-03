@@ -188,7 +188,7 @@ const StoreList: NextPage = ({ initialInput, ...props }: any) => {
 					</Stack>
 					<Stack className={'pagination'}>
 						<Stack className="pagination-box">
-							{agents.length !== 0 && Math.ceil(total / searchFilter.limit) > 1 && (
+							{agents.length !== 0 && (
 								<Stack className="pagination-box">
 									<Pagination
 										page={currentPage}

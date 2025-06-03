@@ -365,7 +365,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 										<option disabled={true} selected={true} value={'select'}>
 											Select
 										</option>
-										{[1, 2, 3, 4, 5].map((room: number) => (
+										{productSquare.map((room: number) => (
 											<option value={`${room}`}>{room}</option>
 										))}
 									</select>
@@ -385,7 +385,7 @@ const AddProduct = ({ initialValues, ...props }: any) => {
 										<option disabled={true} selected={true} value={'select'}>
 											Select
 										</option>
-										{[1, 2, 3, 4, 5].map((bed: number) => (
+										{productSquare.map((bed: number) => (
 											<option value={`${bed}`}>{bed}</option>
 										))}
 									</select>

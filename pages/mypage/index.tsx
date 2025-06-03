@@ -4,37 +4,24 @@ import { NextPage } from 'next';
 import { Button, Stack } from '@mui/material';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-import MyFavorites from '../../libs/components/mypage/MyFavorites';
-import RecentlyVisited from '../../libs/components/mypage/RecentlyVisited';
-import AddProperty from '../../libs/components/mypage/AddNewProduct';
 import MyProfile from '../../libs/components/mypage/MyProfile';
 import MyArticles from '../../libs/components/mypage/MyArticles';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { userVar } from '../../apollo/store';
-import MyMenu from '../../libs/components/mypage/MyMenu';
-import WriteArticle from '../../libs/components/mypage/WriteArticle';
-import MemberFollowers from '../../libs/components/member/MemberFollowers';
 import { sweetConfirmAlert, sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
-import MemberFollowings from '../../libs/components/member/MemberFollowings';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { LIKE_TARGET_MEMBER, SUBSCRIBE, UNSUBSCRIBE } from '../../apollo/user/mutation';
 import { Messages, REACT_APP_API_URL } from '../../libs/config';
-import AgentBlogCard from '../../libs/components/agent/AgentBlogCard';
-import AgentFloowerCard from '../../libs/components/agent/AgentFollowerCard';
 import MyProducts from '../../libs/components/mypage/MyProducts';
 import { GET_MEMBER } from '../../apollo/user/query';
 import { Member } from '../../libs/types/member/member';
 import { T } from '../../libs/types/common';
-import AgentFollowerCard from '../../libs/components/agent/AgentFollowerCard';
 import { MemberType } from '../../libs/enums/member.enum';
 import { logOut } from '../../libs/auth';
-import AgentProduct from '../../libs/components/agent/AgentProduct';
-import AgentBlogs from '../../libs/components/agent/AgentBlogs';
-import { AgentProductsInquiry, ProductsInquiry } from '../../libs/types/product/product.input';
-import { ProductStatus } from '../../libs/enums/product.enum';
 import MyFollowers from '../../libs/components/mypage/MyFollowers';
 import MyFollowings from '../../libs/components/mypage/MyFollowings';
 import AddProduct from '../../libs/components/mypage/AddNewProduct';
+import WriteArticle from '../../libs/components/mypage/WriteArticle';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -53,35 +40,27 @@ const MyPage: NextPage = () => {
 		? `${REACT_APP_API_URL}/${user.memberImage}`
 		: '/img/community/communityImg.png';
 
-	const [searchFilter, setSearchFilter] = useState<AgentProductsInquiry>({
-		page: 1,
-		limit: 5,
-		sort: 'createdAt',
-		search: {
-			productStatus: ProductStatus.ACTIVE,
-		},
-	});
 	/** APOLLO REQUESTS **/
 	const [subscribe] = useMutation(SUBSCRIBE);
 	const [unsubscribe] = useMutation(UNSUBSCRIBE);
 	const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
 
-	const {
-		loading: getMemberLoading,
-		data: getMemberData,
-		error: getMemberError,
-		refetch: getMemberRefetch,
-	} = useQuery(GET_MEMBER, {
-		fetchPolicy: 'network-only',
-		variables: { input: memberId },
-		notifyOnNetworkStatusChange: true,
-		onCompleted: (data: T) => {
-			setMember(data?.getMember);
-			// setSearchFilter({ ...searchFilter, search: { memberId: data?.getMember?._id } });
-		},
-	});
+	// const {
+	// 	loading: getMemberLoading,
+	// 	data: getMemberData,
+	// 	error: getMemberError,
+	// 	refetch: getMemberRefetch,
+	// } = useQuery(GET_MEMBER, {
+	// 	fetchPolicy: 'network-only',
+	// 	variables: { input: memberId },
+	// 	skip: !memberId,
+	// 	notifyOnNetworkStatusChange: true,
+	// 	onCompleted: (data: T) => {
+	// 		setMember(data?.getMember);
+	// 	},
+	// });
+	console.log('member', member);
 	console.log('memberId', memberId);
-	console.log('searchFilter', searchFilter);
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -153,7 +132,7 @@ const MyPage: NextPage = () => {
 	const logoutHandler = async () => {
 		try {
 			if (await sweetConfirmAlert('Do you want to logout?')) logOut();
-			router.push('/').then();
+			await router.push({ pathname: '/account/join' }).then();
 		} catch (err: any) {
 			console.log('ERROR, logoutHandler:', err.message);
 		}
@@ -202,7 +181,7 @@ const MyPage: NextPage = () => {
 							</Stack>
 							<Stack className={'agent-desc'}>
 								<Stack className={'designer'}>
-									{user.memberType == MemberType.AGENT ? <span>Designer</span> : <span>User</span>}
+									{user.memberType == MemberType.AGENT ? <span>Store</span> : <span>User</span>}
 
 									<span>{user?.memberPhone}</span>
 								</Stack>
@@ -211,45 +190,51 @@ const MyPage: NextPage = () => {
 						</Stack>
 					</Stack>
 					<Stack className={'agent-home-list'}>
-						<Stack className={'project-blog'}>
-							<Stack className={'button'}>
-								<Button
-									id={'btn'}
-									className={tab == 'product' ? 'active' : ''}
-									onClick={() => {
-										changeTabHandler('product');
-									}}
-								>
-									<div>Products</div>
-								</Button>
-								<Button
-									id={'btn'}
-									className={tab == 'blog' ? 'active' : ''}
-									onClick={() => {
-										changeTabHandler('blog');
-									}}
-								>
-									<div>Blog</div>
-								</Button>
-							</Stack>
-							<div className="divider"></div>
-							<Stack className={'cards'}>
-								{tab === 'product' && <MyProducts />}
+						{user?.memberType === MemberType.AGENT && (
+							<Stack className={'project-blog'}>
+								<Stack className={'button'}>
+									<Button
+										id={'btn'}
+										className={tab == 'product' ? 'active' : ''}
+										onClick={() => {
+											changeTabHandler('product');
+										}}
+									>
+										<div>Products</div>
+									</Button>
+									<Button
+										id={'btn'}
+										className={tab == 'blog' ? 'active' : ''}
+										onClick={() => {
+											changeTabHandler('blog');
+										}}
+									>
+										<div>Blogs</div>
+									</Button>
+								</Stack>
+								<div className="divider"></div>
+								<Stack className={'cards'}>
+									{tab === 'product' && <MyProducts />}
 
-								{tab === 'blog' && <MyArticles />}
+									{tab === 'blog' && <MyArticles />}
+								</Stack>
 							</Stack>
-						</Stack>
+						)}
+
 						<Stack className={'follower-following'}>
 							<Stack className={'button'}>
-								<Button
-									id={'btn'}
-									className={tab1 == 'followers' ? 'active' : ''}
-									onClick={() => {
-										changeTabHandler1('followers');
-									}}
-								>
-									<span>Followers</span>
-								</Button>
+								{user?.memberType === MemberType.AGENT && (
+									<Button
+										id={'btn'}
+										className={tab1 == 'followers' ? 'active' : ''}
+										onClick={() => {
+											changeTabHandler1('followers');
+										}}
+									>
+										<span>Followers</span>
+									</Button>
+								)}
+
 								<Button
 									id={'btn'}
 									className={tab1 == 'followings' ? 'active' : ''}
@@ -259,16 +244,30 @@ const MyPage: NextPage = () => {
 								>
 									<span>Followings</span>
 								</Button>
+								{user?.memberType === MemberType.USER && (
+									<Button
+										id={'btn'}
+										className={tab == 'blog' ? 'active' : ''}
+										onClick={() => {
+											changeTabHandler('blog');
+										}}
+									>
+										<div>Blogs</div>
+									</Button>
+								)}
 							</Stack>
 							<div className="divider"></div>
 							<Stack className={'cards'}>
-								{tab1 === 'followers' && <MyFollowers />}
+								{tab1 === 'followers' && user?.memberType === MemberType.AGENT && <MyFollowers />}
 
 								{tab1 === 'followings' && <MyFollowings />}
+
+								{tab === 'blog' && user?.memberType === MemberType.USER && <MyArticles />}
 							</Stack>
 						</Stack>
+						{/* {user?.memberType === MemberType.USER && <WriteArticle />} */}
 					</Stack>
-					<AddProduct />
+					{user?.memberType === MemberType.AGENT && <AddProduct />}
 				</Stack>
 			</div>
 		);

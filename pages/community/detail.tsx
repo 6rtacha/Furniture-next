@@ -300,10 +300,10 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 										<Button
 											onClick={() =>
 												router.push({
-													pathname: '/mypage',
-													query: {
-														category: 'writeArticle',
-													},
+													pathname: '/community',
+													// query: {
+													// 	category: 'writeArticle',
+													// },
 												})
 											}
 											className="right"
@@ -313,7 +313,26 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 									</Stack>
 									<Stack className={'blog-image'}>
 										<img className={'image'} src={imagePath} />
-										<Stack className={'ytb_play'}>{boardArticle?.articleContent}</Stack>
+										<ToastViewerComponent
+											markdown={boardArticle?.articleContent}
+											sx={{
+												'.toastui-editor-contents p': {
+													fontSize: '20px',
+													fontHeight: '30px',
+													fontWeight: 400,
+													letterSpacing: '1%',
+													textDecoration: 'center',
+												},
+												'.toastui-editor-contents h2': {
+													fontSize: '24px',
+													color: '#333',
+												},
+												'.toastui-editor-contents a': {
+													color: '#1976d2',
+													textDecoration: 'underline',
+												},
+											}}
+										/>
 										<Stack className="left-config">
 											<Stack className={'image-info'}>
 												<img src={'/img/logo/Logo.png'} />

@@ -91,6 +91,8 @@ const TuiEditor = () => {
 				throw new Error(Message.INSERT_ALL_INPUTS);
 			}
 
+			console.log('memoizedValues', memoizedValues);
+
 			await createBoardArticle({
 				variables: {
 					input: { ...memoizedValues, articleCategory },
@@ -101,7 +103,7 @@ const TuiEditor = () => {
 			await router.push({
 				pathname: '/mypage',
 				query: {
-					category: 'myArticles',
+					tab: 'blog',
 				},
 			});
 		} catch (err: any) {
@@ -130,12 +132,10 @@ const TuiEditor = () => {
 							displayEmpty
 							inputProps={{ 'aria-label': 'Without label' }}
 						>
-							<MenuItem value={BoardArticleCategory.FREE}>
-								<span>Free</span>
-							</MenuItem>
-							<MenuItem value={BoardArticleCategory.HUMOR}>Humor</MenuItem>
-							<MenuItem value={BoardArticleCategory.NEWS}>News</MenuItem>
-							<MenuItem value={BoardArticleCategory.RECOMMEND}>Recommendation</MenuItem>
+							<MenuItem value={BoardArticleCategory.FREE}>FREE</MenuItem>
+							<MenuItem value={BoardArticleCategory.HUMOR}>HUMOR</MenuItem>
+							<MenuItem value={BoardArticleCategory.NEWS}>NEWS</MenuItem>
+							<MenuItem value={BoardArticleCategory.RECOMMEND}>RECOMMEND</MenuItem>
 						</Select>
 					</FormControl>
 				</Box>

@@ -18,6 +18,9 @@ import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/swee
 import { Messages, REACT_APP_API_URL } from '../../libs/config';
 import BlogCard from '../../libs/components/common/BlogCard';
 import Moment from 'react-moment';
+import WriteArticle from '../../libs/components/mypage/WriteArticle';
+import dynamic from 'next/dynamic';
+const ToastViewerComponent = dynamic(() => import('../../libs/components/community/TViewer'), { ssr: false });
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -36,6 +39,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 	const imagePath: string = boardArticles[0]?.articleImage
 		? `${REACT_APP_API_URL}/${boardArticles[0]?.articleImage}`
 		: '/img/community/communityImg.png';
+	const [isWriting, setIsWriting] = useState(false);
 	if (articleCategory) initialInput.search.articleCategory = articleCategory;
 
 	/** APOLLO REQUESTS **/
@@ -57,6 +61,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 			setTotalCount(data?.getBoardArticles?.metaCounter[0]?.total);
 		},
 	});
+	console.log('boardArticles', boardArticles);
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -64,16 +69,17 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 			router.push(
 				{
 					pathname: router.pathname,
-					query: { articleCategory: 'FREE' },
+					query: { articleCategory: 'NEWS' },
 				},
 				router.pathname,
 				{ shallow: true },
 			);
+		getBoardArticlesRefetch({ input: searchCommunity });
 	}, []);
 
 	/** HANDLERS **/
 	const tabChangeHandler = async (e: T, value: string) => {
-		console.log(value);
+		console.log('value', value);
 
 		setSearchCommunity({ ...searchCommunity, page: 1, search: { articleCategory: value as BoardArticleCategory } });
 		await router.push(
@@ -109,37 +115,31 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 		}
 	};
 
+	const handleWriteClick = () => {
+		setIsWriting(true);
+	};
+
 	if (device === 'mobile') {
 		return <h1>COMMUNITY PAGE MOBILE</h1>;
 	} else {
 		return (
 			<div id="community-list-page">
 				<div className="container">
-					<TabContext value={searchCommunity.search.articleCategory}>
+					<TabContext value={searchCommunity?.search?.articleCategory}>
 						<Stack className="main-box">
 							<Stack className="right-config">
 								<Stack className="panel-config">
-									{/* <Stack className="title-box">
-										<Stack className="left">
+									<Stack className="title-box">
+										{/* <Stack className="left">
 											<Typography className="title">{searchCommunity.search.articleCategory} BOARD</Typography>
 											<Typography className="sub-title">
 												Express your opinions freely here without content restrictions
 											</Typography>
-										</Stack>
-										<Button
-											onClick={() =>
-												router.push({
-													pathname: '/mypage',
-													query: {
-														category: 'writeArticle',
-													},
-												})
-											}
-											className="right"
-										>
+										</Stack> */}
+										<Button onClick={handleWriteClick} className="right">
 											Write
 										</Button>
-									</Stack> */}
+									</Stack>
 									<Stack className={'latest-post'}>
 										<Stack className={'title'}>
 											<span>Latest Post</span>
@@ -147,8 +147,26 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 										<Stack className={'post-card'}>
 											<img src={imagePath} />
 											<Stack className={'post-info'}>
-												<Stack className={'post-title'}>{boardArticles[0]?.articleTitle}</Stack>
-												<span>{boardArticles[0]?.articleContent}</span>
+												<ToastViewerComponent
+													markdown={boardArticles[0]?.articleContent}
+													sx={{
+														'.toastui-editor-contents p': {
+															fontSize: '20px',
+															fontHeight: '30px',
+															fontWeight: 400,
+															letterSpacing: '1%',
+															textDecoration: 'center',
+														},
+														'.toastui-editor-contents h2': {
+															fontSize: '24px',
+															color: '#333',
+														},
+														'.toastui-editor-contents a': {
+															color: '#1976d2',
+															textDecoration: 'underline',
+														},
+													}}
+												/>
 												<Moment format="DD MMMM, YYYY">{boardArticles[0]?.createdAt}</Moment>
 											</Stack>
 										</Stack>
@@ -236,6 +254,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 									</TabPanel>
 								</Stack>
 							</Stack>
+
 							<Stack className="left-config">
 								<Stack className={'image-info'}>
 									<img src={'/img/logo/Logo.png'} />
@@ -255,22 +274,22 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 									<Tab
 										value={'FREE'}
 										label={'Free Board'}
-										className={`tab-button ${searchCommunity.search.articleCategory == 'FREE' ? 'active' : ''}`}
+										className={`tab-button ${searchCommunity?.search?.articleCategory == 'FREE' ? 'active' : ''}`}
 									/>
 									<Tab
 										value={'RECOMMEND'}
 										label={'Recommendation'}
-										className={`tab-button ${searchCommunity.search.articleCategory == 'RECOMMEND' ? 'active' : ''}`}
+										className={`tab-button ${searchCommunity?.search?.articleCategory == 'RECOMMEND' ? 'active' : ''}`}
 									/>
 									<Tab
 										value={'NEWS'}
 										label={'News'}
-										className={`tab-button ${searchCommunity.search.articleCategory == 'NEWS' ? 'active' : ''}`}
+										className={`tab-button ${searchCommunity?.search?.articleCategory == 'NEWS' ? 'active' : ''}`}
 									/>
 									<Tab
 										value={'HUMOR'}
 										label={'Humor'}
-										className={`tab-button ${searchCommunity.search.articleCategory == 'HUMOR' ? 'active' : ''}`}
+										className={`tab-button ${searchCommunity?.search?.articleCategory == 'HUMOR' ? 'active' : ''}`}
 									/>
 								</TabList>
 							</Stack>
@@ -295,6 +314,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 							</Stack>
 						</Stack>
 					)}
+					{isWriting && <WriteArticle />}
 				</div>
 			</div>
 		);
@@ -304,7 +324,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 Community.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 6,
+		limit: 20,
 		sort: 'createdAt',
 		direction: 'DESC',
 		search: {

@@ -342,7 +342,7 @@ export const UNSUBSCRIBE = gql`
 `;
 
 /**************************
- *         NOTIFICATION        *
+ *         NOTIFICATION   *
  *************************/
 
 export const UPDATE_NOTIFICATION = gql`
@@ -355,6 +355,23 @@ export const UPDATE_NOTIFICATION = gql`
 			notificationDesc
 			authorId
 			receiverId
+		}
+	}
+`;
+
+/**************************
+ *         ORDER   *
+ *************************/
+
+export const CREATE_ORDER = gql`
+	mutation CreateOrder($input: [OrderItemInput!]!) {
+		createOrder(input: $input) {
+			_id
+			orderTotal
+			orderDelivery
+			orderStatus
+			createdAt
+			updatedAt
 		}
 	}
 `;

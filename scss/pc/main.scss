@@ -27,6 +27,7 @@
 @import '/scss/pc/about/about.scss';
 @import '/scss/pc/account/join.scss';
 @import '/scss/pc/admin/admin.scss';
+@import 'scss/pc/basket/basket.scss';
 
 @import '/scss/pc/member/memberPage.scss';
 @import '/scss/pc/member/memberFollows.scss';
@@ -89,6 +90,10 @@ body::-webkit-scrollbar {
 						display: flex;
 						flex-direction: row;
 						justify-content: space-between;
+						.highlight-shop {
+							color: #cda274;
+							font-weight: bold;
+						}
 						div {
 							position: relative;
 							color: #292f36;

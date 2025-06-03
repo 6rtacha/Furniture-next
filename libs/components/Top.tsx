@@ -14,7 +14,7 @@ import useDeviceDetect from '../hooks/useDeviceDetect';
 import Link from 'next/link';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import { useReactiveVar } from '@apollo/client';
-import { socketVar, userVar } from '../../apollo/store';
+import { cartDataVar, socketVar, userVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
 import { REACT_APP_API_URL } from '../config';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -37,6 +37,8 @@ const Top = () => {
 	const [bgColor, setBgColor] = useState<boolean>(false);
 	const [logoutAnchor, setLogoutAnchor] = React.useState<null | HTMLElement>(null);
 	const logoutOpen = Boolean(logoutAnchor);
+	const cartData = useReactiveVar(cartDataVar);
+	const hasCartData = cartData.length > 0;
 
 	/** LIFECYCLES **/
 
@@ -151,12 +153,13 @@ const Top = () => {
 				<Link href={'/'}>
 					<div>{t('Home')}</div>
 				</Link>
-				{/* <Link href={'/project'}>
-					<div>{t('Projects')}</div>
-				</Link> */}
 				<Link href={'/product'}>
 					<div>{t('Products')}</div>
 				</Link>
+				<Link href={'/basket'}>
+					<div className={hasCartData ? 'highlight-shop' : ''}>{t('Shop')}</div>
+				</Link>
+
 				<Link href={'/store'}>
 					<div> {t('Store')} </div>
 				</Link>
@@ -185,14 +188,15 @@ const Top = () => {
 							<Link href={'/'}>
 								<div>{t('Home')}</div>
 							</Link>
-							{/* <Link href={'/project'}>
-								<div>{t('Projects')}</div>
-							</Link> */}
 							<Link href={'/product'}>
 								<div>{t('Products')}</div>
 							</Link>
+							<Link href={'/basket'}>
+								<div className={hasCartData ? 'highlight-shop' : ''}>{t('Shop')}</div>
+							</Link>
+
 							<Link href={'/store'}>
-								<div> {t('Store')} </div>
+								<div> {t('Stores')} </div>
 							</Link>
 							<Link href={'/community?articleCategory=NEWS'}>
 								<div> {t('Community')} </div>
@@ -279,12 +283,12 @@ const Top = () => {
 											className="img-flag"
 											src={'/img/flag/langkr.png'}
 											onClick={langChoice}
-											id="uz"
+											id="kr"
 											alt={'koreanFlag'}
 										/>
 										{t('Korean')}
 									</MenuItem>
-									<MenuItem disableRipple onClick={langChoice} id="ru">
+									{/* <MenuItem disableRipple onClick={langChoice} id="ru">
 										<img
 											className="img-flag"
 											src={'/img/flag/langru.png'}
@@ -293,7 +297,7 @@ const Top = () => {
 											alt={'russiaFlag'}
 										/>
 										{t('Russian')}
-									</MenuItem>
+									</MenuItem> */}
 								</StyledMenu>
 							</div>
 						</Box>

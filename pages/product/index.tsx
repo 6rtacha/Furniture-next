@@ -16,6 +16,7 @@ import { LIKE_TARGET_PRODUCT } from '../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import NewFilter from '../../libs/components/product/NewFilter';
 import ProductCard from '../../libs/components/product/ProductCard';
+import useBasket from '../../libs/hooks/useBasket';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -35,6 +36,7 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [sortingOpen, setSortingOpen] = useState(false);
 	const [filterSortName, setFilterSortName] = useState('New');
+	const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = useBasket();
 
 	/** APOLLO REQUESTS **/
 	const [likeTargetProduct] = useMutation(LIKE_TARGET_PRODUCT);
@@ -79,6 +81,7 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 			},
 		);
 		setCurrentPage(value);
+		getProductsRefetch({ input: searchFilter });
 	};
 
 	const likeProductHandler = async (user: T, id: string) => {
@@ -183,7 +186,14 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 									</div>
 								) : (
 									products.map((product: Product) => {
-										return <ProductCard product={product} likeProductHandler={likeProductHandler} key={product?._id} />;
+										return (
+											<ProductCard
+												product={product}
+												likeProductHandler={likeProductHandler}
+												key={product?._id}
+												onAdd={onAdd}
+											/>
+										);
 									})
 								)}
 							</Stack>
@@ -219,7 +229,7 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 ProductList.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 12,
+		limit: 8,
 		sort: 'createdAt',
 		direction: 'DESC',
 		search: {

@@ -5,6 +5,7 @@ import { Follower } from '../../types/follow/follow';
 import { REACT_APP_API_URL } from '../../config';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
+import Link from 'next/link';
 
 interface AgentFollowerCardProps {
 	memberFollower: Follower;
@@ -19,7 +20,14 @@ const AgentFollowerCard = (props: AgentFollowerCardProps) => {
 		: `/img/profile/defaultUser.svg`;
 	return (
 		<Stack className={'pb-card'}>
-			<img src={imagePath} alt="" />
+			<Link
+				href={{
+					pathname: '/store/detail',
+					query: { agentId: memberFollower?.followerData?._id },
+				}}
+			>
+				<img src={imagePath} alt="" />
+			</Link>
 			<Stack className={'card-info'}>
 				<Stack className={'pb-name'}>
 					<div className="name">{memberFollower?.followerData?.memberNick}</div>

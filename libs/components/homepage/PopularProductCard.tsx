@@ -80,20 +80,12 @@ const PopularProductCard = (props: PopularProductCardProps) => {
 				<Box
 					component={'div'}
 					className={'card-img'}
-					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${product?.productImages[0]})` }}
+					// style={{ backgroundImage: `url(${REACT_APP_API_URL}/${product?.productImages[0]})` }}
 					onClick={() => {
 						pushDetailHandler(product._id);
 					}}
 				>
-					{product?.productRank && product?.productRank >= topProductRank ? (
-						<div className={'status'}>
-							<img src="/img/icons/electricity.svg" alt="" />
-							<span>top</span>
-						</div>
-					) : (
-						''
-					)}
-
+					<img src={`${REACT_APP_API_URL}/${product?.productImages[0]}`} />
 					<div className={'price'}>${product.productPrice}</div>
 				</Box>
 				<Box component={'div'} className={'info'}>

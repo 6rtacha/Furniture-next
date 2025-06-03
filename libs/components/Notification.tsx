@@ -35,6 +35,7 @@ const Notifications = ({ initialInput, initialInput1, ...props }: any) => {
 		error: getAllNotificationsError,
 		refetch: getAllNotificationsRefetch,
 	} = useQuery(GET_ALL_NOTIFICATIONS, {
+		skip: !user?._id,
 		fetchPolicy: 'cache-and-network',
 		variables: { input: notificationInput },
 		notifyOnNetworkStatusChange: true,
@@ -50,6 +51,7 @@ const Notifications = ({ initialInput, initialInput1, ...props }: any) => {
 		error: getAllNotificationsError1,
 		refetch: getAllNotificationsRefetch1,
 	} = useQuery(GET_ALL_NOTIFICATIONS1, {
+		skip: !user?._id,
 		fetchPolicy: 'network-only',
 		variables: { input: initialInput1 },
 		notifyOnNetworkStatusChange: true,
@@ -57,7 +59,6 @@ const Notifications = ({ initialInput, initialInput1, ...props }: any) => {
 			setTotal(data?.getAllNotifications1?.metaCounter[0]?.total ?? 0);
 		},
 	});
-	console.log('notifications', notifications);
 
 	/** WEBSOCKET SETUP **/
 	useEffect(() => {

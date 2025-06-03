@@ -28,15 +28,15 @@ const withLayoutBasic = (Component: any) => {
 				bgImage = '';
 
 			switch (router.pathname) {
-				case '/project':
-					title = 'Explore Our Projects';
-					desc = 'We are glad to see you again!';
-					bgImage = '/img/page_project.jpg';
-					break;
 				case '/product':
 					title = 'Product Search';
 					desc = 'We are glad to see you again!';
 					bgImage = '/img/page_product.png';
+					break;
+				case '/basket':
+					title = "Let's shop";
+					desc = 'We are glad to see you again!';
+					bgImage = '/img/page_project.jpg';
 					break;
 				case '/store':
 					title = 'Stores';

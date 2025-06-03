@@ -14,7 +14,7 @@ import { T } from '../../types/common';
 import { sweetConfirmAlert, sweetErrorHandling } from '../../sweetAlert';
 import Moment from 'react-moment';
 
-const MyProducts: NextPage = ({ initialInput, ...props }: any) => {
+const MyProducts = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
 	const [searchFilter, setSearchFilter] = useState<AgentProductsInquiry>(initialInput);
 	const [agentProducts, setAgentProducts] = useState<Product[]>([]);
@@ -31,6 +31,7 @@ const MyProducts: NextPage = ({ initialInput, ...props }: any) => {
 		error: getAgentProductsError,
 		refetch: getAgentProductsRefetch,
 	} = useQuery(GET_AGENT_PRODUCTS, {
+		skip: !user._id,
 		fetchPolicy: 'network-only',
 		variables: { input: searchFilter },
 		notifyOnNetworkStatusChange: true,

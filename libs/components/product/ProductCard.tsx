@@ -10,16 +10,19 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { REACT_APP_API_URL } from '../../config';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useBasket } from '../../context/BasketContext';
+import { CartItem } from '../../types/order/basket-item';
 
 interface ProductCardType {
 	product: Product;
 	likeProductHandler?: any;
 	myFavorites?: boolean;
 	recentlyVisited?: boolean;
+	onAdd: (item: CartItem) => void;
 }
 
 const ProductCard = (props: ProductCardType) => {
-	const { product, likeProductHandler, myFavorites, recentlyVisited } = props;
+	const { product, likeProductHandler, myFavorites, recentlyVisited, onAdd } = props;
 	const device = useDeviceDetect();
 	const user = useReactiveVar(userVar);
 	const imagePath: string = product?.productImages[0]
@@ -61,7 +64,22 @@ const ProductCard = (props: ProductCardType) => {
 
 							<Stack className={'view-like'}>
 								<Typography>Available</Typography>
-								<ShoppingCartIcon sx={{ mt: '7px' }} />
+								{user._id && (
+									<ShoppingCartIcon
+										sx={{ mt: '7px', cursor: 'pointer' }}
+										onClick={(e: any) => {
+											onAdd({
+												_id: product._id,
+												quantity: 1,
+												name: product.productTitle,
+												price: product.productPrice,
+												image: product.productImages[0],
+											});
+											e.stopPropagation();
+										}}
+									/>
+								)}
+
 								<Stack className="buttons">
 									<IconButton color={'default'}>
 										<RemoveRedEyeIcon />

@@ -31,7 +31,7 @@ const MyArticles = ({ initialInput, ...props }: any) => {
 		refetch: getBoardArticlesRefetch,
 	} = useQuery(GET_BOARD_ARTICLES, {
 		fetchPolicy: 'cache-and-network',
-		// skip: !searchCommunity.search.memberId,
+		skip: !user._id,
 		variables: {
 			input: articleFilter,
 		},
