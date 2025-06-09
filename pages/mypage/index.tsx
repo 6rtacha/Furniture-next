@@ -162,6 +162,18 @@ const MyPage: NextPage = () => {
 	};
 	const tab1 = router.query.tab1 ?? 'followers';
 
+	const changeTabHandler2 = (tab2: string) => {
+		router.push(
+			{
+				pathname: '/mypage',
+				query: { tab2: tab2 },
+			},
+			undefined,
+			{ scroll: false },
+		);
+	};
+	const tab2 = router.query.tab2 ?? 'followings';
+
 	if (device === 'mobile') {
 		return <div>MY PAGE</div>;
 	} else {
@@ -220,10 +232,9 @@ const MyPage: NextPage = () => {
 								</Stack>
 							</Stack>
 						)}
-
-						<Stack className={'follower-following'}>
-							<Stack className={'button'}>
-								{user?.memberType === MemberType.AGENT && (
+						{user?.memberType === MemberType.AGENT && (
+							<Stack className={'follower-following'}>
+								<Stack className={'button'}>
 									<Button
 										id={'btn'}
 										className={tab1 == 'followers' ? 'active' : ''}
@@ -233,38 +244,56 @@ const MyPage: NextPage = () => {
 									>
 										<span>Followers</span>
 									</Button>
-								)}
 
-								<Button
-									id={'btn'}
-									className={tab1 == 'followings' ? 'active' : ''}
-									onClick={() => {
-										changeTabHandler1('followings');
-									}}
-								>
-									<span>Followings</span>
-								</Button>
-								{user?.memberType === MemberType.USER && (
 									<Button
 										id={'btn'}
-										className={tab == 'blog' ? 'active' : ''}
+										className={tab1 == 'followings' ? 'active' : ''}
 										onClick={() => {
-											changeTabHandler('blog');
+											changeTabHandler1('followings');
+										}}
+									>
+										<span>Followings</span>
+									</Button>
+								</Stack>
+								<div className="divider"></div>
+								<Stack className={'cards'}>
+									{tab1 === 'followers' && <MyFollowers />}
+
+									{tab1 === 'followings' && <MyFollowings />}
+								</Stack>
+							</Stack>
+						)}
+						{user?.memberType === MemberType.USER && (
+							<Stack className={'follower-following'}>
+								<Stack className={'button'}>
+									<Button
+										id={'btn'}
+										className={tab2 == 'followings' ? 'active' : ''}
+										onClick={() => {
+											changeTabHandler2('followings');
+										}}
+									>
+										<span>Followings</span>
+									</Button>
+
+									<Button
+										id={'btn'}
+										className={tab2 == 'blog' ? 'active' : ''}
+										onClick={() => {
+											changeTabHandler2('blog');
 										}}
 									>
 										<div>Blogs</div>
 									</Button>
-								)}
-							</Stack>
-							<div className="divider"></div>
-							<Stack className={'cards'}>
-								{tab1 === 'followers' && user?.memberType === MemberType.AGENT && <MyFollowers />}
+								</Stack>
+								<div className="divider"></div>
+								<Stack className={'cards'}>
+									{tab2 === 'followings' && <MyFollowings />}
 
-								{tab1 === 'followings' && <MyFollowings />}
-
-								{tab === 'blog' && user?.memberType === MemberType.USER && <MyArticles />}
+									{tab2 === 'blog' && <MyArticles />}
+								</Stack>
 							</Stack>
-						</Stack>
+						)}
 						{/* {user?.memberType === MemberType.USER && <WriteArticle />} */}
 					</Stack>
 					{user?.memberType === MemberType.AGENT && <AddProduct />}

@@ -35,45 +35,35 @@ const PeopleOpinionCard = (props: PeopleOpinionProps) => {
 						</div>
 					</Stack>
 					<Stack className={'text'}>
-						<span>
-							<ToastViewerComponent
-								markdown={article?.articleContent}
-								sx={{
-									'.toastui-editor-contents': {
-										margin: 0,
-										padding: 0,
-									},
-									'.toastui-editor-contents > *:first-child': {
-										marginTop: '0 !important',
-										paddingTop: 0,
-									},
-									'.toastui-editor-contents p': {
-										padding: 0, // removes default top/bottom margin from all paragraphs
-										fontSize: '20px',
-										lineHeight: '30px',
-										fontWeight: 400,
-										letterSpacing: '1%',
-									},
-								}}
-							/>
-
-							<GlobalStyles
-								styles={{
-									'.toastui-editor-contents': {
-										margin: 0,
-										padding: 0,
-									},
-									'.toastui-editor-contents > *:first-child': {
-										marginTop: '0 !important',
-									},
-									'.toastui-editor-contents p': {
-										margin: 0,
-									},
-								}}
-							/>
-						</span>
+						<ToastViewerComponent
+							markdown={article?.articleContent}
+							sx={{
+								'.toastui-editor-contents': {
+									margin: 0,
+									padding: 0,
+									height: '40px',
+									lineHeight: 'normal',
+								},
+								'.toastui-editor-contents > *:first-child': {
+									marginTop: '0 !important',
+									paddingTop: '0 !important',
+								},
+								'.toastui-editor-contents p': {
+									margin: 0,
+									padding: 0,
+									fontSize: '20px',
+									lineHeight: '30px',
+									fontWeight: 400,
+									letterSpacing: '1%',
+								},
+								'.toastui-editor-contents *': {
+									marginTop: '0 !important',
+									paddingTop: '0 !important',
+								},
+							}}
+						/>
 					</Stack>
-				</Stack>
+				</Stack>{' '}
 			</>
 		);
 	}

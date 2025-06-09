@@ -20,7 +20,7 @@ const TViewer = ({ markdown, sx }: { markdown: string; sx?: any }) => {
 	}, [markdown]);
 
 	return (
-		<Stack sx={{ background: 'white', mt: '30px', borderRadius: '10px', ...sx }}>
+		<Stack sx={{ background: 'white', borderRadius: '10px', ...sx }}>
 			<Box component={'div'} sx={{ m: '40px' }}>
 				{editorLoaded ? (
 					<Viewer
