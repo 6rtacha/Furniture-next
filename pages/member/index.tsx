@@ -14,7 +14,7 @@ import { userVar } from '../../apollo/store';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { LIKE_TARGET_MEMBER, SUBSCRIBE, UNSUBSCRIBE } from '../../apollo/user/mutation';
 import { Messages } from '../../libs/config';
-import MemberProperties from '../../libs/components/member/MemberProperties';
+import PopularProducts from '../../libs/components/homepage/PopularProducts';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -123,7 +123,7 @@ const MemberPage: NextPage = () => {
 							</Stack>
 							<Stack className="main-config" mb={'76px'}>
 								<Stack className={'list-config'}>
-									{category === 'products' && <MemberProperties />}
+									{category === 'products' && <PopularProducts />}
 									{category === 'followers' && (
 										<MemberFollowers
 											subscribeHandler={subscribeHandler}

@@ -10,7 +10,6 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { REACT_APP_API_URL } from '../../config';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useBasket } from '../../context/BasketContext';
 import { CartItem } from '../../types/order/basket-item';
 
 interface ProductCardType {

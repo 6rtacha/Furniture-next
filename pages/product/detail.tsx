@@ -287,7 +287,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 												onClick={() => likeProductHandler(user, product?._id)}
 											>
 												{product?.meLiked && product?.meLiked[0]?.myFavorite ? (
-													<FavoriteIcon color="none" sx={{ fontSize: 40, cursor: 'pointer' }} />
+													<FavoriteIcon sx={{ fontSize: 40, cursor: 'pointer' }} />
 												) : (
 													<FavoriteBorderIcon sx={{ fontSize: 40, cursor: 'pointer' }} />
 												)}
@@ -296,6 +296,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											<Button
 												className={'add-basket'}
 												onClick={(e: any) => {
+													if (!product) return;
 													onAdd({
 														_id: product._id,
 														quantity: 1,

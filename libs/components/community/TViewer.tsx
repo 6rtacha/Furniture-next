@@ -25,7 +25,6 @@ const TViewer = ({ markdown, sx }: { markdown: string; sx?: any }) => {
 				{editorLoaded ? (
 					<Viewer
 						initialValue={removeImagesFromHTML(markdown)}
-						className="toast-editor-viewer"
 						customHTMLRenderer={{
 							htmlBlock: {
 								iframe(node: any) {

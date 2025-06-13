@@ -2,11 +2,8 @@ import { NextPage } from 'next';
 import useDeviceDetect from '../libs/hooks/useDeviceDetect';
 import withLayoutMain from '../libs/components/layout/LayoutHome';
 import CommunityBoards from '../libs/components/homepage/CommunityBoards';
-import PopularProperties from '../libs/components/homepage/PopularProducts';
 import TopAgents from '../libs/components/homepage/PeopleOpinion';
 import Events from '../libs/components/homepage/Events';
-import TrendProperties from '../libs/components/homepage/TrendProducts';
-import TopProperties from '../libs/components/homepage/TopProperties';
 import { Stack } from '@mui/material';
 import Advertisement from '../libs/components/homepage/Advertisement';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -29,7 +26,6 @@ const Home: NextPage = () => {
 				<TrendProducts />
 				<PopularProducts />
 				<Advertisement />
-				<TopProperties />
 				<TopAgents />
 			</Stack>
 		);
@@ -39,7 +35,6 @@ const Home: NextPage = () => {
 				<Advertisement />
 				<PopularProducts />
 				<TrendProducts />
-				{/* <TopProperties /> */}
 				<PeopleOpinion />
 				<Events />
 				<CommunityBoards />

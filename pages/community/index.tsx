@@ -125,7 +125,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 		return (
 			<div id="community-list-page">
 				<div className="container">
-					<TabContext value={searchCommunity?.search?.articleCategory}>
+					<TabContext value={searchCommunity?.search?.articleCategory || 'FREE'}>
 						<Stack className="main-box">
 							<Stack className="right-config">
 								<Stack className="panel-config">

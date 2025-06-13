@@ -13,6 +13,7 @@ export const BasketProvider = ({ children }: { children: ReactNode }) => {
 	const [items, setItems] = useState<CartItem[]>([]);
 
 	const addToBasket = (product: Product) => {
+		//@ts-ignore
 		setItems((prev) => {
 			const existing = prev.find((item) => item._id === product._id);
 			if (existing) {

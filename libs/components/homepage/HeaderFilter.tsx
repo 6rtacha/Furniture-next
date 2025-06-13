@@ -1,12 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Stack, Box, Modal, Divider, Button, OutlinedInput } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
+import { Stack, Box, OutlinedInput } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import CloseIcon from '@mui/icons-material/Close';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import { propertySquare, propertyYears } from '../../config';
 import { ProductLocation, ProductType } from '../../enums/product.enum';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';

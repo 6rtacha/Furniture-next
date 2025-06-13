@@ -280,6 +280,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 												{boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite ? (
 													<ThumbUpAltIcon onClick={() => likeBoardArticleHandler(user, boardArticle?._id)} />
 												) : (
+													//@ts-ignore
 													<ThumbUpOffAltIcon onClick={() => likeBoardArticleHandler(user, boardArticle?._id)} />
 												)}
 
@@ -314,6 +315,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 									<Stack className={'blog-image'}>
 										<img className={'image'} src={imagePath} />
 										<ToastViewerComponent
+											//@ts-ignore
 											markdown={boardArticle?.articleContent}
 											sx={{
 												'.toastui-editor-contents p': {
