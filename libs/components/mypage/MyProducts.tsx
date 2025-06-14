@@ -86,23 +86,27 @@ const MyProducts = ({ initialInput, ...props }: any) => {
 		}
 	};
 
-	return agentProducts.map((product: Product) => {
-		return (
-			<Stack className={'pb-card'}>
-				<img src={`${process.env.REACT_APP_API_URL}/${product.productImages[0]}`} alt="" />
-				<Stack className={'card-info'}>
-					<Stack className={'pb-name'}>
-						<div className="name">{product.productTitle}</div>
-						<div className="name">${product.productPrice}</div>
+	return (
+		<>
+			{agentProducts.map((product: Product) => {
+				return (
+					<Stack className={'pb-card'}>
+						<img src={`${process.env.REACT_APP_API_URL}/${product.productImages[0]}`} alt="" />
+						<Stack className={'card-info'}>
+							<Stack className={'pb-name'}>
+								<div className="name">{product.productTitle}</div>
+								<div className="name">${product.productPrice}</div>
+							</Stack>
+							<Stack className={'status'}>
+								<span>{product.productStatus}</span>
+								<Moment format="DD MMMM, YYYY">{product.createdAt}</Moment>
+							</Stack>
+						</Stack>
 					</Stack>
-					<Stack className={'status'}>
-						<span>{product.productStatus}</span>
-						<Moment format="DD MMMM, YYYY">{product.createdAt}</Moment>
-					</Stack>
-				</Stack>
-			</Stack>
-		);
-	});
+				);
+			})}
+		</>
+	);
 };
 
 MyProducts.defaultProps = {

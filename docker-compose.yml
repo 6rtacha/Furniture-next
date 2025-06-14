@@ -1,5 +1,3 @@
-version: '3.3'
-
 services:
   furniture-next:
     container_name: furniture-next
