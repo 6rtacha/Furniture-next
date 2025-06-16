@@ -21,6 +21,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Notification1 } from '../types/notification/notification';
 import { Member } from '../types/member/member';
 import Notifications from './Notification';
+import { sweetConfirmAlert } from '../sweetAlert';
 
 const Top = () => {
 	const device = useDeviceDetect();
@@ -102,6 +103,17 @@ const Top = () => {
 			setAnchorEl(event.currentTarget);
 		} else {
 			setAnchorEl(null);
+		}
+	};
+
+	const logoutHandler = async () => {
+		try {
+			if (await sweetConfirmAlert('Do you want to logout?')) {
+				logOut();
+				window.location.href = '/';
+			}
+		} catch (err: any) {
+			console.log('ERROR, logoutHandler:', err.message);
 		}
 	};
 
@@ -231,7 +243,7 @@ const Top = () => {
 										}}
 										sx={{ mt: '5px' }}
 									>
-										<MenuItem onClick={() => logOut()}>
+										<MenuItem onClick={logoutHandler}>
 											<Logout fontSize="small" style={{ color: 'blue', marginRight: '10px' }} />
 											Logout
 										</MenuItem>

@@ -34,6 +34,7 @@ import AgentProduct from '../../libs/components/agent/AgentProduct';
 import AgentBlogs from '../../libs/components/agent/AgentBlogs';
 import AgentFollowers from '../../libs/components/agent/AgentFollowers';
 import AgentFollowings from '../../libs/components/agent/AgentFollowings';
+import { MemberType } from '../../libs/enums/member.enum';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -46,7 +47,7 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	const router = useRouter();
 	const { memberId } = router.query;
 	const user = useReactiveVar(userVar);
-	const [agentId, setAgentId] = useState<string | null>(null);
+	const [agentId, setAgentId] = useState<string | ''>('');
 	const [member, setMember] = useState<Member | null>(null);
 	const [searchFilter, setSearchFilter] = useState<ProductsInquiry>(initialInput);
 	const [agentProducts, setAgentProducts] = useState<Product[]>([]);
@@ -61,6 +62,12 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	});
 	const [refetchTrigger, setRefetchTrigger] = useState<number>(0);
 
+	// Add loading states for follow/unfollow actions
+	const [isFollowLoading, setIsFollowLoading] = useState<boolean>(false);
+
+	// Add optimistic follow state
+	const [optimisticFollowState, setOptimisticFollowState] = useState<boolean | null>(null);
+
 	/** APOLLO REQUESTS **/
 	const [createComment] = useMutation(CREATE_COMMENT);
 	const [likeTargetProduct] = useMutation(LIKE_TARGET_PRODUCT);
@@ -74,7 +81,7 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 		error: getMemberError,
 		refetch: getMemberRefetch,
 	} = useQuery(GET_MEMBER, {
-		fetchPolicy: 'cache-and-network',
+		fetchPolicy: 'network-only',
 		variables: { input: agentId },
 		skip: !agentId,
 		onCompleted: (data: T) => {
@@ -82,6 +89,8 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 			setSearchFilter({ ...searchFilter, search: { memberId: data?.getMember?._id } });
 			setCommentInquiry({ ...commentInquiry, search: { commentRefId: data?.getMember?._id } });
 			setInsertCommentData({ ...insertCommentData, commentRefId: data?.getMember?._id });
+			// Reset optimistic state when real data arrives
+			setOptimisticFollowState(null);
 		},
 	});
 
@@ -103,29 +112,13 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 
 	/** LIFECYCLES **/
 	useEffect(() => {
-		if (router.query.agentId) setAgentId(router.query.agentId as string);
-		console.log('agentId:', agentId);
-	}, [router]);
-
-	useEffect(() => {}, [searchFilter]);
-	useEffect(() => {}, [commentInquiry]);
+		const id = router.query.agentId as string;
+		if (id) {
+			setAgentId(id);
+		}
+	}, [router.query.agentId]);
 
 	/** HANDLERS **/
-
-	const redirectToMemberPageHandler = async (memberId: string) => {
-		try {
-			if (memberId === user?._id) await router.push(`/mypage?memberId=${memberId}`);
-			else await router.push(`/member?memberId=${memberId}`);
-		} catch (error) {
-			await sweetErrorHandling(error);
-		}
-	};
-
-	const productPaginationChangeHandler = async (event: ChangeEvent<unknown>, value: number) => {
-		searchFilter.page = value;
-		setSearchFilter({ ...searchFilter });
-	};
-
 	const commentPaginationChangeHandler = async (event: ChangeEvent<unknown>, value: number) => {
 		commentInquiry.page = value;
 		setCommentInquiry({ ...commentInquiry });
@@ -149,87 +142,75 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 		}
 	};
 
-	const likeProductHandler = async (user: any, id: string) => {
-		try {
-			if (!id) return;
-			if (!user._id) throw new Error(Messages.error2);
-
-			await likeTargetProduct({
-				variables: {
-					input: id,
-				},
-			});
-
-			// await getProductsRefetch({ input: searchFilter });
-			await sweetTopSmallSuccessAlert('success', 800);
-		} catch (err: any) {
-			console.log('Error, likeProductHandler: ', err.message);
-			sweetMixinErrorAlert(err.message).then();
-		}
-	};
-
-	const changeTabHandler = (tab: string) => {
+	const changeTabHandler = (key: 'tab' | 'tab1', value: string) => {
 		router.push(
 			{
 				pathname: '/store/detail',
-				query: { tab: tab },
+				query: { ...router.query, [key]: value },
 			},
 			undefined,
 			{ scroll: false },
 		);
 	};
+
 	const tab = router.query.tab ?? 'product';
-
-	const changeTabHandler1 = (tab1: string) => {
-		router.push(
-			{
-				pathname: '/store/detail',
-				query: { tab1: tab1 },
-			},
-			undefined,
-			{ scroll: false },
-		);
-	};
 	const tab1 = router.query.tab1 ?? 'followers';
 
-	const subscribeHandler = async (id: string, refetch: any, query: any) => {
+	const subscribeHandler = async (id: string) => {
 		try {
-			console.log('id:', id);
-			console.log('query', query);
-
-			if (!id) return;
+			if (!id) throw new Error(Messages.error1);
 			if (!user._id) throw new Error(Messages.error2);
+
+			setIsFollowLoading(true);
+			// Set optimistic state immediately
+			setOptimisticFollowState(true);
 
 			await subscribe({
-				variables: {
-					input: id,
-				},
+				variables: { input: id },
 			});
+
+			// Refetch member data to get updated follow status
+			await getMemberRefetch({ input: agentId });
+
 			await sweetTopSmallSuccessAlert('Followed', 800);
-			await refetch({ input: query });
-			// setRefetchTrigger((prev) => prev + 1);
 		} catch (err: any) {
+			// Reset optimistic state on error
+			setOptimisticFollowState(null);
 			sweetErrorHandling(err).then();
+		} finally {
+			setIsFollowLoading(false);
 		}
 	};
 
-	const unsubscribeHandler = async (id: string, refetch: any, query: any) => {
+	const unsubscribeHandler = async (id: string) => {
 		try {
-			if (!id) return;
+			if (!id) throw new Error(Messages.error1);
 			if (!user._id) throw new Error(Messages.error2);
 
+			setIsFollowLoading(true);
+			// Set optimistic state immediately
+			setOptimisticFollowState(false);
+
 			await unsubscribe({
-				variables: {
-					input: id,
-				},
+				variables: { input: id },
 			});
+
+			// Refetch member data to get updated follow status
+			await getMemberRefetch({ input: agentId });
+
 			await sweetTopSmallSuccessAlert('Unfollowed', 800);
-			await refetch({ input: query });
-			// setRefetchTrigger((prev) => prev + 1);
 		} catch (err: any) {
+			// Reset optimistic state on error
+			setOptimisticFollowState(null);
 			sweetErrorHandling(err).then();
+		} finally {
+			setIsFollowLoading(false);
 		}
 	};
+
+	// Determine current follow state (optimistic state takes precedence)
+	const isFollowing =
+		optimisticFollowState !== null ? optimisticFollowState : member?.meFollowed && member?.meFollowed[0]?.myFollowing;
 
 	if (device === 'mobile') {
 		return <div>AGENT DETAIL PAGE MOBILE</div>;
@@ -249,14 +230,15 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 							<Stack className={'agent-name'}>
 								<span>{member?.memberNick}</span>
 								<Stack className={'follow-btn'}>
-									{member?.meFollowed && member?.meFollowed[0]?.myFollowing ? (
+									{isFollowing ? (
 										<>
 											<Button
 												className={'button'}
 												sx={{ background: '#f4f0ec' }}
-												onClick={() => unsubscribeHandler(member?._id, getMemberRefetch, agentId)}
+												onClick={() => unsubscribeHandler(member?._id as string)}
+												disabled={isFollowLoading}
 											>
-												Unfollow
+												{isFollowLoading ? 'Unfollowing...' : 'Unfollow'}
 											</Button>
 										</>
 									) : (
@@ -266,16 +248,17 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 												background: '#292f36',
 												color: '#cda274',
 											}}
-											onClick={() => subscribeHandler(member?._id as string, getMemberRefetch, agentId)}
+											onClick={() => subscribeHandler(member?._id as string)}
+											disabled={isFollowLoading}
 										>
-											Follow
+											{isFollowLoading ? 'Following...' : 'Follow'}
 										</Button>
 									)}
 								</Stack>
 							</Stack>
 							<Stack className={'agent-desc'}>
 								<Stack className={'designer'}>
-									<span>Store</span>
+									<span>{member?.memberType === MemberType.AGENT ? 'Store' : 'User'}</span>
 								</Stack>
 								<Stack className={'description'}>
 									<span>{member?.memberDesc}</span>
@@ -305,11 +288,10 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 						<Stack className={'project-blog'}>
 							<Stack className={'button'}>
 								<Button
-									// className={'btn'}
 									id={'btn'}
 									className={tab == 'product' ? 'active' : ''}
 									onClick={() => {
-										changeTabHandler('product');
+										changeTabHandler('tab', 'product');
 									}}
 								>
 									<div>Products</div>
@@ -318,7 +300,7 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 									id={'btn'}
 									className={tab == 'blog' ? 'active' : ''}
 									onClick={() => {
-										changeTabHandler('blog');
+										changeTabHandler('tab', 'blog');
 									}}
 								>
 									<div>Blog</div>
@@ -337,7 +319,7 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 									id={'btn'}
 									className={tab1 == 'followers' ? 'active' : ''}
 									onClick={() => {
-										changeTabHandler1('followers');
+										changeTabHandler('tab1', 'followers');
 									}}
 								>
 									<span>Followers</span>
@@ -346,7 +328,7 @@ const StoreDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 									id={'btn'}
 									className={tab1 == 'followings' ? 'active' : ''}
 									onClick={() => {
-										changeTabHandler1('followings');
+										changeTabHandler('tab1', 'followings');
 									}}
 								>
 									<span>Followings</span>

@@ -45,9 +45,13 @@ const AgentBlogs = (props: AgentBlogsProps) => {
 
 	return (
 		<>
-			{agentBlogs.map((agentBlog: BoardArticle) => {
-				return <AgentBlogCard agentBlog={agentBlog} />;
-			})}
+			{agentBlogs.length > 0 ? (
+				agentBlogs.map((agentBlog: BoardArticle) => {
+					return <AgentBlogCard agentBlog={agentBlog} />;
+				})
+			) : (
+				<div>No blogs found</div>
+			)}
 		</>
 	);
 };

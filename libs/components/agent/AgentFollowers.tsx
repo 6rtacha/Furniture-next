@@ -1,7 +1,6 @@
-import { Product } from '../../types/product/product';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { GET_MEMBER_FOLLOWERS, GET_PRODUCTS } from '../../../apollo/user/query';
+import { GET_MEMBER_FOLLOWERS } from '../../../apollo/user/query';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { useRouter } from 'next/router';
 import { T } from '../../types/common';
@@ -21,15 +20,32 @@ const AgentFollowers = (props: AgentFollowersProps) => {
 	const { searchFilter, refetchTrigger } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
-	const [agentProducts, setAgentProducts] = useState<Product[]>([]);
+	const [memberFollowers, setMemberFollowers] = useState<Follower[]>([]);
 	const [searchFollower, setSearchFollower] = useState<FollowInquiry>({
 		page: 1,
 		limit: 20,
 		search: {
-			followingId: searchFilter.search.memberId,
+			followingId: searchFilter.search.memberId || '',
 		},
 	});
-	const [memberFollowers, setMemberFollowers] = useState<Follower[]>([]);
+
+	/** APOLLO REQUESTS **/
+	const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
+
+	const {
+		loading: getMemberFollowersLoading,
+		data: getMemberFollowersData,
+		error: getMemberFollowersError,
+		refetch: getMemberFollowersRefetch,
+	} = useQuery(GET_MEMBER_FOLLOWERS, {
+		fetchPolicy: 'network-only', // Ensure fresh data on load
+		variables: { input: searchFollower },
+		skip: !searchFollower?.search?.followingId, // Skip only if followingId is empty
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setMemberFollowers(data?.getMemberFollowers?.list || []);
+		},
+	});
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -44,33 +60,14 @@ const AgentFollowers = (props: AgentFollowersProps) => {
 		}
 	}, [searchFilter?.search?.memberId]);
 
+	// Trigger refetch when searchFollower or refetchTrigger changes
 	useEffect(() => {
-		getMemberFollowersRefetch();
-	}, [refetchTrigger]);
+		if (searchFollower.search.followingId) {
+			getMemberFollowersRefetch({ input: searchFollower });
+		}
+	}, [searchFollower.search.followingId, refetchTrigger]);
 
-	/** APOLLO REQUESTS **/
-
-	const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
-
-	const {
-		loading: getMemberFollowersLoading,
-		data: getMemberFollowersData,
-		error: getMemberFollowersError,
-		refetch: getMemberFollowersRefetch,
-	} = useQuery(GET_MEMBER_FOLLOWERS, {
-		skip: !searchFollower?.search?.followingId,
-		fetchPolicy: 'network-only',
-		variables: { input: searchFollower },
-		notifyOnNetworkStatusChange: true,
-		onCompleted: (data: T) => {
-			setMemberFollowers(data?.getMemberFollowers?.list);
-		},
-	});
-
-	console.log('memberFollowers', memberFollowers);
-	console.log('searchFilter', searchFilter);
-	console.log('searchFollower', searchFollower);
-
+	/** HANDLERS **/
 	const likeMemberHandler = async (user: any, id: string) => {
 		try {
 			if (!id) return;
@@ -83,20 +80,29 @@ const AgentFollowers = (props: AgentFollowersProps) => {
 			});
 
 			await getMemberFollowersRefetch({ input: searchFollower });
-			console.log('memberFollowers', memberFollowers);
-
-			await sweetTopSmallSuccessAlert('succes', 800);
+			await sweetTopSmallSuccessAlert('Success', 800);
 		} catch (err: any) {
 			console.log('Error, likeMemberHandler:', err.message);
 			sweetMixinErrorAlert(err.message).then();
 		}
 	};
 
+	// if (getMemberFollowersLoading) return <div>Loading followers...</div>;
+	if (getMemberFollowersError) return <div>Error loading followers: {getMemberFollowersError.message}</div>;
+
 	return (
 		<>
-			{memberFollowers.map((memberFollower: Follower) => {
-				return <AgentFollowerCard memberFollower={memberFollower} likeMemberHandler={likeMemberHandler} />;
-			})}
+			{memberFollowers.length > 0 ? (
+				memberFollowers.map((memberFollower: Follower) => (
+					<AgentFollowerCard
+						key={memberFollower._id}
+						memberFollower={memberFollower}
+						likeMemberHandler={likeMemberHandler}
+					/>
+				))
+			) : (
+				<div>No followers found</div>
+			)}
 		</>
 	);
 };

@@ -45,23 +45,6 @@ const MyPage: NextPage = () => {
 	const [unsubscribe] = useMutation(UNSUBSCRIBE);
 	const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
 
-	// const {
-	// 	loading: getMemberLoading,
-	// 	data: getMemberData,
-	// 	error: getMemberError,
-	// 	refetch: getMemberRefetch,
-	// } = useQuery(GET_MEMBER, {
-	// 	fetchPolicy: 'network-only',
-	// 	variables: { input: memberId },
-	// 	skip: !memberId,
-	// 	notifyOnNetworkStatusChange: true,
-	// 	onCompleted: (data: T) => {
-	// 		setMember(data?.getMember);
-	// 	},
-	// });
-	console.log('member', member);
-	console.log('memberId', memberId);
-
 	/** LIFECYCLES **/
 	useEffect(() => {
 		if (!user._id) router.push('/mypage').then();
@@ -131,8 +114,10 @@ const MyPage: NextPage = () => {
 
 	const logoutHandler = async () => {
 		try {
-			if (await sweetConfirmAlert('Do you want to logout?')) logOut();
-			await router.push({ pathname: '/account/join' }).then();
+			if (await sweetConfirmAlert('Do you want to logout?')) {
+				logOut();
+				window.location.href = '/';
+			}
 		} catch (err: any) {
 			console.log('ERROR, logoutHandler:', err.message);
 		}
@@ -314,26 +299,3 @@ MyPage.defaultProps = {
 };
 
 export default withLayoutBasic(MyPage);
-// {category === 'addProperty' && <AddProperty />}
-// 									{category === 'myProperties' && <MyProperties />}
-// 									{category === 'myFavorites' && <MyFavorites />}
-// 									{category === 'recentlyVisited' && <RecentlyVisited />}
-// 									{category === 'myArticles' && <MyArticles />}
-// 									{category === 'writeArticle' && <WriteArticle />}
-// 									{category === 'myProfile' && <MyProfile />}
-// 									{category === 'followers' && (
-// 										<MemberFollowers
-// 											subscribeHandler={subscribeHandler}
-// 											unsubscribeHandler={unsubscribeHandler}
-// 											likeMemberHandler={likeMemberHandler}
-// 											redirectToMemberPageHandler={redirectToMemberPageHandler}
-// 										/>
-// 									)}
-// 									{category === 'followings' && (
-// 										<MemberFollowings
-// 											subscribeHandler={subscribeHandler}
-// 											unsubscribeHandler={unsubscribeHandler}
-// 											likeMemberHandler={likeMemberHandler}
-// 											redirectToMemberPageHandler={redirectToMemberPageHandler}
-// 										/>
-// 									)}

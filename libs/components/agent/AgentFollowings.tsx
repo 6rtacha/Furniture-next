@@ -94,9 +94,13 @@ const AgentFollowings = (props: AgentFollowingsProps) => {
 
 	return (
 		<>
-			{memberFollowings.map((memberFollowing: Following) => {
-				return <AgentFollowingCard memberFollowing={memberFollowing} likeMemberHandler={likeMemberHandler} />;
-			})}
+			{memberFollowings.length > 0 ? (
+				memberFollowings.map((memberFollowing: Following) => {
+					return <AgentFollowingCard memberFollowing={memberFollowing} likeMemberHandler={likeMemberHandler} />;
+				})
+			) : (
+				<div>No followings found</div>
+			)}
 		</>
 	);
 };

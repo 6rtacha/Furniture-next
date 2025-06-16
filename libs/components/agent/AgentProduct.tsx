@@ -39,13 +39,15 @@ const AgentProduct = (props: AgentProductProps) => {
 		},
 	});
 
-	console.log('searchFilter', searchFilter);
-
 	return (
 		<>
-			{agentProducts.map((agentProduct: Product) => {
-				return <AgentProductCard agentProduct={agentProduct} />;
-			})}
+			{agentProducts.length > 0 ? (
+				agentProducts.map((agentProduct: Product) => {
+					return <AgentProductCard agentProduct={agentProduct} />;
+				})
+			) : (
+				<div>No products found</div>
+			)}
 		</>
 	);
 };
