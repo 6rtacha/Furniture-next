@@ -152,30 +152,37 @@ const TrendProducts = (props: TrendProductsProps) => {
 			<Stack className={'trend-properties'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<span>Our Projects</span>
+						<Box component={'div'} className={'left'}>
+							<span>Checkout Our Trending Products</span>
+							<p>
+								Don't just follow trends—set them! Our latest collection is designed for those who dare to stand out.
+								Elevate your style with exclusive pieces, handpicked for a bold and sophisticated look. Shop now before
+								they're gone!
+							</p>
+						</Box>
 					</Stack>
 					<Stack className={'card-box'}>
-						{trendProducts.length === 0 ? (
-							<Box component={'div'} className={'empty-list'}>
-								Projects Empty
-							</Box>
-						) : (
-							<Swiper
-								className={'trend-property-swiper'}
-								slidesPerView={'auto'}
-								centeredSlides={true}
-								spaceBetween={15}
-								modules={[Autoplay]}
-							>
-								{trendProducts.map((product: Product) => {
-									return (
-										<SwiperSlide key={product._id} className={'trend-property-slide'}>
-											<TrendPropertyCard product={product} likeProductHandler={likeProductHandler} />
-										</SwiperSlide>
-									);
-								})}
-							</Swiper>
-						)}
+						<Stack className={'line-one'}>
+							<div className="big-card" data-value="">
+								<img src="/img/homePage/bed.png" alt="" className="big" onClick={pushBedHandler} />
+							</div>
+
+							<div className="small-card">
+								<img src="/img/homePage/chair.jpg" alt="" className="small" onClick={pushChairHandler} />
+								<img src="/img/homePage/lamp.jpg" alt="" className="small" onClick={pushLampHandler} />
+							</div>
+							<div className="small-card"></div>
+						</Stack>
+						<Stack className={'line-one'}>
+							<div className="small-card">
+								<img src="/img/homePage/table.png" alt="" className="small" onClick={pushTableHandler} />
+								<img src="/img/homePage/cabinet.png" alt="" className="small" onClick={pushCabinetHandler} />
+							</div>
+							<div className="small-card"></div>
+							<div className="big-card">
+								<img src="/img/homePage/sofa.png" alt="" className="big" onClick={pushSofaHandler} />
+							</div>
+						</Stack>
 					</Stack>
 				</Stack>
 			</Stack>

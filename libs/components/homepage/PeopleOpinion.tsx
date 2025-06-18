@@ -53,26 +53,38 @@ const PeopleOpinion = (props: PeopleOpinionProps) => {
 		return (
 			<Stack className={'top-agents'}>
 				<Stack className={'container'}>
-					<Stack className={'info-box'}>
-						<span>What People Think About Us</span>
+					<Stack className={'head-box'}>
+						<Box component={'div'} className={'left'}>
+							<span>What People Think About Us</span>
+						</Box>
 					</Stack>
 					<Stack className={'wrapper'}>
-						<Swiper
-							className={'top-agents-swiper'}
-							slidesPerView={'auto'}
-							centeredSlides={true}
-							spaceBetween={29}
-							modules={[Autoplay]}
-						>
-							{topAgents.map((agent: Member) => {
-								return (
-									// <SwiperSlide className={'top-agents-slide'} key={agent?._id}>
-									// 	<TopAgentCard agent={agent} key={agent?.memberNick} />
-									// </SwiperSlide>
-									<></>
-								);
-							})}
-						</Swiper>
+						{/* <Box component={'div'} className={'switch-btn swiper-agents-prev'}>
+							<ArrowBackIosNewIcon />
+						</Box> */}
+						<Box component={'div'} className={'card-wrapper'}>
+							<Swiper
+								className={'top-agents-swiper'}
+								slidesPerView={'auto'}
+								spaceBetween={10}
+								modules={[Autoplay, Navigation, Pagination]}
+								navigation={{
+									nextEl: '.swiper-agents-next',
+									prevEl: '.swiper-agents-prev',
+								}}
+							>
+								{recommendArticles.map((article: BoardArticle) => {
+									return (
+										<SwiperSlide className={'top-agents-slide'} key={article?._id}>
+											<PeopleOpinionCard article={article} key={article?.articleContent} />
+										</SwiperSlide>
+									);
+								})}
+							</Swiper>
+						</Box>
+						{/* <Box component={'div'} className={'switch-btn swiper-agents-next'}>
+							<ArrowBackIosNewIcon />
+						</Box> */}
 					</Stack>
 				</Stack>
 			</Stack>
