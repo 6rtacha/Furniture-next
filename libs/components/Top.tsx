@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter, withRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { getJwtToken, logOut, updateUserInfo } from '../auth';
-import { Stack, Box } from '@mui/material';
+import { Stack, Box, Drawer } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { alpha, styled } from '@mui/material/styles';
@@ -12,14 +12,10 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import { CaretDown } from 'phosphor-react';
 import useDeviceDetect from '../hooks/useDeviceDetect';
 import Link from 'next/link';
-import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import { useReactiveVar } from '@apollo/client';
 import { cartDataVar, socketVar, userVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
 import { REACT_APP_API_URL } from '../config';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { Notification1 } from '../types/notification/notification';
-import { Member } from '../types/member/member';
 import Notifications from './Notification';
 import { sweetConfirmAlert } from '../sweetAlert';
 
@@ -35,6 +31,7 @@ const Top = () => {
 	const [colorChange, setColorChange] = useState(false);
 	const [anchorEl, setAnchorEl] = React.useState<any | HTMLElement>(null);
 	let open = Boolean(anchorEl);
+	const [drawerOpen, setDrawerOpen] = useState(false);
 	const [bgColor, setBgColor] = useState<boolean>(false);
 	const [logoutAnchor, setLogoutAnchor] = React.useState<null | HTMLElement>(null);
 	const logoutOpen = Boolean(logoutAnchor);
@@ -161,26 +158,177 @@ const Top = () => {
 
 	if (device == 'mobile') {
 		return (
-			<Stack className={'top'}>
-				<Link href={'/'}>
-					<div>{t('Home')}</div>
-				</Link>
-				<Link href={'/product'}>
-					<div>{t('Products')}</div>
-				</Link>
-				<Link href={'/basket'}>
-					<div className={hasCartData ? 'highlight-shop' : ''}>{t('Shop')}</div>
-				</Link>
+			<Stack className={'navbar'}>
+				<Stack className={`navbar-main ${colorChange ? 'transparent' : ''} ${bgColor ? 'transparent' : ''}`}>
+					<Stack
+						className={'container'}
+						direction="row"
+						alignItems="center"
+						justifyContent="space-between"
+						sx={{ height: '64px', px: 2 }}
+					>
+						{/* Hamburger Menu (Three Lines) */}
+						<Button onClick={() => setDrawerOpen(true)} sx={{ minWidth: '40px', padding: 0 }}>
+							<Box
+								sx={{
+									display: 'flex',
+									flexDirection: 'column',
+									justifyContent: 'space-between',
+									width: '24px',
+									height: '18px',
+								}}
+							>
+								<Box sx={{ height: '3px', backgroundColor: '#000', borderRadius: '2px' }} />
+								<Box sx={{ height: '3px', backgroundColor: '#000', borderRadius: '2px' }} />
+								<Box sx={{ height: '3px', backgroundColor: '#000', borderRadius: '2px' }} />
+							</Box>
+						</Button>
 
-				<Link href={'/store'}>
-					<div> {t('Store')} </div>
-				</Link>
-				<Link href={'/community?articleCategory=NEWS'}>
-					<div> {t('Community')} </div>
-				</Link>
-				<Link href={'/cs'}>
-					<div> {t('CS')} </div>
-				</Link>
+						{/* Logo in Center */}
+						<Box className="logo-box" sx={{ textAlign: 'center' }}>
+							<Link href="/">
+								<div className="logo">
+									<img src="/img/logo/Logo.png" alt="logo" />
+									Interno
+								</div>
+							</Link>
+						</Box>
+
+						{/* user-box on right */}
+						<Box
+							className="user-box"
+							sx={{
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'flex-end',
+								gap: 1.2,
+								minWidth: 'fit-content',
+							}}
+						>
+							{/* Profile or Login Icon */}
+							{user?._id ? (
+								<>
+									<Box
+										className="login-user"
+										onClick={(event: any) => setLogoutAnchor(event.currentTarget)}
+										sx={{
+											width: 32,
+											height: 32,
+											borderRadius: '50%',
+											overflow: 'hidden',
+											cursor: 'pointer',
+										}}
+									>
+										<img
+											src={
+												user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'
+											}
+											alt="user"
+											style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+										/>
+									</Box>
+									<Menu id="basic-menu" anchorEl={logoutAnchor} open={logoutOpen} onClose={() => setLogoutAnchor(null)}>
+										<MenuItem onClick={logoutHandler}>
+											<Logout fontSize="small" style={{ color: 'blue', marginRight: '10px' }} />
+											Logout
+										</MenuItem>
+									</Menu>
+								</>
+							) : (
+								<Link href="/account/join">
+									<Box
+										className="join-box"
+										sx={{
+											display: 'flex',
+											alignItems: 'center',
+											justifyContent: 'center',
+											width: 32,
+											height: 32,
+											borderRadius: '50%',
+											backgroundColor: '#f0f0f0',
+											cursor: 'pointer',
+										}}
+									>
+										<AccountCircleOutlinedIcon fontSize="small" />
+									</Box>
+								</Link>
+							)}
+
+							<Notifications />
+
+							<Button
+								disableRipple
+								className="btn-lang"
+								onClick={langClick}
+								endIcon={<CaretDown size={14} color="#616161" weight="fill" />}
+								sx={{
+									minWidth: 0,
+									padding: 0,
+									display: 'flex',
+									alignItems: 'center',
+									justifyContent: 'center',
+								}}
+							>
+								<Box
+									className="flag"
+									sx={{
+										width: 24,
+										height: 18,
+										overflow: 'hidden',
+										borderRadius: '2px',
+										display: 'flex',
+									}}
+								>
+									<img src={`/img/flag/lang${lang || 'en'}.png`} alt="lang" style={{ width: '100%', height: 'auto' }} />
+								</Box>
+							</Button>
+
+							{/* Lang dropdown menu */}
+							<StyledMenu anchorEl={anchorEl2} open={drop} onClose={langClose}>
+								<MenuItem disableRipple onClick={langChoice} id="en">
+									<img className="img-flag" src="/img/flag/langen.png" alt="en" /> {t('English')}
+								</MenuItem>
+								<MenuItem disableRipple onClick={langChoice} id="kr">
+									<img className="img-flag" src="/img/flag/langkr.png" alt="kr" /> {t('Korean')}
+								</MenuItem>
+							</StyledMenu>
+						</Box>
+					</Stack>
+				</Stack>
+
+				{/* Mobile Drawer only for router links */}
+				<Drawer
+					anchor="left"
+					open={drawerOpen}
+					onClose={() => setDrawerOpen(false)}
+					PaperProps={{ sx: { width: 260, padding: 2 } }}
+				>
+					<Box className="router-box" display="flex" flexDirection="column" gap={2}>
+						<Link href="/">
+							<div>{t('Home')}</div>
+						</Link>
+						<Link href="/product">
+							<div>{t('Products')}</div>
+						</Link>
+						<Link href="/basket">
+							<div className={hasCartData ? 'highlight-shop' : ''}>{t('Shop')}</div>
+						</Link>
+						<Link href="/store">
+							<div>{t('Stores')}</div>
+						</Link>
+						<Link href="/community?articleCategory=NEWS">
+							<div>{t('Community')}</div>
+						</Link>
+						{user?._id && (
+							<Link href="/mypage">
+								<div>{t('My Page')}</div>
+							</Link>
+						)}
+						<Link href="/cs">
+							<div>{t('CS')}</div>
+						</Link>
+					</Box>
+				</Drawer>
 			</Stack>
 		);
 	} else {

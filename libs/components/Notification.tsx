@@ -116,7 +116,7 @@ const Notifications = ({ initialInput, initialInput1, ...props }: any) => {
 		<div className="notification" ref={dropdownRef}>
 			{user?._id && (
 				<>
-					<NotificationsIcon className="notification-icon" onClick={toggleDropdown} />
+					<NotificationsIcon sx={{ color: '#cda274' }} className="notification-icon" onClick={toggleDropdown} />
 					{total > 0 && <span className="notification-count">{total}</span>}
 
 					{openNotification && (

@@ -98,7 +98,54 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>HEADER FILTER MOBILE</div>;
+		return (
+			<>
+				<Stack className={'motto-box'}>
+					<Box className={'motto'}>
+						<div>Make Your Interior More Minimalistic & Modern</div>
+					</Box>
+					<Box className={'moto-desc'}>
+						<div>Turn your romm with panto into a lot more minimalistic and modern with ease and speed</div>
+					</Box>
+				</Stack>
+				<Stack className={'input-box'}>
+					<OutlinedInput
+						value={searchText}
+						type={'text'}
+						className={'search-input'}
+						placeholder={'What are you looking for?'}
+						onChange={(e: any) => setSearchText(e.target.value)}
+						sx={{
+							'& .MuiOutlinedInput-notchedOutline': {
+								borderColor: 'none',
+							},
+							'&:hover > .MuiOutlinedInput-notchedOutline': {
+								borderColor: 'none',
+							},
+						}}
+						onKeyDown={(event: any) => {
+							if (event.key == 'Enter') {
+								pushSearchHandler();
+							}
+						}}
+						endAdornment={
+							<>
+								<CancelRoundedIcon
+									onClick={() => {
+										setSearchText('');
+										setSearchFilter({
+											...searchFilter,
+											search: { ...searchFilter.search, text: '' },
+										});
+									}}
+								/>
+							</>
+						}
+					/>
+					<img src={'/img/icons/search_icon.png'} alt={''} />
+				</Stack>
+			</>
+		);
 	} else {
 		return (
 			<>

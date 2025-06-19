@@ -225,11 +225,6 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 		else return '/img/community/articleImg.png';
 	};
 
-	const goMemberPage = (id: any) => {
-		if (id === user?._id) router.push('/mypage');
-		else router.push(`/member?memberId=${id}`);
-	};
-
 	const cancelButtonHandler = () => {
 		setOpenBackdrop(false);
 		setUpdatedComment('');
@@ -260,15 +255,8 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 										<Stack className="content">
 											<Typography className="content-data">{boardArticle?.articleTitle}</Typography>
 											<Stack className="member-info">
-												<img
-													src={memberImage}
-													alt=""
-													className="member-img"
-													onClick={() => goMemberPage(boardArticle?.memberData?._id)}
-												/>
-												<Typography className="member-nick" onClick={() => goMemberPage(boardArticle?.memberData?._id)}>
-													{boardArticle?.memberData?.memberNick}
-												</Typography>
+												<img src={memberImage} alt="" className="member-img" />
+												<Typography className="member-nick">{boardArticle?.memberData?.memberNick}</Typography>
 												<Stack className="divider"></Stack>
 												<Moment className={'time-added'} format={'DD.MM.YY HH:mm'}>
 													{boardArticle?.createdAt}
@@ -409,7 +397,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 												<Stack className="member-info">
 													<Stack
 														className="name-date"
-														onClick={() => goMemberPage(commentData?.memberData?._id as string)}
+														// onClick={() => goMemberPage(commentData?.memberData?._id as string)}
 													>
 														<img src={getCommentMemberImage(commentData?.memberData?.memberImage)} alt="" />
 														<Stack className="name-date-column">
