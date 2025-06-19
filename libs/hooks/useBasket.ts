@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CartItem } from '../types/order/basket-item';
 import { cartDataVar } from '../../apollo/store';
+import { cartAnimationVar } from '../../apollo/store';
 
 const useBasket = () => {
 	const cartJson: string | null = typeof window !== 'undefined' ? localStorage.getItem('cartData') : '';
@@ -8,22 +9,34 @@ const useBasket = () => {
 	const currentCart = cartJson ? JSON.parse(cartJson) : [];
 	const [cartItems, setCardItems] = useState<CartItem[]>(currentCart);
 
+	const triggerCartBounce = () => {
+		cartAnimationVar(false);
+
+		requestAnimationFrame(() => {
+			cartAnimationVar(true);
+			setTimeout(() => cartAnimationVar(false), 600);
+		});
+	};
+
 	const onAdd = (input: CartItem) => {
 		const exist: any = cartItems.find((item: CartItem) => item._id === input._id);
+
+		let cartUpdate;
+
 		if (exist) {
-			const cartUpdate = cartItems.map((item: CartItem) =>
+			cartUpdate = cartItems.map((item: CartItem) =>
 				item._id === input._id ? { ...exist, quantity: exist.quantity + 1 } : item,
 			);
-
-			setCardItems(cartUpdate);
-			localStorage.setItem('cartData', JSON.stringify(cartUpdate));
-			cartDataVar(cartUpdate);
 		} else {
-			const cartUpdate = [...cartItems, { ...input }];
-			setCardItems(cartUpdate);
-			localStorage.setItem('cartData', JSON.stringify(cartUpdate));
-			cartDataVar(cartUpdate);
+			cartUpdate = [...cartItems, { ...input }];
 		}
+
+		setCardItems(cartUpdate);
+		localStorage.setItem('cartData', JSON.stringify(cartUpdate));
+		cartDataVar(cartUpdate);
+
+		// 🔥 Always trigger bounce
+		triggerCartBounce();
 	};
 
 	const onRemove = (input: CartItem) => {

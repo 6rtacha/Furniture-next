@@ -18,6 +18,14 @@ import { Logout } from '@mui/icons-material';
 import { REACT_APP_API_URL } from '../config';
 import Notifications from './Notification';
 import { sweetConfirmAlert } from '../sweetAlert';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { cartAnimationVar } from '../../apollo/store';
+import { keyframes } from '@emotion/react';
+
+const bounce = keyframes`
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(2); }
+`;
 
 const Top = () => {
 	const device = useDeviceDetect();
@@ -37,6 +45,9 @@ const Top = () => {
 	const logoutOpen = Boolean(logoutAnchor);
 	const cartData = useReactiveVar(cartDataVar);
 	const hasCartData = cartData.length > 0;
+	const isCartAnimating = useReactiveVar(cartAnimationVar);
+	const cartBounce = useReactiveVar(cartAnimationVar);
+	const popClass = cartBounce ? 'cart-pop' : '';
 
 	/** LIFECYCLES **/
 
@@ -62,6 +73,19 @@ const Top = () => {
 	useEffect(() => {
 		const jwt = getJwtToken();
 		if (jwt) updateUserInfo(jwt);
+	}, []);
+
+	useEffect(() => {
+		const changeNavbarColor = () => {
+			if (window.scrollY >= 50) {
+				setColorChange(true);
+			} else {
+				setColorChange(false);
+			}
+		};
+
+		window.addEventListener('scroll', changeNavbarColor);
+		return () => window.removeEventListener('scroll', changeNavbarColor);
 	}, []);
 
 	/** HANDLERS **/
@@ -334,7 +358,7 @@ const Top = () => {
 	} else {
 		return (
 			<Stack className={'navbar'}>
-				<Stack className={`navbar-main ${colorChange ? 'transparent' : ''} ${bgColor ? 'transparent' : ''}`}>
+				<Stack className={`navbar-main ${colorChange ? 'scrolled' : ''}`}>
 					<Stack className={'container'}>
 						<Box component={'div'} className={'logo-box'}>
 							<Link href={'/'}>
@@ -350,9 +374,6 @@ const Top = () => {
 							</Link>
 							<Link href={'/product'}>
 								<div>{t('Products')}</div>
-							</Link>
-							<Link href={'/basket'}>
-								<div className={hasCartData ? 'highlight-shop' : ''}>{t('Shop')}</div>
 							</Link>
 
 							<Link href={'/store'}>
@@ -409,6 +430,15 @@ const Top = () => {
 							)}
 
 							<div className={'lan-box'}>
+								<Link href="/basket">
+									<div className={`cart-badge ${popClass}`} style={{ position: 'relative' }}>
+										<ShoppingCartIcon sx={{ color: '#cda274', fontSize: 28 }} />
+										{cartData.length > 0 && (
+											<span className="cart-count">{cartData.reduce((acc, item) => acc + item.quantity, 0)}</span>
+										)}
+									</div>
+								</Link>
+
 								{/* {user?._id && <NotificationsOutlinedIcon className={'notification-icon'} />} */}
 								<Notifications />
 

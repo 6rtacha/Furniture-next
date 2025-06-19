@@ -35,6 +35,22 @@
 @import '/scss/pc/member/memberProperties.scss';
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
 
+.cart-pop {
+	animation: pop 0.4s ease;
+}
+
+@keyframes pop {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.25);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
 body {
 	-ms-overflow-style: none; /* for Internet Explorer, Edge */
 	scrollbar-width: none; /* for Firefox */
@@ -53,19 +69,28 @@ body::-webkit-scrollbar {
 	#top {
 		.navbar {
 			.navbar-main {
-				position: relative;
-				padding: 22px 0px;
+				position: fixed; // ← makes it always visible
+				top: 0;
+				left: 0;
+				right: 0;
+				z-index: 999;
+				padding: 22px 0;
 				width: 100%;
 				height: 87px;
 				display: flex;
-				flex-direction: row;
-				box-sizing: border-box;
-				z-index: 99;
 				align-items: center;
-				border-top: 1px solid rgba(255, 255, 255, 0.07);
-				&.transparent {
-					// background-color: #181a209e;
+				transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+				// Initially transparent
+				// background-color: rgba(255, 255, 255, 0);
+				background-color: rgba(255, 255, 255, 0.95);
+				box-shadow: none;
+
+				&.scrolled {
+					background-color: rgba(255, 255, 255, 0); // ← or a darker color if needed
+					box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); // optional subtle shadow
 				}
+				border-top: 1px solid rgba(255, 255, 255, 0.07);
 				.container {
 					flex-direction: row;
 					align-items: center;
@@ -90,10 +115,6 @@ body::-webkit-scrollbar {
 						display: flex;
 						flex-direction: row;
 						justify-content: space-between;
-						.highlight-shop {
-							color: #cda274;
-							font-weight: bold;
-						}
 						div {
 							position: relative;
 							color: #292f36;
@@ -165,8 +186,30 @@ body::-webkit-scrollbar {
 					.lan-box {
 						margin-left: 28px;
 						display: flex;
+						flex-direction: row;
+						justify-content: space-between;
 						align-items: center;
+						.cart-badge {
+							position: relative;
+
+							.cart-count {
+								position: absolute;
+								top: -5px;
+								right: -5px;
+								background: #cda274;
+								color: white;
+								border-radius: 50%;
+								font-size: 11px;
+								font-weight: 600;
+								line-height: 1;
+								min-width: 20px;
+								padding: 2px 6px;
+								text-align: center;
+							}
+						}
+
 						.notification {
+							margin-left: 10px;
 							position: relative;
 							.notification-icon {
 								margin-right: 18px;
