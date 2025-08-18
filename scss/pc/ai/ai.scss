@@ -1,0 +1,139 @@
+#pc-wrap {
+	.chatContainer {
+		padding-top: 130px;
+		width: 900px;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		@media (max-width: 768px) {
+			width: 90%;
+		}
+
+		.messageContainer {
+			border: 1px solid #ddd;
+			border-radius: 8px;
+			padding: 16px;
+			min-height: 400px;
+			max-height: 600px;
+			overflow-y: auto;
+			background-color: #fafafa;
+
+			.message {
+				margin-bottom: 16px;
+
+				.userMessage {
+					display: flex;
+					justify-content: flex-end;
+					margin-bottom: 4px;
+
+					.messageContent {
+						background-color: #cda274;
+						color: white;
+						padding: 8px 12px;
+						border-radius: 16px 16px 0 16px;
+						max-width: 80%;
+						word-wrap: break-word;
+
+						.timestamp {
+							font-size: 12px;
+							color: #ddd;
+							margin-left: 8px;
+						}
+					}
+				}
+
+				.aiMessage {
+					display: flex;
+					justify-content: flex-start;
+
+					.messageContent {
+						background-color: #eee;
+						color: #333;
+						padding: 8px 12px;
+						border-radius: 16px 16px 16px 0;
+						max-width: 80%;
+						word-wrap: break-word;
+					}
+				}
+			}
+		}
+
+		form {
+			display: flex;
+			gap: 8px;
+			margin-top: 12px;
+
+			.input {
+				flex: 1;
+				padding: 10px 12px;
+				border-radius: 4px;
+				border: 1px solid #ccc;
+				margin-top: 19px;
+				font-size: 16px;
+				height: 40px; // Set fixed height
+
+				&:focus {
+					outline: none;
+					border-color: #cda274;
+				}
+			}
+
+			.button {
+				padding: 10px 18px;
+				border-radius: 4px;
+				background-color: #cda274;
+				color: white;
+				border: none;
+				cursor: pointer;
+				font-size: 16px;
+				height: 40px; // Match input height
+
+				&:disabled {
+					cursor: not-allowed;
+					background-color: #cda274;
+				}
+			}
+		}
+	}
+}
+
+// Loading dots animation
+.loadingDots {
+	display: inline-flex;
+	align-items: center;
+	margin-left: 8px;
+
+	span {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background-color: #666;
+		margin: 0 2px;
+		animation: loadingBounce 1.4s ease-in-out infinite both;
+
+		&:nth-child(1) {
+			animation-delay: -0.32s;
+		}
+
+		&:nth-child(2) {
+			animation-delay: -0.16s;
+		}
+
+		&:nth-child(3) {
+			animation-delay: 0s;
+		}
+	}
+}
+
+@keyframes loadingBounce {
+	0%,
+	80%,
+	100% {
+		transform: scale(0.8);
+		opacity: 0.5;
+	}
+	40% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
