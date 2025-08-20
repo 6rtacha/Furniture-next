@@ -814,3 +814,40 @@ export const GET_MY_ORDERS = gql`
 		}
 	}
 `;
+
+/**************************
+ *    SEMANTIC SEARCH     *
+ *************************/
+export const SEMANTIC_SEARCH = gql`
+	query SemanticSearch($query: String!) {
+		semanticSearch(query: $query) {
+			_id
+			productType
+			productStatus
+			productLocation
+			productAddress
+			productTitle
+			productPrice
+			productMaterial
+			productColors
+			productWidth
+			productHeight
+			productLength
+			productViews
+			productLikes
+			productComments
+			productRank
+			productImages
+			productDesc
+			productPurchase
+			productRent
+			memberId
+			productEmbedding
+			score
+			soldAt
+			deletedAt
+			createdAt
+			updatedAt
+		}
+	}
+`;

@@ -10,7 +10,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import { Direction, Message } from '../../libs/enums/common.enum';
 import { useMutation, useQuery } from '@apollo/client';
-import { GET_PRODUCTS } from '../../apollo/user/query';
+import { GET_PRODUCTS, SEMANTIC_SEARCH } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 import { LIKE_TARGET_PRODUCT } from '../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
@@ -53,6 +53,23 @@ const ProductList: NextPage = ({ initialInput, ...props }: any) => {
 		onCompleted: (data: T) => {
 			setProducts(data?.getProducts?.list);
 			setTotal(data?.getProducts?.metaCounter[0]?.total);
+		},
+	});
+
+	const {
+		loading: getSemanticLoading,
+		data: getSemanticData,
+		error: getSemanticError,
+		refetch: getSemanticRefetch,
+	} = useQuery(SEMANTIC_SEARCH, {
+		fetchPolicy: 'cache-and-network',
+		variables: { query: searchFilter?.search?.text },
+		skip: !searchFilter?.search?.text,
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			if (data?.semanticSearch) {
+				setProducts(data?.semanticSearch);
+			}
 		},
 	});
 

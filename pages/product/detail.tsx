@@ -26,7 +26,7 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { GET_COMMENTS, GET_PRODUCT, GET_PRODUCTS } from '../../apollo/user/query';
+import { GET_COMMENTS, GET_PRODUCT, GET_PRODUCTS, SEMANTIC_SEARCH } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 import { Direction, Message } from '../../libs/enums/common.enum';
 import { CREATE_COMMENT, LIKE_TARGET_PRODUCT } from '../../apollo/user/mutation';
@@ -50,7 +50,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 	const [productId, setProductId] = useState<string | null>(null);
 	const [product, setProduct] = useState<Product | null>(null);
 	const [slideImage, setSlideImage] = useState<string>('');
-	const [destinationProducts, setDestinationProducts] = useState<Product[]>([]);
+	const [vectorProducts, setVectorProducts] = useState<Product[]>([]);
 	const [commentInquiry, setCommentInquiry] = useState<CommentsInquiry>(initialComment);
 	const [productComments, setProductComments] = useState<Comment[]>([]);
 	const [commentTotal, setCommentTotal] = useState<number>(0);
@@ -86,27 +86,20 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 			}
 		},
 	});
-	console.log('product', getProductData);
+
 	const {
-		loading: getProductsLoading,
-		data: getProductsData,
-		error: getProductsError,
-		refetch: getProductsRefetch,
-	} = useQuery(GET_PRODUCTS, {
+		loading: getSemanticLoading,
+		data: getSemanticData,
+		error: getSemanticError,
+		refetch: getSemanticRefetch,
+	} = useQuery(SEMANTIC_SEARCH, {
 		fetchPolicy: 'cache-and-network',
-		variables: {
-			input: {
-				page: 1,
-				limit: 20,
-				sort: 'createdAt',
-				direction: Direction.DESC,
-				search: { locationList: product?.productLocation ? [product?.productLocation] : [] },
-			},
-		},
-		// skip: !productId && !product,
+		variables: { query: `${product?.productType} made of ${product?.productMaterial}` },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			if (data?.getProducts?.list) setDestinationProducts(data?.getProducts?.list);
+			if (data?.semanticSearch) {
+				setVectorProducts(data?.semanticSearch);
+			}
 		},
 	});
 
@@ -166,15 +159,9 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 			await likeTargetProduct({ variables: { input: id } });
 
 			await getProductRefetch({ input: id });
-			// execute getPropertiesRefetch
-			await getProductsRefetch({
-				input: {
-					page: 1,
-					limit: 4,
-					sort: 'createdAt',
-					direction: Direction.DESC,
-					search: { locationList: [product?.productLocation] },
-				},
+
+			await getSemanticRefetch({
+				query: `${product?.productType} made of ${product?.productMaterial}`,
 			});
 
 			await sweetTopSmallSuccessAlert('success', 800);
@@ -263,6 +250,10 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 													<Box component={'div'} className={'info'}>
 														<Typography className={'title'}>Product Type</Typography>
 														<Typography className={'data'}>{product?.productType}</Typography>
+													</Box>
+													<Box component={'div'} className={'info'}>
+														<Typography className={'title'}>Product Material</Typography>
+														<Typography className={'data'}>{product?.productMaterial}</Typography>
 													</Box>
 													<Box component={'div'} className={'info'}>
 														<Typography className={'title'}>Product Options</Typography>
@@ -416,11 +407,11 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 								</Stack>
 							</Stack>
 						</Stack>
-						{destinationProducts.length !== 0 && (
+						{vectorProducts.length !== 0 && (
 							<Stack className={'similar-properties-config'}>
 								<Stack className={'title-pagination-box'}>
 									<Stack className={'title-box'}>
-										<Typography className={'main-title'}>Similiar Products</Typography>
+										<Typography className={'main-title'}>Smart Suggestios</Typography>
 										<Typography className={'sub-title'}></Typography>
 									</Stack>
 									<Stack className={'pagination-box'}>
@@ -443,7 +434,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											el: '.swiper-similar-pagination',
 										}}
 									>
-										{destinationProducts.map((product: Product) => {
+										{vectorProducts.map((product: Product) => {
 											return (
 												<SwiperSlide className={'similar-homes-slide'} key={product.productTitle}>
 													<ProductCard

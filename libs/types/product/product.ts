@@ -54,6 +54,8 @@ export interface Product {
 
 	memberId: string;
 
+	productEmbedding?: number[];
+
 	soldAt?: Date;
 
 	deletedAt?: Date;
